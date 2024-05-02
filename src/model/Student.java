@@ -1,4 +1,4 @@
-package camp.model;
+package model;
 
 public class Student {
     private String studentId;

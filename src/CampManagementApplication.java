@@ -1,14 +1,12 @@
-package camp;
-
-import camp.model.Score;
-import camp.model.Student;
-import camp.model.Subject;
+import model.Score;
+import model.Student;
+import model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
+/** test
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
  * main 메서드를 실행하면 프로그램이 실행됩니다.
