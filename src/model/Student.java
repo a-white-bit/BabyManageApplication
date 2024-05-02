@@ -1,6 +1,5 @@
 package model;
 
-import java.util.HashMap;
 public class Student {
     private String studentId;
     private String studentName;
