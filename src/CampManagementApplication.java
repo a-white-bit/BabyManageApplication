@@ -102,6 +102,7 @@ public class CampManagementApplication {
 
     // index 자동 증가
     private static String sequence(String type) {
+        System.out.println("f");
         switch (type) {
             case INDEX_TYPE_STUDENT -> {
                 studentIndex++;
