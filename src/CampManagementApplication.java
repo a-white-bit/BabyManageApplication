@@ -48,6 +48,7 @@ public class CampManagementApplication {
 
     // 초기 데이터 생성
     private static void setInitData() {
+        Scanner sc = new Scanner(System.in);
         studentStore = new ArrayList<>();
         subjectStore = List.of(
                 new Subject(
