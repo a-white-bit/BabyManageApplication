@@ -1,21 +1,22 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Student {
-    private String studentId;
-    private String studentName;
+    private List<Map<String, Object>> studentList; // 과목을 List로 받기위해서 Map<String, Object>로 선언
 
-    public Student(String seq, String studentName) {
-        this.studentId = seq;
-        this.studentName = studentName;
+    public Student() {
+        studentList = new ArrayList<>();
     }
 
-    // Getter
-    public String getStudentId() {
-        return studentId;
+    public List<Map<String, Object>> getStudentList() {
+        return studentList;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public void setStudentList(List<Map<String, Object>> studentList) {
+        this.studentList = studentList;
     }
-
 }
