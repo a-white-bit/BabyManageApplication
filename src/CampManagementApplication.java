@@ -154,7 +154,7 @@ public class CampManagementApplication {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
                 case 3 -> updateStudent(); // 수강생 정보 수정
-                //case 4 -> //수강생 삭제 메소드 추가
+                case 4 -> deleteStudent(); //수강생 삭제
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -178,6 +178,7 @@ public class CampManagementApplication {
 
         Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, studentState, studentSubject); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
+        studentStore.add(student);
         System.out.println("수강생 등록 성공!\n");
     }
 
@@ -185,10 +186,13 @@ public class CampManagementApplication {
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
+        for (Student student : studentStore) {
+            System.out.println(student.getStudentName());
+        }
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
-    // 수강생 목록 조회
+    // 수강생 정보 수정
     private static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
         // 기능 구현
@@ -224,6 +228,29 @@ public class CampManagementApplication {
             }
         }
 
+    }
+
+    private static void deleteStudent() {
+        System.out.println("\n수강생 정보를 삭제합니다...");
+        System.out.println("\n수강생 고유번호를 입력해주세요: ");
+        String studentId = sc.next();
+
+        Iterator<Student> it = studentStore.iterator();
+        while (it.hasNext()) {
+            Student studentToDelete = (Student)it.next();
+            if (studentToDelete.getStudentId().equals(studentId)) {
+                System.out.print("정말로 " + studentToDelete.getStudentName() + "님의 정보를 삭제하시겠습니까?:\n ('네' 입력시 삭제) ");
+                if ("네".equals(sc.next())) {
+                    it.remove();
+                    System.out.println("삭제되었습니다.");
+                }
+                else {
+                    System.out.println("\n삭제가 취소되었습니다.");
+                }
+                return;
+            }
+        }
+        System.out.println("해당 수강생이 없습니다.");
     }
 
     private static void displayScoreView() {
