@@ -2,9 +2,7 @@ import model.Score;
 import model.Student;
 import model.Subject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Notification
@@ -146,14 +144,18 @@ public class CampManagementApplication {
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
+            System.out.println("3. 수강생 정보 수정");
+            System.out.println("4. 수강생 삭제");
+            System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
+                case 3 -> updateStudent(); // 수강생 정보 수정
+                //case 4 -> //수강생 삭제 메소드 추가
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -167,9 +169,14 @@ public class CampManagementApplication {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
-        // 기능 구현 (필수 과목, 선택 과목)
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        System.out.print("(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력: ");
+        String studentState = sc.next();
+
+        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 과목 선택: ");
+        Set<String> studentSubject = new HashSet<>();
+
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, studentState, studentSubject); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
     }
@@ -179,6 +186,44 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
         System.out.println("\n수강생 목록 조회 성공!");
+    }
+
+    // 수강생 목록 조회
+    private static void updateStudent() {
+        System.out.println("\n수강생 정보를 수정합니다...");
+        // 기능 구현
+        System.out.println("\n수강생 고유번호를 입력해주세요: ");
+        String studentId = sc.next();
+
+        for (Student student : studentStore) {
+            if (studentId.equals(student.getStudentId())) {
+                String studentState = "";
+
+                System.out.println("변경하는 수강생 이름을 입력하세요: ");
+                String studentName = sc.next();
+
+                System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨");
+                int stateNumber = Integer.parseInt(sc.next());
+
+                switch (stateNumber){
+                    case 1 -> studentState = "아주좋음";
+                    case 2 -> studentState = "좋음";
+                    case 3 -> studentState = "보통";
+                    case 4 -> studentState = "나쁨";
+                    case 5 -> studentState = "아주나쁨";
+                    default -> System.out.println("잘못된 입력입니다");
+                }
+
+                student.setStudentName(studentName); //수강생 이름 set
+                student.setStudentName(studentState); //수강생 상태 set
+
+                //수강생 정보 List로 반영 하는 메소드 추가 예정
+
+            }else{
+                System.out.println("해당 수강생이 없습니다.");
+            }
+        }
+
     }
 
     private static void displayScoreView() {
