@@ -192,12 +192,8 @@ public class CampManagementApplication {
         System.out.print("\n"+"조회할 학생들의 상태를 입력해주세요 (1 : 좋음  2 : 보통  3 : 나쁨  :  )");
         String stateNumber = sc.next();
         switch (stateNumber) {
-//            case 1 -> {
-//                System.out.print(createStudent(std));
-//
-//            }
-        }
-        System.out.println("\n수강생 목록 조회 성공!");
+
+//        System.out.println("\n수강생 목록 조회 성공!");
     }
 
     private static void displayScoreView() {
