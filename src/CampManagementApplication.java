@@ -134,7 +134,6 @@ public class CampManagementApplication {
 
     // 수강생 등록
     private static void createStudent() {
-    Map<String, Object> studentScore = new HashMap<>();
         System.out.println("\n수강생을 등록합니다...");
 
 //        /* 이 메서드에서 구현해야할 것:
@@ -149,8 +148,37 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
 
-        System.out.print("(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력: ");
-        String studentState = sc.next();
+        boolean state = true;
+        String studentState = "";
+        while (state) {
+            System.out.print("(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력: ");
+            studentState = sc.next();
+            switch (studentState) {
+                case "1":
+                    studentState = "아주좋음";
+                    state = false;
+                    break;
+                case "2":
+                    studentState = "좋음";
+                    state = false;
+                    break;
+                case "3":
+                    studentState = "보통";
+                    state = false;
+                    break;
+                case "4":
+                    studentState = "나쁨";
+                    state = false;
+                    break;
+                case "5":
+                    studentState = "아주나쁨";
+                    state = false;
+                    break;
+
+                default:
+                    System.out.println("옳바른 값을 입력해주세요.");
+            }
+        }
         Set<String> studentSubject = new HashSet<>();
         boolean flag = true;
         while (flag){
@@ -161,6 +189,8 @@ public class CampManagementApplication {
             case "3" : studentSubject.add("Redis"); break;
             case "4" : studentSubject.add("MongoDB"); break;
             case "5" : flag = false; break;
+            default :
+                System.out.println("옳바른 값을 입력해주세요.");
         }
         }
 
@@ -170,7 +200,7 @@ public class CampManagementApplication {
         // 수강생 인스턴스 생성 예시 코드
         Student student = new Student(studentId, studentName, studentState, studentSubject);
         // 학생 목록(Map)에 저장
-        studentScore.put(studentId, student);
+        studentStore.put(studentId, student);
         System.out.println("수강생 등록 성공!\n");
     }
 
