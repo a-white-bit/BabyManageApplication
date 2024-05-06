@@ -5,6 +5,7 @@ public class Subject {
     private String subjectName;
     private String subjectType;
 
+
     public Subject(String seq, String subjectName, String subjectType) {
         this.subjectId = seq;
         this.subjectName = subjectName;
