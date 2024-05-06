@@ -136,26 +136,67 @@ public class CampManagementApplication {
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
 
-        /* 이 메서드에서 구현해야할 것:
-        * 다음 정보를 학생 목록(studentStore)에 저장하기
-        * 수강생 ID, 이름, 상태, 과목 목록
-        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
-        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
-        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
-        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
-         */
+//        /* 이 메서드에서 구현해야할 것:
+//        * 다음 정보를 학생 목록(studentStore)에 저장하기
+//        * 수강생 ID, 이름, 상태, 과목 목록
+//        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
+//        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
+//        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
+//        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+//         */
 
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
 
-        System.out.print("(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력: ");
-        String studentState = sc.next();
+        boolean state = true;
+        String studentState = "";
+        while (state) {
+            System.out.print("(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력: ");
+            studentState = sc.next();
+            switch (studentState) {
+                case "1":
+                    studentState = "아주좋음";
+                    state = false;
+                    break;
+                case "2":
+                    studentState = "좋음";
+                    state = false;
+                    break;
+                case "3":
+                    studentState = "보통";
+                    state = false;
+                    break;
+                case "4":
+                    studentState = "나쁨";
+                    state = false;
+                    break;
+                case "5":
+                    studentState = "아주나쁨";
+                    state = false;
+                    break;
 
-        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 과목 선택: ");
+                default:
+                    System.out.println("옳바른 값을 입력해주세요.");
+            }
+        }
         Set<String> studentSubject = new HashSet<>();
+        boolean flag = true;
+        while (flag){
+        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 과목 선택: ");
+        switch(sc.next()){
+            case "1" : studentSubject.add("디자인 패턴"); break;
+            case "2" : studentSubject.add("Spring Security"); break;
+            case "3" : studentSubject.add("Redis"); break;
+            case "4" : studentSubject.add("MongoDB"); break;
+            case "5" : flag = false; break;
+            default :
+                System.out.println("옳바른 값을 입력해주세요.");
+        }
+        }
 
         // 수강생 ID 시퀀스 생성
         String studentId = sequence(INDEX_TYPE_STUDENT);
+
         // 수강생 인스턴스 생성 예시 코드
         Student student = new Student(studentId, studentName, studentState, studentSubject);
         // 학생 목록(Map)에 저장
