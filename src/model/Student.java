@@ -1,23 +1,18 @@
 package model;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.Set;
 
 public class Student {
-    // HashMap 추가
-    Map<String, String> strMap = new HashMap<>();
-
     private String studentId;
     private String studentName;
-    //학생 과목 추가
-    private String studentSubject;
+    private String studentState;
+    private Set<String> studentSubject;
 
-    public Student(String seq, String studentName, String studentSubject) {
+    public Student(String seq, String studentName, String studentState, Set<String> studentSubject) {
         this.studentId = seq;
         this.studentName = studentName;
+        this.studentState = studentState;
         this.studentSubject = studentSubject;
-
-        this.strMap.put(studentId, studentName);
     }
 
     // Getter
@@ -29,7 +24,17 @@ public class Student {
         return studentName;
     }
 
-    public String getStudentSubject() {
-        return studentSubject;
-    }
+    public String getStudentState() { return studentState;  }
+
+    public Set<String> getStudentSubject() { return studentSubject; }
+
+    // Setter
+    public void setStudentId(String studentId) { this.studentId = studentId; }
+
+    public void setStudentName(String studentName) { this.studentName = studentName; }
+
+    public void setStudentState(String studentState) { this.studentState = studentState; }
+
+    public void setStudentSubject(Set<String> studentSubject) { this.studentSubject = studentSubject; }
+
 }
