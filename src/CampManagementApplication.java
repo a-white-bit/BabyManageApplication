@@ -198,17 +198,19 @@ public class CampManagementApplication {
         * https://velog.io/@woply/HashMap-%EC%A0%84%EC%B2%B4-%EA%B0%92%EC%9D%84-%EC%B6%9C%EB%A0%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
         * https://coding-factory.tistory.com/556
          */
-        if (studentStore !=null) {
-            String studentId = "" + studentIndex;
-            String studentName = "" + studentIndex;
+        if (!studentStore.isEmpty()) {
+            String studentId = "";
+            String studentName = "";
             for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
-                studentId = String.valueOf(entry.getValue());
-                studentName = String.valueOf(entry.getValue());
-
+                studentId = String.valueOf(entry.getValue().getStudentId());
+                studentName = String.valueOf(entry.getValue().getStudentName());
+                System.out.println("학생 ID: " + studentId + ", 이름: " + studentName);
             }
-            System.out.println("학생 ID: " + studentId + ", 이름: " + studentName);
+
+            System.out.println("\n수강생 목록 조회 성공!");
+        } else {
+            System.out.println("아무 정보도 없습니다!!");
         }
-        System.out.println("\n수강생 목록 조회 성공!");
     }
 
     // 수강생 상세 정보 조회
@@ -232,9 +234,9 @@ public class CampManagementApplication {
             System.out.println("상태 : " + student.getStudentState());
 
             Set<String> subjects = student.getStudentSubject();
-            System.out.println("과목 리스트");
+            System.out.println("과목 리스트 : ");
             for (String subject : subjects) {
-                System.out.println(subject);
+                System.out.print(subject + " ");
             }
         } else { // 조회한 수강생이 없을 경우
             System.out.println("등록되지 않은 수강생입니다");
