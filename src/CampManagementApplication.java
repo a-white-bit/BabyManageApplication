@@ -318,10 +318,10 @@ public class CampManagementApplication {
         if (student != null) {
             String studentState = "";
 
-            System.out.println("변경하는 수강생 이름을 입력하세요: ");
+            System.out.println("변경하는 수강생 이름을 입력하세요: (미 입력시 기존 정보가 유지됩니다.)");
             String studentName = sc.next();
 
-            System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨, 6.수정하지않음");
+            System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨, 6.기존 정보 유지");
             int stateNumber = Integer.parseInt(sc.next());
 
             switch (stateNumber){
