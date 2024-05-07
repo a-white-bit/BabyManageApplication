@@ -136,14 +136,14 @@ public class CampManagementApplication {
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
 
-//        /* 이 메서드에서 구현해야할 것:
-//        * 다음 정보를 학생 목록(studentStore)에 저장하기
-//        * 수강생 ID, 이름, 상태, 과목 목록
-//        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
-//        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
-//        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
-//        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
-//         */
+        /* 이 메서드에서 구현해야할 것:
+        * 다음 정보를 학생 목록(studentStore)에 저장하기
+        * 수강생 ID, 이름, 상태, 과목 목록
+        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
+        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
+        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
+        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+         */
 
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
@@ -176,22 +176,27 @@ public class CampManagementApplication {
                     break;
 
                 default:
-                    System.out.println("옳바른 값을 입력해주세요.");
+                    System.out.println("올바른 값을 입력해주세요.");
             }
         }
+
         Set<String> studentSubject = new HashSet<>();
+        studentSubject.add("Java");
+        studentSubject.add("객체지향");
+        studentSubject.add("Spring");
+        studentSubject.add("JPA");
+        studentSubject.add("MySQL");
         boolean flag = true;
         while (flag){
-            System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 과목 선택: ");
-            switch(sc.next()){
-                case "1" : studentSubject.add("디자인 패턴"); break;
-                case "2" : studentSubject.add("Spring Security"); break;
-                case "3" : studentSubject.add("Redis"); break;
-                case "4" : studentSubject.add("MongoDB"); break;
-                case "5" : flag = false; break;
-                default :
-                    System.out.println("옳바른 값을 입력해주세요.");
-            }
+        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 선택 과목: ");
+        switch(sc.next()){
+            case "1" : studentSubject.add("디자인 패턴"); break;
+            case "2" : studentSubject.add("Spring Security"); break;
+            case "3" : studentSubject.add("Redis"); break;
+            case "4" : studentSubject.add("MongoDB"); break;
+            case "5" : flag = false; break;
+            default :
+                System.out.println("올바른 값을 입력해주세요.");
         }
 
         // 수강생 ID 시퀀스 생성
@@ -277,7 +282,7 @@ public class CampManagementApplication {
             Set<String> subjects = student.getStudentSubject();
             System.out.println("과목 리스트 : ");
             for (String subject : subjects) {
-                System.out.print("{" + subject + "}");
+                System.out.print("{" + subject + "} ");
             }
         } else { // 조회한 수강생이 없을 경우
             System.out.println("등록되지 않은 수강생입니다");
@@ -288,26 +293,45 @@ public class CampManagementApplication {
     }
 
     // 수강생 상태별 목록 조회
+    /*
+     * 조회하고 싶은 상태를 사용자에게 입력받습니다. (예시: "아주좋음")
+     * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다. Entry set문법으로 Map의 키, Value 를 받아옴
+     * Map의 모든 요소들을 돌면서  통일성있게 swich 문으로 입력받은 상태 "아주좋음"과 일치하는 요소들의
+     *  ID와 이름으로 출력해주세요.
+     * 아래 참고하시면 좋을 것 같습니다!
+     * https://velog.io/@woply/HashMap-%EC%A0%84%EC%B2%B4-%EA%B0%92%EC%9D%84-%EC%B6%9C%EB%A0%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
+     * https://coding-factory.tistory.com/556
+     */
+
+    /*기능구현
+     * 학생들의 상태값을 스캐너로 입력받아 swich ~ case 문으로 상태별 조건을 할당해준다.
+     * Map의 값을 가져오기위해 Entry 문을 사용하여 studentStore 의 값을 entryset 으로 할당해준 후
+     * for문으로 Map 을 전체적으로 돌면서 사용자가 입력한 key를 입력받아 학생 ID와 이름을 value 값으로 넘겨준다
+     * 출력단에서 studentStore 에서 직접 뽑아오는게 아닌 if 문에서의 조건에 해당하는 밸류값을
+     * studentStore 를 할당받은 entryset 에서 출력해준다.
+     */
     private static void inquireStudentByState() {
         System.out.println("\n수강생을 상태별로 조회합니다...");
-        /*
-         * 조회하고 싶은 상태를 사용자에게 입력받습니다. (예시: "아주좋음")
-         * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다.
-         * Map의 모든 요소들을 돌면서  if문으로 입력받은 상태 "아주좋음"과 일치하는 요소들의
-         *  ID와 이름으로 출력해주세요.
-         * 아래 참고하시면 좋을 것 같습니다!
-         * https://velog.io/@woply/HashMap-%EC%A0%84%EC%B2%B4-%EA%B0%92%EC%9D%84-%EC%B6%9C%EB%A0%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
-         * https://coding-factory.tistory.com/556
-         */
-        System.out.println("\n조회하고 싶은 상태를 입력해주세요: ");
+        System.out.print("조회할 학생들의 상태를 입력해주세요 \n(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력 : ");
         String studentState = sc.next();
-
-        System.out.println(studentStore);
-
-        System.out.println("\n수강생 상태별 목록 조회 성공!");
+        switch (studentState) {
+            case "1" -> studentState = "아주좋음";
+            case "2" -> studentState = "좋음";
+            case "3" -> studentState = "보통";
+            case "4" -> studentState = "나쁨";
+            case "5" -> studentState = "아주나쁨";
+            default -> {
+                System.out.println("올바른 값을 입력해주세요");
+                return;
+            }
+        }
+        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+            if (studentState.equals(entryset.getValue().getStudentState())) {
+                System.out.println("수강생 ID : " + entryset.getValue().getStudentId() + ", 해당 수강생들 이름 : " + entryset.getValue().getStudentName());
+            }
+        }
+        // 수강생 정보 수정
     }
-
-    // 수강생 정보 수정
     private static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
