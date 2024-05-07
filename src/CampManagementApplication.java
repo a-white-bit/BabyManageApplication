@@ -313,45 +313,15 @@ public class CampManagementApplication {
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
         String studentId = sc.next();
 
-        /* 컬렉션이 list 일 때 코드
-        for (Student student : studentStore) {
-            if (studentId.equals(student.getStudentId())) {
-                String studentState = "";
-
-                System.out.println("변경하는 수강생 이름을 입력하세요: ");
-                String studentName = sc.next();
-
-                System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨");
-                int stateNumber = Integer.parseInt(sc.next());
-
-                switch (stateNumber){
-                    case 1 -> studentState = "아주좋음";
-                    case 2 -> studentState = "좋음";
-                    case 3 -> studentState = "보통";
-                    case 4 -> studentState = "나쁨";
-                    case 5 -> studentState = "아주나쁨";
-                    default -> System.out.println("잘못된 입력입니다");
-                }
-
-                student.setStudentName(studentName); //수강생 이름 set
-                student.setStudentName(studentState); //수강생 상태 set
-
-                //수강생 정보 List로 반영 하는 메소드 추가 예정
-
-            }else{
-                System.out.println("해당 수강생이 없습니다.");
-            }
-        }
-         */
-
         Student student = studentStore.get(studentId);
+
         if (student != null) {
             String studentState = "";
 
             System.out.println("변경하는 수강생 이름을 입력하세요: ");
             String studentName = sc.next();
 
-            System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨");
+            System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨, 6.수정하지않음");
             int stateNumber = Integer.parseInt(sc.next());
 
             switch (stateNumber){
@@ -360,13 +330,17 @@ public class CampManagementApplication {
                 case 3 -> studentState = "보통";
                 case 4 -> studentState = "나쁨";
                 case 5 -> studentState = "아주나쁨";
+                case 6 -> studentState = "";
                 default -> System.out.println("잘못된 입력입니다");
             }
 
-            student.setStudentName(studentName); //수강생 이름 set
-            student.setStudentName(studentState); //수강생 상태 set
-
-            //수강생 정보 List로 반영 하는 메소드 추가 예정
+            //미 입력시 기존 정보 유지
+            if(!"".equals(studentName)) {
+                student.setStudentName(studentName); //수강생 이름 set
+            }
+            if(!"".equals(studentState)){
+                student.setStudentState(studentState); //수강생 상태 set
+            }
 
         } else {
             System.out.println("해당 수강생이 없습니다.");
