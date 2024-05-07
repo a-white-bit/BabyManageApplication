@@ -277,7 +277,7 @@ public class CampManagementApplication {
             Set<String> subjects = student.getStudentSubject();
             System.out.println("과목 리스트 : ");
             for (String subject : subjects) {
-                System.out.print(subject + " ");
+                System.out.print("{" + subject + "} ");
             }
         } else { // 조회한 수강생이 없을 경우
             System.out.println("등록되지 않은 수강생입니다");
