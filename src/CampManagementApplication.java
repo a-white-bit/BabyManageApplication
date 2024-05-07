@@ -136,14 +136,14 @@ public class CampManagementApplication {
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
 
-//        /* 이 메서드에서 구현해야할 것:
-//        * 다음 정보를 학생 목록(studentStore)에 저장하기
-//        * 수강생 ID, 이름, 상태, 과목 목록
-//        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
-//        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
-//        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
-//        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
-//         */
+        /* 이 메서드에서 구현해야할 것:
+        * 다음 정보를 학생 목록(studentStore)에 저장하기
+        * 수강생 ID, 이름, 상태, 과목 목록
+        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
+        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
+        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
+        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+         */
 
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
@@ -176,7 +176,7 @@ public class CampManagementApplication {
                     break;
 
                 default:
-                    System.out.println("옳바른 값을 입력해주세요.");
+                    System.out.println("올바른 값을 입력해주세요.");
             }
         }
 
@@ -196,8 +196,7 @@ public class CampManagementApplication {
             case "4" : studentSubject.add("MongoDB"); break;
             case "5" : flag = false; break;
             default :
-                System.out.println("옳바른 값을 입력해주세요.");
-        }
+                System.out.println("올바른 값을 입력해주세요.");
         }
 
         // 수강생 ID 시퀀스 생성
@@ -239,11 +238,11 @@ public class CampManagementApplication {
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         /*
-        * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다.
-        * Map의 모든 요소들을 돌면서 학생들의 ID와 이름으로 출력해주세요.
-        * 아래 참고하시면 좋을 것 같습니다!
-        * https://velog.io/@woply/HashMap-%EC%A0%84%EC%B2%B4-%EA%B0%92%EC%9D%84-%EC%B6%9C%EB%A0%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
-        * https://coding-factory.tistory.com/556
+         * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다.
+         * Map의 모든 요소들을 돌면서 학생들의 ID와 이름으로 출력해주세요.
+         * 아래 참고하시면 좋을 것 같습니다!
+         * https://velog.io/@woply/HashMap-%EC%A0%84%EC%B2%B4-%EA%B0%92%EC%9D%84-%EC%B6%9C%EB%A0%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
+         * https://coding-factory.tistory.com/556
          */
         if (!studentStore.isEmpty()) {
             String studentId = "";
@@ -435,7 +434,7 @@ public class CampManagementApplication {
 
 
         /*
-        * 삭제된 수강생에 관련된 점수 목록도 전부 삭제 (예정)
+         * 삭제된 수강생에 관련된 점수 목록도 전부 삭제 (예정)
          */
 
     }
