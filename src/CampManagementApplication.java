@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/07 16:00
+// updated 2024/05/07 21:00
 
 /**
  * 구현 메모
@@ -445,7 +445,9 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생의 과목별 평균 등급 조회");
+            System.out.println("5. 특정 상태 수강생들의 필수 과목 평균 등급 조회");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -468,7 +470,7 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         // 잘못된 Id 입력 처리 필요
         String studentId = sc.next();
-        if (studentStore.get(studentId) != null) {
+        if (studentStore.get(studentId) == null) {
             studentId = "";
         }
         return studentId;
@@ -483,7 +485,6 @@ public class CampManagementApplication {
          * studentId, subjectId, roundNumber 이 세 멤버변수가 "모두 일치"하는 score 객체가 존재한다면 등록하면 안됩니다.)
          */
 
-        /*
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         if ("".equals(studentId)) {
             System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
@@ -515,12 +516,15 @@ public class CampManagementApplication {
         System.out.println("점수: ");
         int studentScore = Integer.parseInt(sc.next());
         // 잘못된 입력 (0~100 이외의 입력) 처리
-*/
-        // 점수 ID 시퀀스 생성
-        //String scoreId = sequence(INDEX_TYPE_SCORE);
-        // 점수 등록 예시
-        //Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
 
+        // 점수 ID 시퀀스 생성
+        String scoreId = sequence(INDEX_TYPE_SCORE);
+        // 점수 등록 예시
+        Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
+        if (SUBJECT_TYPE_CHOICE.equals(subjectStore.get(subjectId).getSubjectType()))
+            score.setGradeChoiceByScore();
+        else if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType()))
+            score.setGradeMandatoryByScore();
 
         System.out.println("\n점수 등록 성공!");
     }
