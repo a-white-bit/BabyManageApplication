@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * 구현 메모
- *
+ * <p>
  * 1. 숫자가 아닌 값 입력되면 오류로 프로그램 종료됨
  * 프로그램은 종료되지 않게 하고, 다시 값을 받게 하거나 수정단계만 빠져나가도록 하기
  * switch 변수를 String 형으로 작성  or 예외 try-catch
@@ -137,12 +137,12 @@ public class CampManagementApplication {
         System.out.println("\n수강생을 등록합니다...");
 
         /* 이 메서드에서 구현해야할 것:
-        * 다음 정보를 학생 목록(studentStore)에 저장하기
-        * 수강생 ID, 이름, 상태, 과목 목록
-        * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
-        * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
-        * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
-        * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+         * 다음 정보를 학생 목록(studentStore)에 저장하기
+         * 수강생 ID, 이름, 상태, 과목 목록
+         * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
+         * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
+         * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
+         * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
          */
 
         System.out.print("수강생 이름 입력: ");
@@ -187,26 +187,37 @@ public class CampManagementApplication {
         studentSubject.add("JPA");
         studentSubject.add("MySQL");
         boolean flag = true;
-        while (flag){
-        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 선택 과목: ");
-        switch(sc.next()){
-            case "1" : studentSubject.add("디자인 패턴"); break;
-            case "2" : studentSubject.add("Spring Security"); break;
-            case "3" : studentSubject.add("Redis"); break;
-            case "4" : studentSubject.add("MongoDB"); break;
-            case "5" : flag = false; break;
-            default :
-                System.out.println("올바른 값을 입력해주세요.");
+        while (flag) {
+            System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 선택 과목: ");
+            switch (sc.next()) {
+                case "1":
+                    studentSubject.add("디자인 패턴");
+                    break;
+                case "2":
+                    studentSubject.add("Spring Security");
+                    break;
+                case "3":
+                    studentSubject.add("Redis");
+                    break;
+                case "4":
+                    studentSubject.add("MongoDB");
+                    break;
+                case "5":
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("올바른 값을 입력해주세요.");
+            }
+
+            // 수강생 ID 시퀀스 생성
+            String studentId = sequence(INDEX_TYPE_STUDENT);
+
+            // 수강생 인스턴스 생성 예시 코드
+            Student student = new Student(studentId, studentName, studentState, studentSubject);
+            // 학생 목록(Map)에 저장
+            studentStore.put(studentId, student);
+            System.out.println("수강생 등록 성공!\n");
         }
-
-        // 수강생 ID 시퀀스 생성
-        String studentId = sequence(INDEX_TYPE_STUDENT);
-
-        // 수강생 인스턴스 생성 예시 코드
-        Student student = new Student(studentId, studentName, studentState, studentSubject);
-        // 학생 목록(Map)에 저장
-        studentStore.put(studentId, student);
-        System.out.println("수강생 등록 성공!\n");
     }
 
     private static void displayStudentListView() throws InterruptedException {
@@ -332,6 +343,7 @@ public class CampManagementApplication {
         }
         // 수강생 정보 수정
     }
+
     private static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
@@ -378,7 +390,7 @@ public class CampManagementApplication {
             System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨");
             int stateNumber = Integer.parseInt(sc.next());
 
-            switch (stateNumber){
+            switch (stateNumber) {
                 case 1 -> studentState = "아주좋음";
                 case 2 -> studentState = "좋음";
                 case 3 -> studentState = "보통";
@@ -427,8 +439,7 @@ public class CampManagementApplication {
             } else {
                 System.out.println("\n삭제가 취소되었습니다.");
             }
-        }
-        else {
+        } else {
             System.out.println("해당 수강생이 없습니다.");
         }
 
