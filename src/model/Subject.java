@@ -25,4 +25,12 @@ public class Subject {
         return subjectType;
     }
 
+    public boolean isMandatory() {
+        return subjectType.equalsIgnoreCase("mandatory");
+    }
+
+    public boolean isChoice() {
+        return subjectType.equalsIgnoreCase("choice");
+    }
+
 }
