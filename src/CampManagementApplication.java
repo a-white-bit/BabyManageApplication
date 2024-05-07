@@ -179,10 +179,16 @@ public class CampManagementApplication {
                     System.out.println("옳바른 값을 입력해주세요.");
             }
         }
+
         Set<String> studentSubject = new HashSet<>();
+        studentSubject.add("Java");
+        studentSubject.add("객체지향");
+        studentSubject.add("Spring");
+        studentSubject.add("JPA");
+        studentSubject.add("MySQL");
         boolean flag = true;
         while (flag){
-        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 과목 선택: ");
+        System.out.print("(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n수강할 선택 과목: ");
         switch(sc.next()){
             case "1" : studentSubject.add("디자인 패턴"); break;
             case "2" : studentSubject.add("Spring Security"); break;
