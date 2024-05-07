@@ -21,7 +21,7 @@ import java.util.*;
  */
 
 public class CampManagementApplication {
-    // 데이터 저장소  *(변경 전) List<Object> ------> Map<Id, Object> (변경 후)
+    // 데이터 저장소
     private static Map<String, Student> studentStore;
     private static Map<String, Subject> subjectStore;
     private static Map<String, Score> scoreStore;
@@ -532,15 +532,15 @@ public class CampManagementApplication {
         String scoreId4 = sequence(INDEX_TYPE_SCORE);
         String scoreId5 = sequence(INDEX_TYPE_SCORE);
         Score score1 = new Score(scoreId1, "ST1", "SU2", 1, 80);
-        score1.setGradeMandatoryScore();
+        score1.setGradeMandatoryByScore();
         Score score2 = new Score(scoreId2, "ST1", "SU3", 1, 75);
-        score2.setGradeChoiceScore();
+        score2.setGradeChoiceByScore();
         Score score3 = new Score(scoreId3, "ST1", "SU2", 2, 90);
-        score3.setGradeMandatoryScore();
+        score3.setGradeMandatoryByScore();
         Score score4 = new Score(scoreId4, "ST2", "SU1", 1, 40);
-        score4.setGradeMandatoryScore();
+        score4.setGradeMandatoryByScore();
         Score score5 = new Score(scoreId5, "ST2", "SU1", 2, 77);
-        score5.setGradeMandatoryScore();
+        score5.setGradeMandatoryByScore();
         scoreStore.put(scoreId1, score1);
         scoreStore.put(scoreId2, score2);
         scoreStore.put(scoreId3, score3);
@@ -625,53 +625,11 @@ public class CampManagementApplication {
         // 3. 해당하는 student 객체들의 필수 과목들만 찾기
 
         // 4. (3.)에 해당하는 과목들의 회차별 점수들 모두 scores 리스트에 담기
-
-        // 5. 다음 메서드 활용
-        // averageScoreToGrade(scores, SUBJECT_TYPE_MANDATORY);
-        String avgGrade = averageScoreToGrade(scores, SUBJECT_TYPE_MANDATORY);
-
+        
+        // 5. 평균등급
+        String avgGrade = Score.getGradeChoiceByScore(scores);
+        System.out.println("필수 과목 평균 등급: " + avgGrade);
         System.out.println("\n필수 과목 평균 등급 조회 성공!");
-    }
-
-    private static String averageScoreToGrade(List<Integer> scores, String type) {
-        String grade = "N";
-        int avg = (int) scores.stream().mapToInt(x -> x).average().orElse(0);
-
-        if (Objects.equals(type, SUBJECT_TYPE_MANDATORY)) {
-            grade = (avg < 60) ? "N" :
-                    (avg < 70) ? "F" :
-                            (avg < 80) ? "D" :
-                                    (avg < 90) ? "C" :
-                                            (avg < 95) ? "B" : "A";
-        } else if (Objects.equals(type, SUBJECT_TYPE_CHOICE)) {
-            grade = (avg < 50) ? "N" :
-                    (avg < 60) ? "F" :
-                            (avg < 70) ? "D" :
-                                    (avg < 80) ? "C" :
-                                            (avg < 90) ? "B" : "A";
-        }
-
-        return grade;
-    }
-
-    private static String averageScoreToGrade(int score, String type) {
-        String grade = "N";
-
-        if (Objects.equals(type, SUBJECT_TYPE_MANDATORY)) {
-            grade = (score < 60) ? "N" :
-                    (score < 70) ? "F" :
-                            (score < 80) ? "D" :
-                                    (score < 90) ? "C" :
-                                            (score < 95) ? "B" : "A";
-        } else if (Objects.equals(type, SUBJECT_TYPE_CHOICE)) {
-            grade = (score < 50) ? "N" :
-                    (score < 60) ? "F" :
-                            (score < 70) ? "D" :
-                                    (score < 80) ? "C" :
-                                            (score < 90) ? "B" : "A";
-        }
-
-        return grade;
     }
 
 }
