@@ -517,8 +517,7 @@ public class CampManagementApplication {
             }
         }
 
-        boolean flag1 = false;
-        while (!flag1) {
+        while (true) {
             System.out.println("회차: ");
             int roundNumber = Integer.parseInt(sc.next());
             if (1 <= roundNumber && roundNumber <= 10) {
