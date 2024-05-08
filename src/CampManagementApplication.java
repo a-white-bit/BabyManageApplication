@@ -637,26 +637,34 @@ public class CampManagementApplication {
 
         // 기능 구현 (조회할 특정 과목)
         // 1. 과목 이름 입력받기
-        System.out.print("과목을 입력해주세요 \n(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n과목 입력 : ");
+        Set<String> subjects = studentStore.get(studentId).getStudentSubject();
+        List<String> studentSubjectNames = subjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
+        System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
         String studentSubject = sc.next();
-        switch (studentSubject) {
-            case "1" -> studentSubject = "디자인 패턴";
-            case "2" -> studentSubject = "Spring security";
-            case "3" -> studentSubject = "Redis";
-            case "4" -> studentSubject = "MongoDB";
-            case "5" -> studentSubject = "종료";
-            default -> {
-                System.out.println("올바른 값을 입력해주세요");
-                return;
+        // 이상한 값 안 받기 위한 코드 짜기
+        // 유효한 과목 ID를 저장할 변수 초기화
+        String subjectId = null;
+        // 사용자가 유효한 과목 이름을 입력할 때까지 반복
+        while (subjectId == null) {
+            // 사용자가 입력한 과목 이름을 사용하여 해당 과목의 ID를 가져옴
+            subjectId = getSubjectIdByName(studentSubject);
+            // 만약 입력된 과목 이름이 유효하지 않으면 다시 입력 요청
+            if (subjectId == null) {
+                // 잘못된 입력임을 알리는 메시지 출력
+                System.out.println("잘못된 과목입니다. 다시 입력하세요.");
+                // 사용자가 선택할 수 있는 유효한 과목 목록을 출력하고 다시 입력 요청
+                System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
+                studentSubject = sc.next();
             }
         }
-
         // 2. 시험본 회차 입력받기
         System.out.println("시험본 회차를 입력해주세요 : ");
         int examRound;
         while (true) {
             try {
-                examRound = Integer.parseInt(sc.nextLine());
+                examRound = Integer.parseInt(sc.next());
                 break;
             } catch (NumberFormatException e) {
                 System.out.print("올바른 숫자를 입력해주세요: ");
@@ -668,10 +676,10 @@ public class CampManagementApplication {
         for (Score score : scoreStore.values()) {
             //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
             if (score.getStudentId().equals(studentId)
-                    && score.getSubjectId().equals(studentSubject)
+                    && score.getSubjectId().equals(getSubjectIdByName(studentSubject))
                     && score.getRoundNumber() == examRound) {
                 // 4. score 객체의 studentGrade 멤버변수 출력
-                System.out.println("수강생 " + studentId + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
+                System.out.println("수강생 " + studentStore.get(studentId).getStudentName() + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
                 return;
             }
         }
