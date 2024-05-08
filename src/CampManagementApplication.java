@@ -1,7 +1,6 @@
 import model.Score;
 import model.Student;
 import model.Subject;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 
