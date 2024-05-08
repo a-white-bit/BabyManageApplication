@@ -192,7 +192,6 @@ public class CampManagementApplication {
                     System.out.println("올바른 값을 입력해주세요.");
             }
         }
-
         Set<String> studentSubject = new HashSet<>();
         studentSubject.add("Java");
         studentSubject.add("객체지향");
@@ -445,7 +444,9 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생의 과목별 평균 등급 조회");
+            System.out.println("5. 특정 상태 수강생들의 필수 과목 평균 등급 조회");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -519,7 +520,7 @@ public class CampManagementApplication {
         // 점수 ID 시퀀스 생성
         //String scoreId = sequence(INDEX_TYPE_SCORE);
         // 점수 등록 예시
-        //Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
+//        Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
 
 
         System.out.println("\n점수 등록 성공!");
@@ -551,8 +552,65 @@ public class CampManagementApplication {
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        System.out.println("시험 점수를 수정합니다...");
+        String subjectId = scoreStore.get(studentId).getSubjectId();
+        int roundNumber = scoreStore.get(subjectId).getRoundNumber();
 
+        System.out.println("시험 점수를 수정합니다...");
+        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+            // 수정할 과목 이름 입력받기
+            System.out.print(entryset.getValue().getStudentSubject() + "\n수정할 과목을 입력해주세요 : ");
+            subjectId  = sc.next();
+            // 수정할 과목 회차 입력받기
+            System.out.print("수정할 회차를 선택해주세요 : ");
+            roundNumber = sc.nextInt();
+        }
+        for (Map.Entry<String, Score> entryset : scoreStore.entrySet()) {
+            if (studentId.equals(entryset.getValue().getStudentId()) && subjectId.equals(entryset.getValue().getSubjectId())) {
+            }
+        }
+    }
+//
+//        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+//        if (studentState.equals(entryset.getValue().getStudentState())) {
+//            studentSortByState.put(entryset.getValue().getStudentId(), entryset.getValue().getStudentName());
+
+//            if (subjectName.equals("Java")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("디자인 패턴")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("MySQL")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("Redis")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("객체지향")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("JPA")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("Spring")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("Spring Security")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else if (subjectName.equals("MongoDB")) {
+//                System.out.print("수정할 회차를 입력해주세요 : ");
+//                roundNumber = sc.nextInt();
+//            } else {
+//                System.out.println("올바른 값을 입력해주세요");
+//            }
+//        }
+//    }
+
+
+//        }
+//        System.out.println("\n점수 수정 성공!");
+//    }
         // 기능 구현 (수정할 과목 및 회차, 점수)
 
         // 1. 수정할 과목 이름 입력받기
@@ -566,8 +624,7 @@ public class CampManagementApplication {
         // 5. 수정 과목이 mandatory인지 choice인지에 따라 .setGradeMandatoryScore(), .setGradeChoiceScore() 둘 중 하나 실행하여 등급(A,B,..) 설정
         // 5-1. 과목 타입(mandatory, choice)은 확인하려면 subjectStore에서 subjectId로 해당하는 subject 객체를 찾고 멤버변수 subjectType으로 알 수있음
 
-        System.out.println("\n점수 수정 성공!");
-    }
+
 
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
