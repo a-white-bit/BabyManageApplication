@@ -12,7 +12,6 @@ import java.util.*;
  * 1. 숫자가 아닌 값 입력되면 오류로 프로그램 종료됨
  * 프로그램은 종료되지 않게 하고, 다시 값을 받게 하거나 수정단계만 빠져나가도록 하기
  * switch 변수를 String 형으로 작성  or 예외 try-catch
- *
  */
 
 public class CampManagementApplication {
@@ -512,8 +511,8 @@ public class CampManagementApplication {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-//                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-//                case 4 -> inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
+                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 4 -> inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
                 case 5 -> inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -612,27 +611,27 @@ public class CampManagementApplication {
         // 관리할 수강생 고유 번호
         String studentId = getStudentId();
         System.out.println(studentId);
-        //getStudentId메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
-            if ("".equals(studentId)) {
-                System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
-                return;
-            }
-            System.out.println("시험 점수를 수정합니다...");
-            Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
-            // stream을 이용한 subjectID를 Name로변경
-            List<String> studentSubjectNames = studentSubjects.stream().map(x ->{
-                return x = subjectStore.get(x).getSubjectName();
-            }).toList();
+        //getStudentId 메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
+        if ("".equals(studentId)) {
+            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+            return;
+        }
+        System.out.println("시험 점수를 수정합니다...");
+        Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
+        // stream을 이용한 subjectID를 Name로변경
+        List<String> studentSubjectNames = studentSubjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
 
-            for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
-                System.out.print(studentSubjectNames+ "\n수정할 과목을 입력해주세요 : ");
+        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+            System.out.print(studentSubjectNames + "\n수정할 과목을 입력해주세요 : ");
             // 수정할 과목 이름 입력받기
-                String subjectName = sc.next();
-                System.out.print("수정할 회차를 선택해주세요 : ");
+            String subjectName = sc.next();
+            System.out.print("수정할 회차를 선택해주세요 : ");
             // 수정할 과목 회차 입력받기,
-             int roundNumber = Integer.parseInt(sc.next());
+            int roundNumber = Integer.parseInt(sc.next());
 
-             for (Score score : scoreStore.values()) {
+            for (Score score : scoreStore.values()) {
                 if (score.getStudentId().equals(studentId)
                         && score.getSubjectId().equals(getSubjectIdByName(subjectName))
                         && score.getRoundNumber() == roundNumber) {
@@ -643,25 +642,7 @@ public class CampManagementApplication {
                 }
             }
             System.out.println("\n점수 수정 성공!");
-            }
-    }
-
-        // 기능 구현 (수정할 과목 및 회차, 점수)
-
-        // 1. 수정할 과목 이름 입력받기
-
-        // 2. 수정할 회차 입력받기
-
-        // 3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
-
-        // 4. 찾은 score 객체의 .setStudentScore() 메서드로 점수 수정
-
-        // 5. 수정 과목이 mandatory인지 choice인지에 따라 .setGradeMandatoryScore(), .setGradeChoiceScore() 둘 중 하나 실행하여 등급(A,B,..) 설정
-        // 5-1. 과목 타입(mandatory, choice)은 확인하려면 subjectStore에서 subjectId로 해당하는 subject 객체를 찾고 멤버변수 subjectType으로 알 수있음
-
-
-
-        System.out.println("\n점수 수정 성공!");
+        }
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
@@ -722,6 +703,7 @@ public class CampManagementApplication {
         // 3번에서 일치하는 score 객체를 찾지 못한 경우
         System.out.println("해당하는 정보를 찾을 수 없습니다.");
     }
+
     // 수강생의 과목별 평균 등급 조회
     private static void inquireAvgGrades() {
         String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
@@ -729,42 +711,42 @@ public class CampManagementApplication {
 
         Set<String> subjects = new HashSet<>();
 
-        for(Map.Entry<String, Student> entry : studentStore.entrySet()) {
-            if(entry.getKey().equals(studentId)){
+        for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
+            if (entry.getKey().equals(studentId)) {
                 subjects = entry.getValue().getStudentSubject();
             }
         }
 
-        for(String str : subjects){
+        for (String str : subjects) {
             String subjectName = subjectStore.get(str).getSubjectName();
             String grade = settingGrade(studentId, str);
 
-            if(!"none".equals(grade)){
-                System.out.println( subjectName+" 과목 평균 등급 : "+grade);
+            if (!"none".equals(grade)) {
+                System.out.println(subjectName + " 과목 평균 등급 : " + grade);
             }
         }
 
-            System.out.println("\n평균 등급 조회 성공!");
-        }
+        System.out.println("\n평균 등급 조회 성공!");
+    }
 
     private static String settingGrade(String studentId, String subjectId) {
         String subjectType = subjectStore.get(subjectId).getSubjectType();
         List<Integer> scoreList = new ArrayList<>();
         String grade = "";
 
-        for(Map.Entry<String, Score> entry : scoreStore.entrySet()) {
-            if(studentId.equals(entry.getValue().getStudentId())
-                    && subjectId.equals(entry.getValue().getSubjectId())){
+        for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
+            if (studentId.equals(entry.getValue().getStudentId())
+                    && subjectId.equals(entry.getValue().getSubjectId())) {
                 scoreList.add(entry.getValue().getStudentScore());
             }
         }
 
-        if(scoreList.isEmpty()){
+        if (scoreList.isEmpty()) {
             grade = "none";
-        }else{
-            if(subjectType.equals(SUBJECT_TYPE_CHOICE)){
+        } else {
+            if (subjectType.equals(SUBJECT_TYPE_CHOICE)) {
                 grade = Score.getGradeChoiceByScore(scoreList);
-            }else{
+            } else {
                 grade = Score.getGradeMandatoryByScore(scoreList);
             }
         }
@@ -822,3 +804,4 @@ public class CampManagementApplication {
             }
         }
     }
+}
