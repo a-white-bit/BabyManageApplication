@@ -48,7 +48,7 @@ public class CampManagementApplication {
     public static void main(String[] args) {
         setInitData();
         // 임시 점수 데이터 추가
-        temperaryCreateScore();
+//        temperaryCreateScore();
         try {
             displayMainView();
         } catch (Exception e) {
@@ -472,9 +472,11 @@ public class CampManagementApplication {
         String studentId = sc.next();
         if (studentStore.get(studentId) == null) {
             studentId = "";
+//            System.out.println(studentStore.get(studentId).toString());
         }
         return studentId;
     }
+
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
@@ -486,12 +488,18 @@ public class CampManagementApplication {
          */
 
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        Student student = studentStore.get(studentId);
         if ("".equals(studentId)) {
             System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
             return;
         }
         System.out.println("시험 점수를 등록합니다...");
-
+        /*
+         * 회차 번호(Score 클래스의 roundNumber 멤버변수)가 1 ~ 10 값만 저장되어야 합니다.  * 1회차 ~ 10회차
+         * 등록하려는 점수(Score 클래스의 studentScore 멤버변수)가 0 ~ 100 값만 저장되어야 합니다.
+         * 등록하려는 과목의 회차 점수가 이미 등록되어 있다면 등록할 수 없습니다. (Score 클래스에서
+         * studentId, subjectId, roundNumber 이 세 멤버변수가 "모두 일치"하는 score 객체가 존재한다면 등록하면 안됩니다.)
+         */
         boolean flag = false;
         Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
         String subjectId = "";
@@ -509,24 +517,33 @@ public class CampManagementApplication {
             }
         }
 
-        System.out.println("회차: ");
-        int roundNumber = Integer.parseInt(sc.next());
-        // 잘못된 입력 (1~10 이외의 입력) 처리
+        boolean flag1 = false;
+        while (!flag1) {
+            System.out.println("회차: ");
+            int roundNumber = Integer.parseInt(sc.next());
+            if (1 <= roundNumber && roundNumber <= 10) {
+                System.out.println("점수: ");
+                int studentScore = Integer.parseInt(sc.next());
+                if (0 <= studentScore && studentScore <= 100) {
+                    // 점수 ID 시퀀스 생성
+                    String scoreId = sequence(INDEX_TYPE_SCORE);
+                    // 점수 등록 예시
+                    Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
+                    scoreStore.put(scoreId, score);
 
-        System.out.println("점수: ");
-        int studentScore = Integer.parseInt(sc.next());
-        // 잘못된 입력 (0~100 이외의 입력) 처리
-
-        // 점수 ID 시퀀스 생성
-        String scoreId = sequence(INDEX_TYPE_SCORE);
-        // 점수 등록 예시
-        Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
-        if (SUBJECT_TYPE_CHOICE.equals(subjectStore.get(subjectId).getSubjectType()))
-            score.setGradeChoiceByScore();
-        else if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType()))
-            score.setGradeMandatoryByScore();
-
-        System.out.println("\n점수 등록 성공!");
+                    System.out.println("\n점수 등록 성공!");
+                    break;
+                } else {
+                    // 잘못된 입력 (0~100 이외의 입력) 처리
+                    System.out.println("알맞지 않은 숫자입니다.");
+                    continue;
+                }
+            } else {
+                // 잘못된 입력 (1~10 이외의 입력) 처리
+                System.out.println("알맞지 않은 숫자입니다");
+                continue;
+            }
+        }
     }
 
     private static void temperaryCreateScore() {
