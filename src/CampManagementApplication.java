@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/08 03:00
+// updated 2024/05/08 13:00
 
 /**
  * 구현 메모
@@ -270,6 +270,7 @@ public class CampManagementApplication {
 
         // 수강생 ID 시퀀스 생성
         String studentId = sequence(INDEX_TYPE_STUDENT);
+
         // 수강생 인스턴스 생성 예시 코드
         Student student = new Student(studentId, studentName, studentState, studentSubject);
         // 학생 목록(Map)에 저장
@@ -425,7 +426,6 @@ public class CampManagementApplication {
                 System.out.println("ID: " + studentId + ", 이름: " + studentName);
             });
         }
-
     }
 
     // 수강생 정보 수정
@@ -577,27 +577,37 @@ public class CampManagementApplication {
             }
         }
 
-        System.out.print("회차: ");
-        int roundNumber = Integer.parseInt(sc.next());
-        // 잘못된 입력 (1~10 이외의 입력) 처리
+        while (true) {
+            System.out.println("회차(1~10) 입력: ");
+            int roundNumber = Integer.parseInt(sc.next());
+            if (1 <= roundNumber && roundNumber <= 10) {
+                System.out.println("점수(0~100) 입력: ");
+                int studentScore = Integer.parseInt(sc.next());
+                if (0 <= studentScore && studentScore <= 100) {
+                    // 점수 ID 시퀀스 생성
+                    String scoreId = sequence(INDEX_TYPE_SCORE);
+                    // 점수 객체 생성
+                    Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
+                    if (SUBJECT_TYPE_CHOICE.equals(subjectStore.get(subjectId).getSubjectType()))
+                        score.setGradeChoiceByScore();
+                    else if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType()))
+                        score.setGradeMandatoryByScore();
 
-        System.out.print("점수: ");
-        int studentScore = Integer.parseInt(sc.next());
-        // 잘못된 입력 (0~100 이외의 입력) 처리
-
-        // score ID 시퀀스 생성
-        String scoreId = sequence(INDEX_TYPE_SCORE);
-
-        // 점수 객체 생성
-        Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
-        if (SUBJECT_TYPE_CHOICE.equals(subjectStore.get(subjectId).getSubjectType()))
-            score.setGradeChoiceByScore();
-        else if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType()))
-            score.setGradeMandatoryByScore();
-
-        // 점수 등록
-        scoreStore.put(scoreId, score);
-        System.out.println("\n점수 등록 성공!");
+                    // 점수 등록
+                    scoreStore.put(scoreId, score);
+                    System.out.println("\n점수 등록 성공!");
+                    break;
+                } else {
+                    // 잘못된 입력 (0~100 이외의 입력) 처리
+                    System.out.println("알맞지 않은 숫자입니다.");
+                    continue;
+                }
+            } else {
+                // 잘못된 입력 (1~10 이외의 입력) 처리
+                System.out.println("알맞지 않은 숫자입니다");
+                continue;
+            }
+        }
     }
 
     // 수강생의 과목별 회차 점수 수정
@@ -628,15 +638,42 @@ public class CampManagementApplication {
 
         // 기능 구현 (조회할 특정 과목)
         // 1. 과목 이름 입력받기
+        Set<String> subjects = studentStore.get(studentId).getStudentSubject();
+        List<String> studentSubjectNames = subjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
+        System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
+        String studentSubject = sc.next();
+        // 이상한 값 올수도있음
+        String subjectId = getSubjectIdByName(studentSubject);
+
 
         // 2. 시험본 회차 입력받기
+        System.out.println("시험본 회차를 입력해주세요 : ");
+        int examRound;
+        while (true) {
+            try {
+                examRound = Integer.parseInt(sc.next());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.print("올바른 숫자를 입력해주세요: ");
+            }
+        }
 
-        // 3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
-
-        // 4. score 객체의 studentGrade 멤버변수 출력
-
-
-        System.out.println("\n등급 조회 성공!");
+        // 3. scoreStore를 돌면서 [studentId, subjectId, examRound] 이 세가지가 일치하는 score 객체 찾기
+        // scoreStore에 있는 각 Score 객체에 대해 다음 작업을 수행합니다.
+        for (Score score : scoreStore.values()) {
+            //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
+            if (score.getStudentId().equals(studentId)
+                    && score.getSubjectId().equals(studentSubject)
+                    && score.getRoundNumber() == examRound) {
+                // 4. score 객체의 studentGrade 멤버변수 출력
+                System.out.println("수강생 " + studentId + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
+                return;
+            }
+        }
+        // 3번에서 일치하는 score 객체를 찾지 못한 경우
+        System.out.println("해당하는 정보를 찾을 수 없습니다.");
     }
 
     // 수강생의 과목별 평균 등급 조회
