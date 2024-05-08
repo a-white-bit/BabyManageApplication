@@ -643,6 +643,7 @@ public class CampManagementApplication {
         }).toList();
         System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
         String studentSubject = sc.next();
+
         // 이상한 값 안 받기 위한 코드 짜기
         // 유효한 과목 ID를 저장할 변수 초기화
         String subjectId = null;
@@ -659,6 +660,7 @@ public class CampManagementApplication {
                 studentSubject = sc.next();
             }
         }
+
         // 2. 시험본 회차 입력받기
         System.out.println("시험본 회차를 입력해주세요 : ");
         int examRound;
@@ -671,7 +673,7 @@ public class CampManagementApplication {
             }
         }
 
-        // 3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
+        // 3. scoreStore를 돌면서 [studentId, subjectId, examRound] 이 세가지가 일치하는 score 객체 찾기
         // scoreStore에 있는 각 Score 객체에 대해 다음 작업을 수행합니다.
         for (Score score : scoreStore.values()) {
             //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
@@ -691,22 +693,49 @@ public class CampManagementApplication {
         String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
         System.out.println("과목별 평균 등급을 조회합니다...");
 
-        // 기능 구현 (조회할 특정 과목)
-        // 1. 과목 이름 입력받기
-        // 1-1. subjectStore를 돌면서 입력받은 과목 이름과 일치하는 subject 객체 찾기
-        // 1-2. 해당 객체의 subjectId, subjectType 가져오기 (이후 연산에 필요함)
+        Set<String> subjects = new HashSet<>();
 
-        // 2. scoreStore를 돌면서 [studentId, subjectId(1-2에서 가져왔던 것)] 이 두 가지가 일치하는 score 객체를 찾고
-        // 찾은 score 객체마다의 studentScore 멤버변수들을 가지고 평균점수 구하기
+        for(Map.Entry<String, Student> entry : studentStore.entrySet()) {
+            if(entry.getKey().equals(studentId)){
+                subjects = entry.getValue().getStudentSubject();
+            }
+        }
 
-        // 3. 평균 점수를  등급으로 환산하기
-        //   (1-2.)에서 구했던 subjectType 이 MANDATORY인지 CHOICE인지에 따라 averageScoreToGrade() 메서드 활용
-        // --> String grade = averageScoreToGrade(평균점수, subjectType); 또는
-        // --> String grade = averageScoreToGrade(점수리스트, subjectType); 선택해서 사용..
+        for(String str : subjects){
+            String subjectName = subjectStore.get(str).getSubjectName();
+            String grade = settingGrade(studentId, str);
 
-        // 4. 평균 등급 출력
+            if(!"none".equals(grade)){
+                System.out.println( subjectName+" 과목 평균 등급 : "+grade);
+            }
+        }
 
         System.out.println("\n평균 등급 조회 성공!");
+    }
+
+    private static String settingGrade(String studentId, String subjectId) {
+        String subjectType = subjectStore.get(subjectId).getSubjectType();
+        List<Integer> scoreList = new ArrayList<>();
+        String grade = "";
+
+        for(Map.Entry<String, Score> entry : scoreStore.entrySet()) {
+            if(studentId.equals(entry.getValue().getStudentId())
+                    && subjectId.equals(entry.getValue().getSubjectId())){
+                scoreList.add(entry.getValue().getStudentScore());
+            }
+        }
+
+        if(scoreList.isEmpty()){
+            grade = "none";
+        }else{
+            if(subjectType.equals(SUBJECT_TYPE_CHOICE)){
+                grade = Score.getGradeChoiceByScore(scoreList);
+            }else{
+                grade = Score.getGradeMandatoryByScore(scoreList);
+            }
+        }
+
+        return grade;
     }
 
     // 특정 상태 수강생들의 필수 과목 평균 등급 조회
