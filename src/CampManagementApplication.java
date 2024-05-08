@@ -637,33 +637,28 @@ public class CampManagementApplication {
 
         // 기능 구현 (조회할 특정 과목)
         // 1. 과목 이름 입력받기
-        System.out.print("과목을 입력해주세요 \n(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료)\n과목 입력 : ");
+        Set<String> subjects = studentStore.get(studentId).getStudentSubject();
+        List<String> studentSubjectNames = subjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
+        System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
         String studentSubject = sc.next();
-        switch (studentSubject) {
-            case "1" -> studentSubject = "디자인 패턴";
-            case "2" -> studentSubject = "Spring security";
-            case "3" -> studentSubject = "Redis";
-            case "4" -> studentSubject = "MongoDB";
-            case "5" -> studentSubject = "종료";
-            default -> {
-                System.out.println("올바른 값을 입력해주세요");
-                return;
-            }
-        }
+        // 이상한 값 올수도있음
+        String subjectId = getSubjectIdByName(studentSubject);
 
         // 2. 시험본 회차 입력받기
         System.out.println("시험본 회차를 입력해주세요 : ");
         int examRound;
         while (true) {
             try {
-                examRound = Integer.parseInt(sc.nextLine());
+                examRound = Integer.parseInt(sc.next());
                 break;
             } catch (NumberFormatException e) {
                 System.out.print("올바른 숫자를 입력해주세요: ");
             }
         }
 
-        // 3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
+        // 3. scoreStore를 돌면서 [studentId, subjectId, examRound] 이 세가지가 일치하는 score 객체 찾기
         // scoreStore에 있는 각 Score 객체에 대해 다음 작업을 수행합니다.
         for (Score score : scoreStore.values()) {
             //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
