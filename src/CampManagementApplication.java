@@ -721,5 +721,4 @@ public class CampManagementApplication {
             System.out.println("조회할 점수가 없습니다.");
         }
     }
-
 }
