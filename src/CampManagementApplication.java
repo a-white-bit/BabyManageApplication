@@ -512,8 +512,8 @@ public class CampManagementApplication {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
+//                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+//                case 4 -> inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
                 case 5 -> inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -557,7 +557,6 @@ public class CampManagementApplication {
             String name = subjectStore.get(id).getSubjectName();
             studentSubjectNames.add(name);
         }
-
         String subjectName = "";
         String subjectId = null;
         while (true) {
@@ -570,8 +569,7 @@ public class CampManagementApplication {
 
             if (subjectId == null) {
                 System.out.println("등록된 수강 과목이 아닙니다. 다시 입력해주세요.");
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -611,66 +609,43 @@ public class CampManagementApplication {
 
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        String subjectId = scoreStore.get(studentId).getSubjectId();
-        int roundNumber = scoreStore.get(subjectId).getRoundNumber();
-
-        System.out.println("시험 점수를 수정합니다...");
-        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
-            // 수정할 과목 이름 입력받기
-            System.out.print(entryset.getValue().getStudentSubject() + "\n수정할 과목을 입력해주세요 : ");
-            subjectId  = sc.next();
-            // 수정할 과목 회차 입력받기
-            System.out.print("수정할 회차를 선택해주세요 : ");
-            roundNumber = sc.nextInt();
-        }
-        for (Map.Entry<String, Score> entryset : scoreStore.entrySet()) {
-            if (studentId.equals(entryset.getValue().getStudentId()) && subjectId.equals(entryset.getValue().getSubjectId())) {
+        // 관리할 수강생 고유 번호
+        String studentId = getStudentId();
+        System.out.println(studentId);
+        //getStudentId메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
+            if ("".equals(studentId)) {
+                System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+                return;
             }
-        }
+            System.out.println("시험 점수를 수정합니다...");
+            Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
+            // stream을 이용한 subjectID를 Name로변경
+            List<String> studentSubjectNames = studentSubjects.stream().map(x ->{
+                return x = subjectStore.get(x).getSubjectName();
+            }).toList();
+
+            for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+                System.out.print(studentSubjectNames+ "\n수정할 과목을 입력해주세요 : ");
+            // 수정할 과목 이름 입력받기
+                String subjectName = sc.next();
+                System.out.print("수정할 회차를 선택해주세요 : ");
+            // 수정할 과목 회차 입력받기,
+             int roundNumber = Integer.parseInt(sc.next());
+
+             for (Score score : scoreStore.values()) {
+                if (score.getStudentId().equals(studentId)
+                        && score.getSubjectId().equals(getSubjectIdByName(subjectName))
+                        && score.getRoundNumber() == roundNumber) {
+                    System.out.print("바꿀 점수를 입력해주세요 : ");
+                    int changeScore = Integer.parseInt(sc.next());
+                    score.setStudentScore(changeScore);
+                    System.out.println("바뀐 점수 : " + changeScore);
+                }
+            }
+            System.out.println("\n점수 수정 성공!");
+            }
     }
-//
-//        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
-//        if (studentState.equals(entryset.getValue().getStudentState())) {
-//            studentSortByState.put(entryset.getValue().getStudentId(), entryset.getValue().getStudentName());
 
-//            if (subjectName.equals("Java")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("디자인 패턴")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("MySQL")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("Redis")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("객체지향")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("JPA")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("Spring")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("Spring Security")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else if (subjectName.equals("MongoDB")) {
-//                System.out.print("수정할 회차를 입력해주세요 : ");
-//                roundNumber = sc.nextInt();
-//            } else {
-//                System.out.println("올바른 값을 입력해주세요");
-//            }
-//        }
-//    }
-
-
-//        }
-//        System.out.println("\n점수 수정 성공!");
-//    }
         // 기능 구현 (수정할 과목 및 회차, 점수)
 
         // 1. 수정할 과목 이름 입력받기
@@ -685,96 +660,95 @@ public class CampManagementApplication {
         // 5-1. 과목 타입(mandatory, choice)은 확인하려면 subjectStore에서 subjectId로 해당하는 subject 객체를 찾고 멤버변수 subjectType으로 알 수있음
 
 
+//         수강생의 특정 과목 회차별 등급 조회
+        private static void inquireRoundGradeBySubject () {
+            String studentId = getStudentId(); // 관리할 수강생 고유 번호
+            System.out.println("회차별 등급을 조회합니다...");
 
-    // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        System.out.println("회차별 등급을 조회합니다...");
+//             기능 구현 (조회할 특정 과목)
+//             1. 과목 이름 입력받기
+//
+//             2. 시험본 회차 입력받기
+//
+//             3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
+//
+//             4. score 객체의 studentGrade 멤버변수 출력
 
-        // 기능 구현 (조회할 특정 과목)
-        // 1. 과목 이름 입력받기
-
-        // 2. 시험본 회차 입력받기
-
-        // 3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
-
-        // 4. score 객체의 studentGrade 멤버변수 출력
-
-        System.out.println("\n등급 조회 성공!");
-    }
-
-    // 수강생의 과목별 평균 등급 조회
-    private static void inquireAvgGrades() {
-        String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
-        System.out.println("과목별 평균 등급을 조회합니다...");
-
-        // 기능 구현 (조회할 특정 과목)
-        // 1. 과목 이름 입력받기
-        // 1-1. subjectStore를 돌면서 입력받은 과목 이름과 일치하는 subject 객체 찾기
-        // 1-2. 해당 객체의 subjectId, subjectType 가져오기 (이후 연산에 필요함)
-
-        // 2. scoreStore를 돌면서 [studentId, subjectId(1-2에서 가져왔던 것)] 이 두 가지가 일치하는 score 객체를 찾고
-        // 찾은 score 객체마다의 studentScore 멤버변수들을 가지고 평균점수 구하기
-
-        // 3. 평균 점수를  등급으로 환산하기
-        //   (1-2.)에서 구했던 subjectType 이 MANDATORY인지 CHOICE인지에 따라 averageScoreToGrade() 메서드 활용
-        // --> String grade = averageScoreToGrade(평균점수, subjectType); 또는
-        // --> String grade = averageScoreToGrade(점수리스트, subjectType); 선택해서 사용..
-
-        // 4. 평균 등급 출력
-
-        System.out.println("\n평균 등급 조회 성공!");
-    }
-
-    // 특정 상태 수강생들의 필수 과목 평균 등급 조회
-    private static void inquireMandatoryAvgGradeByStudentState() {
-        String studentState;
-        while (true) {
-            System.out.println("조회하고싶은 수강생들의 상태를 입력: ");
-            studentState = sc.next();
-            if (stateList.contains(studentState)) {
-                break;
-            }
-            System.out.println("잘못된 입력입니다. 다시 입력해주세요..");
-        }
-        System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
-
-        // studentStore 맵을 돌면서 studentState가 일치하는 student 객체를 리스트에 저장
-        List<Student> studentByState = new ArrayList<>();
-        for (Student student : studentStore.values()) {
-            if (student.getStudentState().equals(studentState)) {
-                studentByState.add(student);
-            }
+            System.out.println("\n등급 조회 성공!");
         }
 
-        // 특정 상태 수강생들(studentByState)의 모든 점수 ID를 리스트에 저장
-        List<String> scoreId = new ArrayList<String>();
-        for (Student student : studentByState) {
-            for (Score score : scoreStore.values()) {
-                if (Objects.equals(score.getStudentId(), student.getStudentId())) {
-                    scoreId.add(score.getScoreId());
+//        // 수강생의 과목별 평균 등급 조회
+        private static void inquireAvgGrades () {
+            String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
+            System.out.println("과목별 평균 등급을 조회합니다...");
+//
+//            // 기능 구현 (조회할 특정 과목)
+            // 1. 과목 이름 입력받기
+            // 1-1. subjectStore를 돌면서 입력받은 과목 이름과 일치하는 subject 객체 찾기
+            // 1-2. 해당 객체의 subjectId, subjectType 가져오기 (이후 연산에 필요함)
+
+            // 2. scoreStore를 돌면서 [studentId, subjectId(1-2에서 가져왔던 것)] 이 두 가지가 일치하는 score 객체를 찾고
+            // 찾은 score 객체마다의 studentScore 멤버변수들을 가지고 평균점수 구하기
+
+            // 3. 평균 점수를  등급으로 환산하기
+            //   (1-2.)에서 구했던 subjectType 이 MANDATORY인지 CHOICE인지에 따라 averageScoreToGrade() 메서드 활용
+            // --> String grade = averageScoreToGrade(평균점수, subjectType); 또는
+            // --> String grade = averageScoreToGrade(점수리스트, subjectType); 선택해서 사용..
+
+            // 4. 평균 등급 출력
+
+            System.out.println("\n평균 등급 조회 성공!");
+        }
+
+        // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+        private static void inquireMandatoryAvgGradeByStudentState () {
+            String studentState;
+            while (true) {
+                System.out.println("조회하고싶은 수강생들의 상태를 입력: ");
+                studentState = sc.next();
+                if (stateList.contains(studentState)) {
+                    break;
+                }
+                System.out.println("잘못된 입력입니다. 다시 입력해주세요..");
+            }
+            System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
+
+            // studentStore 맵을 돌면서 studentState가 일치하는 student 객체를 리스트에 저장
+            List<Student> studentByState = new ArrayList<>();
+            for (Student student : studentStore.values()) {
+                if (student.getStudentState().equals(studentState)) {
+                    studentByState.add(student);
                 }
             }
-        }
 
-        // 저장한 점수들 중에 과목 타입이 필수 과목인 것만 저장
-        // 필수 과목들의 회차별 점수들 모두 scores 리스트에 담기
-        String getId;
-        List<Integer> scores = new ArrayList<>();
-        for (String id : scoreId) {
-            getId = scoreStore.get(id).getSubjectId();
-            if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(getId).getSubjectType())) {
-                scores.add(scoreStore.get(id).getStudentScore());
+            // 특정 상태 수강생들(studentByState)의 모든 점수 ID를 리스트에 저장
+            List<String> scoreId = new ArrayList<String>();
+            for (Student student : studentByState) {
+                for (Score score : scoreStore.values()) {
+                    if (Objects.equals(score.getStudentId(), student.getStudentId())) {
+                        scoreId.add(score.getScoreId());
+                    }
+                }
+            }
+
+            // 저장한 점수들 중에 과목 타입이 필수 과목인 것만 저장
+            // 필수 과목들의 회차별 점수들 모두 scores 리스트에 담기
+            String getId;
+            List<Integer> scores = new ArrayList<>();
+            for (String id : scoreId) {
+                getId = scoreStore.get(id).getSubjectId();
+                if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(getId).getSubjectType())) {
+                    scores.add(scoreStore.get(id).getStudentScore());
+                }
+            }
+
+            // 평균등급 계산
+            String avgGrade = Score.getGradeMandatoryByScore(scores);
+            if (!"none".equals(avgGrade)) {
+                System.out.println("필수 과목 평균 등급: " + avgGrade);
+                System.out.println("\n필수 과목 평균 등급 조회 성공!");
+            } else {
+                System.out.println("조회할 점수가 없습니다.");
             }
         }
-
-        // 평균등급 계산
-        String avgGrade = Score.getGradeMandatoryByScore(scores);
-        if (!"none".equals(avgGrade)) {
-            System.out.println("필수 과목 평균 등급: " + avgGrade);
-            System.out.println("\n필수 과목 평균 등급 조회 성공!");
-        } else {
-            System.out.println("조회할 점수가 없습니다.");
-        }
     }
-}
