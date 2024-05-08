@@ -58,8 +58,9 @@ public class Score {
     }
 
     public static String getGradeMandatoryByScore(List<Integer> scores) {
-        String grade = "";
-        int avg = (int)scores.stream().mapToInt(x -> x).average().orElse(0);
+        String grade = "none";
+        int avg = (int)scores.stream().mapToInt(x -> x).average().orElse(-1);
+        if (avg == -1) return grade;
         if (avg < 60) {
             grade = "N";
         }
@@ -75,15 +76,16 @@ public class Score {
         else if (avg < 95) {
             grade = "B";
         }
-        else if (avg <= 100){
+        else if (avg <= 100) {
             grade = "A";
         }
         return grade;
     }
 
     public static String getGradeChoiceByScore(List<Integer> scores) {
-        String grade = "";
-        int avg = (int) scores.stream().mapToInt(x -> x).average().orElse(0);
+        String grade = "none";
+        int avg = (int) scores.stream().mapToInt(x -> x).average().orElse(-1);
+        if (avg == -1) return grade;
         if (avg < 50) {
             grade = "N";
         }

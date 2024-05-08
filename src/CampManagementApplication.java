@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/08 03:00
+// updated 2024/05/08 13:00
 
 /**
  * 구현 메모
@@ -66,7 +66,6 @@ public class CampManagementApplication {
     private static void setInitData() {
         studentStore = new HashMap<>();
         subjectStore = new HashMap<>();
-
         setSubjectList(subjectsMandatoryList, SUBJECT_TYPE_MANDATORY);
         setSubjectList(subjectsChoiceList, SUBJECT_TYPE_CHOICE);
         scoreStore = new HashMap<>();
@@ -151,6 +150,7 @@ public class CampManagementApplication {
         }
     }
 
+    // 과목이름을 가지고 ID를 구하는 메서드 (실패: null)
     private static String getSubjectIdByName(String subjectName) {
         for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
             if (entry.getValue().getSubjectName().equals(subjectName)) {
@@ -173,42 +173,15 @@ public class CampManagementApplication {
          * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
          */
 
+        // 이름 입력
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
 
-        boolean state = true;
-        String studentState = "";
-        while (state) {
-            System.out.print("수강생 상태 입력:\n(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨) ");
-            studentState = sc.next();
-            switch (studentState) {
-                case "1":
-                    studentState = STUDENT_STATE_VERYGOOD;
-                    state = false;
-                    break;
-                case "2":
-                    studentState = STUDENT_STATE_GOOD;
-                    state = false;
-                    break;
-                case "3":
-                    studentState = STUDENT_STATE_NORMAL;
-                    state = false;
-                    break;
-                case "4":
-                    studentState = STUDENT_STATE_BAD;
-                    state = false;
-                    break;
-                case "5":
-                    studentState = STUDENT_STATE_VERYBAD;
-                    state = false;
-                    break;
+        // 상태 입력
+        String studentState = getStudentState();
 
-                default:
-                    System.out.println("올바른 값을 입력해주세요.");
-            }
-        }
-
-        // 학생 과목 리스트
+        // 학생 과목 리스트 생성
+        // 필수 & 선택 과목 추가될 리스트
         Set<String> studentSubject = new HashSet<>();
 
         // 필수 과목 입력
@@ -218,47 +191,8 @@ public class CampManagementApplication {
                 studentSubject.add(subjectId);
             }
         }
-
         // 선택 과목 리스트
-        Set<String> choiceSubjectNames = new HashSet<>();
-        boolean flag = true;
-        while (flag) {
-            String choiceSubjectName;
-            System.out.print("수강할 선택 과목: ");
-            if (!choiceSubjectNames.isEmpty()) {
-                System.out.print(choiceSubjectNames);
-            }
-            System.out.print("\n(1.디자인 패턴, 2.Spring security, 3.Redis, 4.MongoDB, 5.종료) ");
-            switch (sc.next()) {
-                case "1" -> {
-                    choiceSubjectName = "디자인 패턴";
-                }
-                case "2" -> {
-                    choiceSubjectName = "Spring security";
-                }
-                case "3" -> {
-                    choiceSubjectName = "Redis";
-                }
-                case "4" -> {
-                    choiceSubjectName = "MongoDB";
-                }
-                case "5" -> {
-                    flag = false;
-                    continue;
-                }
-                default -> {
-                    System.out.println("올바른 값을 입력해주세요.");
-                    continue;
-                }
-            }
-            if (!choiceSubjectNames.add(choiceSubjectName)) {
-                System.out.println("이미 선택된 과목입니다.");
-            }
-            if (choiceSubjectNames.size() == subjectsChoiceList.size()) {
-                System.out.println("모든 수강을 선택하셨습니다.");
-                flag = false;
-            }
-        }
+        List<String> choiceSubjectNames = getChoiceSubject();
         // 선택 과목 입력
         for (String subject : choiceSubjectNames) {
             String subjectId = getSubjectIdByName(subject);
@@ -274,6 +208,86 @@ public class CampManagementApplication {
         // 학생 목록(Map)에 저장
         studentStore.put(studentId, student);
         System.out.println("수강생 등록 성공!\n");
+    }
+
+    // 수강생 상태를 입력받는 메서드
+    private static String getStudentState() {
+        String studentState = "";
+        int listSize = stateList.size();
+        while (true) {
+            System.out.println("수강생 상태 입력:");
+            System.out.print("(");
+            for (int i = 0; i < listSize - 1; i++) {
+                System.out.print(i + 1 + "." + stateList.get(i) + ", ");
+            }
+            System.out.print(listSize + "." + stateList.get(listSize - 1));
+            System.out.print(") ");
+
+            try {
+                int index = Integer.parseInt(sc.next()) - 1;
+                studentState = stateList.get(index);
+            } catch (NumberFormatException e) {
+                System.out.println("번호를 입력해주세요.");
+                continue;
+            }
+            return studentState;
+        }
+    }
+
+    // 선택과목을 입력받는 메서드
+    private static List<String> getChoiceSubject() {
+        List<String> choiceSubject = new ArrayList<>();
+        Boolean[] selected = new Boolean[subjectsChoiceList.size()]; // 고른 과목인지 체크
+        Arrays.fill(selected, false);
+        StringBuilder subjectsChoice = new StringBuilder();
+
+        while (true) {
+            if (choiceSubject.size() == subjectsChoiceList.size()) {
+                System.out.println("\n모든 수강을 선택하셨습니다.");
+                break;
+            }
+            // 사용자가 선택한 과목 출력
+            System.out.print("수강할 선택 과목: ");
+            if (!choiceSubject.isEmpty()) {
+                System.out.print(choiceSubject);
+            }
+            subjectsChoice.append("\n(");
+            for (int i = 0; i < subjectsChoiceList.size(); i++) {
+                if (!selected[i]) {
+                    subjectsChoice.append(i + 1);
+                } else {
+                    subjectsChoice.append("x");
+                }
+                subjectsChoice.append(".").append(subjectsChoiceList.get(i)).append(", ");
+            }
+            subjectsChoice.append(subjectsChoiceList.size() + 1).append(". 등록 완료) ");
+            System.out.print(subjectsChoice.toString());
+            subjectsChoice.delete(0, subjectsChoice.length());
+
+            // 선택과목 입력
+            try {
+                int index = Integer.parseInt(sc.next()) - 1;
+                if (index < 0 || index > subjectsChoiceList.size()) {
+                    System.out.println("\n잘못된 번호입니다.");
+                    continue;
+                } else if (index == subjectsChoiceList.size()) {
+                    break;
+                }
+
+                String choice = subjectsChoiceList.get(index);
+                if (choiceSubject.contains(choice)) {
+                    System.out.println("\n이미 선택된 과목입니다.");
+                }
+                else {
+                    choiceSubject.add(choice);
+                    selected[index] = true;
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("\n번호를 입력해주세요.");
+            }
+        }
+        return choiceSubject;
     }
 
     private static void displayStudentListView() throws InterruptedException {
@@ -317,7 +331,7 @@ public class CampManagementApplication {
             for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
                 studentId = String.valueOf(entry.getValue().getStudentId());
                 studentName = String.valueOf(entry.getValue().getStudentName());
-                System.out.println("학생 ID: " + studentId + ", 이름: " + studentName);
+                System.out.println("ID: " + studentId + ", 이름: " + studentName);
             }
 
             System.out.println("\n수강생 목록 조회 성공!");
@@ -336,15 +350,15 @@ public class CampManagementApplication {
          * 학생 ID, 학생이름, 상태(state), 과목리스트
          * 과목리스트는 컬렉션이므로 for문으로 돌면서 이름들을 출력해주세요.
          */
-        System.out.println("\n수강생 고유번호를 입력해주세요: ");
+        System.out.print("\n수강생 고유번호를 입력해주세요: ");
         String studentId = sc.next();
         Student student = studentStore.get(studentId);
 
         // 수강생 조회
         if (student != null) {
-            System.out.println("학생 ID: " + student.getStudentId());
-            System.out.println("학생 이름 : " + student.getStudentName());
-            System.out.println("상태 : " + student.getStudentState());
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("이름: " + student.getStudentName());
+            System.out.println("상태: " + student.getStudentState());
 
             Set<String> studentSubject = student.getStudentSubject();
 
@@ -360,11 +374,11 @@ public class CampManagementApplication {
                     optionalList.add(name);
                 }
             }
-            System.out.println("필수 과목 : " + mandatoryList);
+            System.out.println("필수 과목: " + mandatoryList);
             if (!optionalList.isEmpty()) {
-                System.out.println("선택 과목 : " + optionalList);
+                System.out.println("선택 과목: " + optionalList);
             } else {
-                System.out.println("선택 과목 : 없음");
+                System.out.println("선택 과목: 없음");
             }
 
         } else { // 조회한 수강생이 없을 경우
@@ -466,6 +480,7 @@ public class CampManagementApplication {
         }
     }
 
+    // 수강생 정보 삭제
     private static void deleteStudent() {
         System.out.println("\n수강생 정보를 삭제합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
@@ -482,7 +497,6 @@ public class CampManagementApplication {
         } else {
             System.out.println("해당 수강생이 없습니다.");
         }
-
 
         // 해당하는 수강생 점수 정보 삭제
         Iterator<Map.Entry<String, Score>> entries = scoreStore.entrySet().iterator();
@@ -652,6 +666,7 @@ public class CampManagementApplication {
 
         // 기능 구현 (조회할 특정 과목)
         // 1. 과목 이름 입력받기
+        // stream lambda 수정하기**
         Set<String> subjects = studentStore.get(studentId).getStudentSubject();
         List<String> studentSubjectNames = subjects.stream().map(x -> {
             return x = subjectStore.get(x).getSubjectName();
