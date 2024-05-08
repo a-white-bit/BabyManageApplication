@@ -150,7 +150,7 @@ public class CampManagementApplication {
         }
     }
 
-    // 과목이름을 가지고 ID를 구하는 메서드 (실패: null)
+    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
     private static String getSubjectIdByName(String subjectName) {
         for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
             if (entry.getValue().getSubjectName().equals(subjectName)) {
@@ -234,8 +234,14 @@ public class CampManagementApplication {
         }
     }
 
-    // 선택과목을 입력받는 메서드
+    // 수강생 등록 -> 선택과목을 입력받는 메서드, 선택한 과목 리스트 반환
     private static List<String> getChoiceSubject() {
+        /*
+         * 생각보다 많은 코드가 기술되어서 따로 메서드를 작성했습니다.
+         * 1) 사용자가 선택 중인 과목 리스트 표시함
+         * 2) 선택한 과목은 "x.OOOO" 으로 사용할 수 없는 번호임을 명시함
+         * 3) 예외처리 완료
+         */
         List<String> choiceSubject = new ArrayList<>();
         Boolean[] selected = new Boolean[subjectsChoiceList.size()]; // 고른 과목인지 체크
         Arrays.fill(selected, false);
@@ -351,7 +357,12 @@ public class CampManagementApplication {
          * 과목리스트는 컬렉션이므로 for문으로 돌면서 이름들을 출력해주세요.
          */
         System.out.print("\n수강생 고유번호를 입력해주세요: ");
-        String studentId = sc.next();
+        // 정규화 사용, id 숫자만 입력해도 검색됨
+        // ST1, st1, sT1, St1, 1, 01, 001, .. 가능
+        String studentId = sc.next().toUpperCase();
+        if (studentId.matches("^[0-9]+$")) {
+            studentId = "ST" + Integer.parseInt(studentId);
+        }
         Student student = studentStore.get(studentId);
 
         // 수강생 조회
