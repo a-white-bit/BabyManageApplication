@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Score {
     private String scoreId;
     private String studentId;
@@ -16,22 +18,19 @@ public class Score {
         this.studentScore = studentScore;
     }
 
-
-    public void setGradeMandatoryScore() {
-        studentGrade = (studentScore < 60) ? "N" :
-                (studentScore < 70) ? "F" :
-                        (studentScore < 80) ? "D" :
-                                (studentScore < 90) ? "C" :
-                                        (studentScore < 95) ? "B" : "A";
+    // Setter
+    public void setStudentScore(int studentScore) {
+        this.studentScore = studentScore;
     }
 
-    public void setGradeChoiceScore() {
-        studentGrade = (studentScore < 50) ? "N" :
-                (studentScore < 60) ? "F" :
-                        (studentScore < 70) ? "D" :
-                                (studentScore < 80) ? "C" :
-                                        (studentScore < 90) ? "B" : "A";
+    public void setGradeChoiceByScore() {
+        this.studentGrade = getGradeChoiceByScore(List.of(this.studentScore));
     }
+
+    public void setGradeMandatoryByScore() {
+        this.studentGrade = getGradeMandatoryByScore(List.of(this.studentScore));
+    }
+
 
     // Getter
     public String getScoreId() {
@@ -58,10 +57,52 @@ public class Score {
         return studentGrade;
     }
 
+    public static String getGradeMandatoryByScore(List<Integer> scores) {
+        String grade = "";
+        int avg = (int)scores.stream().mapToInt(x -> x).average().orElse(0);
+        if (avg < 60) {
+            grade = "N";
+        }
+        else if (avg < 70) {
+            grade = "F";
+        }
+        else if (avg < 80) {
+            grade = "D";
+        }
+        else if (avg < 90) {
+            grade = "C";
+        }
+        else if (avg < 95) {
+            grade = "B";
+        }
+        else if (avg <= 100){
+            grade = "A";
+        }
+        return grade;
+    }
 
-    // Setter
-    public void setStudentScore(int studentScore) {
-        this.studentScore = studentScore;
+    public static String getGradeChoiceByScore(List<Integer> scores) {
+        String grade = "";
+        int avg = (int) scores.stream().mapToInt(x -> x).average().orElse(0);
+        if (avg < 50) {
+            grade = "N";
+        }
+        else if (avg < 60) {
+            grade = "F";
+        }
+        else if (avg < 70) {
+            grade = "D";
+        }
+        else if (avg < 80) {
+            grade = "C";
+        }
+        else if (avg < 90) {
+            grade = "B";
+        }
+        else if (avg <= 100){
+            grade = "A";
+        }
+        return grade;
     }
 
 }
