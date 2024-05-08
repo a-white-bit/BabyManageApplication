@@ -643,8 +643,23 @@ public class CampManagementApplication {
         }).toList();
         System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
         String studentSubject = sc.next();
-        // 이상한 값 올수도있음
-        String subjectId = getSubjectIdByName(studentSubject);
+
+        // 이상한 값 안 받기 위한 코드 짜기
+        // 유효한 과목 ID를 저장할 변수 초기화
+        String subjectId = null;
+        // 사용자가 유효한 과목 이름을 입력할 때까지 반복
+        while (subjectId == null) {
+            // 사용자가 입력한 과목 이름을 사용하여 해당 과목의 ID를 가져옴
+            subjectId = getSubjectIdByName(studentSubject);
+            // 만약 입력된 과목 이름이 유효하지 않으면 다시 입력 요청
+            if (subjectId == null) {
+                // 잘못된 입력임을 알리는 메시지 출력
+                System.out.println("잘못된 과목입니다. 다시 입력하세요.");
+                // 사용자가 선택할 수 있는 유효한 과목 목록을 출력하고 다시 입력 요청
+                System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
+                studentSubject = sc.next();
+            }
+        }
 
         // 2. 시험본 회차 입력받기
         System.out.println("시험본 회차를 입력해주세요 : ");
@@ -663,10 +678,10 @@ public class CampManagementApplication {
         for (Score score : scoreStore.values()) {
             //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
             if (score.getStudentId().equals(studentId)
-                    && score.getSubjectId().equals(studentSubject)
+                    && score.getSubjectId().equals(getSubjectIdByName(studentSubject))
                     && score.getRoundNumber() == examRound) {
                 // 4. score 객체의 studentGrade 멤버변수 출력
-                System.out.println("수강생 " + studentId + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
+                System.out.println("수강생 " + studentStore.get(studentId).getStudentName() + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
                 return;
             }
         }
