@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/08 13:00
+// updated 2024/05/09 02:00
 
 /**
  * 구현 메모
@@ -420,24 +420,14 @@ public class CampManagementApplication {
          * studentStore 를 할당받은 entryset 에서 출력해준다.
          */
         System.out.println("\n수강생을 상태별로 조회합니다...");
-        System.out.print("조회할 학생들의 상태를 입력해주세요 \n(1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨)\n수강생 상태 입력 : ");
-        String studentState = sc.next();
-        switch (studentState) {
-            case "1" -> studentState = STUDENT_STATE_VERYGOOD;
-            case "2" -> studentState = STUDENT_STATE_GOOD;
-            case "3" -> studentState = STUDENT_STATE_NORMAL;
-            case "4" -> studentState = STUDENT_STATE_BAD;
-            case "5" -> studentState = STUDENT_STATE_VERYBAD;
-            default -> {
-                System.out.println("올바른 값을 입력해주세요");
-                return;
-            }
-        }
+        System.out.print("조회할 ");
+        String studentState = getStudentState();
 
+        // studentStore 돌면서 상태가 studentState인 학생을 해시맵에 저장
         Map<String, String> studentSortByState = new HashMap<>();
         for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
             if (studentState.equals(entryset.getValue().getStudentState())) {
-                studentSortByState.put(entryset.getValue().getStudentId(), entryset.getValue().getStudentName());
+                studentSortByState.put(entryset.getKey(), entryset.getValue().getStudentName());
             }
         }
 
