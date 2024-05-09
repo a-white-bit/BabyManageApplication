@@ -337,4 +337,14 @@ public class StudentManagement {
     public static String getStudentName(String studentId) {
         return studentStore.get(studentId).getStudentName();
     }
+
+    public static List<Student> getStudentByState(String state) {
+        List<Student> studentByState = new ArrayList<>();
+        for (Student student : studentStore.values()) {
+            if (student.getStudentState().equals(state)) {
+                studentByState.add(student);
+            }
+        }
+        return studentByState;
+    }
 }

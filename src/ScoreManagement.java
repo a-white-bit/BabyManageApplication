@@ -20,9 +20,6 @@ public class ScoreManagement {
         return INDEX_TYPE_SCORE + scoreIndex;
     }
 
-    // 학생 상태 표현 리스트
-    private static List<String> stateList = new ArrayList<>();
-
     // 싱글톤은 아니고 유사한 무언가의 동작...
     private ScoreManagement() {
     }
@@ -255,27 +252,33 @@ public class ScoreManagement {
 
     // 수강생의 과목별 평균 등급 조회
     public static void inquireAvgGrades() {
-        String studentId = StudentManagement.getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
+        // 과목별 평균 등급을 보고싶은 수강생 ID 입력
+        String studentId = StudentManagement.getStudentId();
+        if (studentId == null) {
+            return;
+        }
         System.out.println("과목별 평균 등급을 조회합니다...");
 
-        Set<String> subjects = new HashSet<>();
+        // 수강생의 수강 과목 id 리스트
+        List<String> studentSubjectId = StudentManagement.getStudentSubjectId(studentId).stream().toList();
 
-        for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
-            if (entry.getKey().equals(studentId)) {
-                subjects = entry.getValue().getStudentSubject();
-            }
-        }
-
-        for (String str : subjects) {
-            String subjectName = subjectStore.get(str).getSubjectName();
-            String grade = settingGrade(studentId, str);
-
-            if (!"none".equals(grade)) {
+        List<String> subjectAvgGrade = new ArrayList<>();
+        String grade;
+        int roundCount = 0;
+        for (int i = 0; i < studentSubjectId.size(); i++) {
+            grade = settingGrade(studentId, studentSubjectId.get(i));
+            String subjectName = SubjectManagement.getSubjectNameById(studentSubjectId.get(i));
+            if (!Objects.equals("", grade)) {
                 System.out.println(subjectName + " 과목 평균 등급 : " + grade);
+                roundCount++;
             }
         }
-
-        System.out.println("\n평균 등급 조회 성공!");
+        if (roundCount != 0) {
+            System.out.println("\n평균 등급 조회 성공!");
+        }
+        else {
+            System.out.println("시험 정보가 없습니다.");
+        }
     }
 
     // 특정 학생의 특정 과목 평균 등급 조회
@@ -307,22 +310,16 @@ public class ScoreManagement {
     public static void inquireMandatoryAvgGradeByStudentState() {
         String studentState;
         while (true) {
-            System.out.println("조회하고싶은 수강생들의 상태를 입력: ");
-            studentState = sc.next();
-            if (stateList.contains(studentState)) {
-                break;
-            }
+
+            // 상태 입력
+            System.out.print("점수를 조회하고 싶은 ");
+            studentState = StudentManagement.getStudentState();
             System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
 
-            // studentStore 맵을 돌면서 studentState가 일치하는 student 객체를 리스트에 저장
-            List<Student> studentByState = new ArrayList<>();
-            for (Student student : studentStore.values()) {
-                if (student.getStudentState().equals(studentState)) {
-                    studentByState.add(student);
-                }
-            }
+            // 입력받은 상태가 일치하는 학생 객체 리스트
+            List<Student> studentByState = StudentManagement.getStudentByState(studentState);
 
-            // 특정 상태 수강생들(studentByState)의 모든 점수 ID를 리스트에 저장
+            // 위 학생들의 모든 점수 ID를 리스트에 저장
             List<String> scoreId = new ArrayList<String>();
             for (Student student : studentByState) {
                 for (Score score : scoreStore.values()) {
@@ -332,21 +329,21 @@ public class ScoreManagement {
                 }
             }
 
-            // 저장한 점수들 중에 과목 타입이 필수 과목인 것만 저장
-            // 필수 과목들의 회차별 점수들 모두 scores 리스트에 담기
-            String getId;
+            // 과목 타입이 필수 과목인 것만 점수 저장
+            String subjectId;
             List<Integer> scores = new ArrayList<>();
-            for (String id : scoreId) {
-                getId = scoreStore.get(id).getSubjectId();
-                if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(getId).getSubjectType())) {
-                    scores.add(scoreStore.get(id).getStudentScore());
+            for (int i = 0; i < scoreId.size(); i++) {
+                // 과목 타입이 필수인지 확인
+                subjectId = scoreStore.get(scoreId.get(i)).getSubjectId();
+                if (SubjectManagement.isMandatory(subjectId)) {
+                    scores.add(scoreStore.get(scoreId.get(i)).getStudentScore());
                 }
             }
 
-            // 평균등급 계산
+            // 총 평균등급 계산
             String avgGrade = Score.getGradeMandatoryByScore(scores);
             if (!"none".equals(avgGrade)) {
-                System.out.println("필수 과목 평균 등급: " + avgGrade);
+                System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급: " + avgGrade);
                 System.out.println("\n필수 과목 평균 등급 조회 성공!");
             } else {
                 System.out.println("조회할 점수가 없습니다.");
