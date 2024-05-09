@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/09 02:00
+// updated 2024/05/09 11:00
 
 /**
  * 구현 메모
@@ -377,48 +377,59 @@ public class CampManagementApplication {
          * 학생 ID, 학생이름, 상태(state), 과목리스트
          * 과목리스트는 컬렉션이므로 for문으로 돌면서 이름들을 출력해주세요.
          */
-        System.out.print("\n수강생 고유번호를 입력해주세요: ");
-        // 정규화 사용, id 숫자만 입력해도 검색됨
-        // ST1, st1, sT1, St1, 1, 01, 001, .. 가능
-        String studentId = sc.next().toUpperCase();
-        if (studentId.matches("^[0-9]+$")) {
-            studentId = "ST" + Integer.parseInt(studentId);
+        String studentId = getStudentId();
+        if (studentId == null) { // 조회한 수강생이 없을 경우
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
+            return;
         }
         Student student = studentStore.get(studentId);
 
         // 수강생 조회
-        if (student != null) {
-            System.out.println("ID: " + student.getStudentId());
-            System.out.println("이름: " + student.getStudentName());
-            System.out.println("상태: " + student.getStudentState());
+        System.out.println("ID: " + student.getStudentId());
+        System.out.println("이름: " + student.getStudentName());
+        System.out.println("상태: " + student.getStudentState());
 
-            Set<String> studentSubject = student.getStudentSubject();
+        Set<String> studentSubject = student.getStudentSubject();
 
-            // 학생이 수강하는 과목리스트 출력
-            List<String> mandatoryList = new ArrayList<>();
-            List<String> optionalList = new ArrayList<>();
-            for (String subject : studentSubject) {
-                String type = subjectStore.get(subject).getSubjectType();
-                String name = subjectStore.get(subject).getSubjectName();
-                if (SUBJECT_TYPE_MANDATORY.equals(type)) {
-                    mandatoryList.add(name);
-                } else if (SUBJECT_TYPE_CHOICE.equals(type)) {
-                    optionalList.add(name);
-                }
+        // 학생이 수강하는 과목리스트 출력
+        List<String> mandatoryList = new ArrayList<>();
+        List<String> optionalList = new ArrayList<>();
+        for (String subject : studentSubject) {
+            String type = subjectStore.get(subject).getSubjectType();
+            String name = subjectStore.get(subject).getSubjectName();
+            if (SUBJECT_TYPE_MANDATORY.equals(type)) {
+                mandatoryList.add(name);
+            } else if (SUBJECT_TYPE_CHOICE.equals(type)) {
+                optionalList.add(name);
             }
-            System.out.println("필수 과목: " + mandatoryList);
-            if (!optionalList.isEmpty()) {
-                System.out.println("선택 과목: " + optionalList);
-            } else {
-                System.out.println("선택 과목: 없음");
-            }
-
-        } else { // 조회한 수강생이 없을 경우
-            System.out.println("등록되지 않은 수강생입니다");
-            return;
         }
-
+        System.out.println("필수 과목: " + mandatoryList);
+        if (!optionalList.isEmpty()) {
+            System.out.println("선택 과목: " + optionalList);
+        } else {
+            System.out.println("선택 과목: 없음");
+        }
         System.out.println("\n수강생 상세 정보 조회 성공!");
+    }
+
+    // 수강생 ID를 입력받는 메서드, 실패시 null
+    private static String getStudentId() {
+        /*
+         * 수강생 Id를 입력받는 메서드
+         * 정규화 사용, id 숫자만 입력해도 검색됨
+         * ST1, st1, sT1, St1, 1, 01, 001, .. 가능
+         * 존재하지 않는 id값 입력시 null 반환
+         */
+        System.out.print("수강생 ID를 입력해주세요: ");
+        String studentId = sc.next().toUpperCase();
+        if (studentId.matches("^[0-9]+$")) {
+            studentId = "ST" + Integer.parseInt(studentId);
+        }
+        if (!studentStore.containsKey(studentId)) {
+            return null;
+        } else {
+            return studentId;
+        }
     }
 
     // 수강생 상태별 목록 조회
@@ -562,16 +573,6 @@ public class CampManagementApplication {
         }
     }
 
-    private static String getStudentId() {
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        // 잘못된 Id 입력 처리 필요
-        String studentId = sc.next();
-        if (studentStore.get(studentId) == null) {
-            studentId = "";
-        }
-        return studentId;
-    }
-
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         /*
@@ -582,8 +583,8 @@ public class CampManagementApplication {
          */
 
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        if ("".equals(studentId)) {
-            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+        if (studentId == null) {
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
             return;
         }
         System.out.println("시험 점수를 등록합니다...");
@@ -649,10 +650,10 @@ public class CampManagementApplication {
     private static void updateRoundScoreBySubject() {
         // 관리할 수강생 고유 번호
         String studentId = getStudentId();
-        System.out.println(studentId);
+
         //getStudentId 메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
-        if ("".equals(studentId)) {
-            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+        if (studentId == null) {
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
             return;
         }
         System.out.println("시험 점수를 수정합니다...");
@@ -686,8 +687,13 @@ public class CampManagementApplication {
 
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("회차별 등급을 조회합니다...");
+
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        if (studentId == null) {
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
+            return;
+        }
 
         // 기능 구현 (조회할 특정 과목)
         // 1. 과목 이름 입력받기
@@ -746,8 +752,12 @@ public class CampManagementApplication {
 
     // 수강생의 과목별 평균 등급 조회
     private static void inquireAvgGrades() {
-        String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
         System.out.println("과목별 평균 등급을 조회합니다...");
+        String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
+        if (studentId == null) {
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
+            return;
+        }
 
         Set<String> subjects = new HashSet<>();
 
