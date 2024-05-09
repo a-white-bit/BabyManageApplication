@@ -25,7 +25,9 @@ public class ScoreManagement {
     private static List<String> stateList = new ArrayList<>();
 
     // 싱글톤은 아니고 유사한 무언가의 동작...
-    private ScoreManagement() {}
+    private ScoreManagement() {
+    }
+
     public static Map<String, Score> getStore() {
         if (scoreStore == null) {
             scoreStore = new HashMap<>();
@@ -34,79 +36,80 @@ public class ScoreManagement {
     }
 
 
-
     // 수강생의 과목별 시험 회차 및 점수 등록
     public static void createScore() {
         /*
          * 회차 번호(Score 클래스의 roundNumber 멤버변수)가 1 ~ 10 값만 저장되어야 합니다.  * 1회차 ~ 10회차
          * 등록하려는 점수(Score 클래스의 studentScore 멤버변수)가 0 ~ 100 값만 저장되어야 합니다.
-         * 등록하려는 과목의 회차 점수가 이미 등록되어 있다면 등록할 수 없습니다. (Score 클래스에서
-         * studentId, subjectId, roundNumber 이 세 멤버변수가 "모두 일치"하는 score 객체가 존재한다면 등록하면 안됩니다.)
+         * 등록하려는 과목의 회차 점수가 이미 등록되어 있다면 등록할 수 없습니다.
+         * (= Score 클래스에서 studentId, subjectId, roundNumber 이 세 멤버변수가 "모두 일치"하는 score 객체가 존재한다면 등록하면 안됩니다.)
          */
 
         String studentId = StudentManagement.getStudentId(); // 관리할 수강생 고유 번호
-        if ("".equals(studentId)) {
-            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+        if (studentId == null) {
             return;
         }
         System.out.println("시험 점수를 등록합니다...");
 
-        // 등록할 과목 이름 리스트
-        Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
-        Set<String> studentSubjectNames = new HashSet<>();
-        for (String id : studentSubjects) {
-            String name = subjectStore.get(id).getSubjectName();
-            studentSubjectNames.add(name);
-        }
-        String subjectName = "";
-        String subjectId = null;
-        while (true) {
-            System.out.println("등록할 과목 선택:");
-            System.out.print(studentSubjectNames + " ");
-            subjectName = sc.next();
-            if (studentSubjectNames.contains(subjectName)) {
-                subjectId = SubjectManagement.getSubjectIdByName(subjectName);
-            }
+        // 등록할 과목 Id, 이름 리스트
+        List<String> studentSubjectId = StudentManagement.getStudentSubjectId(studentId).stream().toList();
 
-            if (subjectId == null) {
-                System.out.println("등록된 수강 과목이 아닙니다. 다시 입력해주세요.");
-            } else {
-                break;
-            }
+        // 등록할 과목 입력
+        String subjectId = SubjectManagement.inquireSubject(studentSubjectId);
+        if ("".equals(subjectId)) {
+            System.out.println("점수 등록을 취소합니다.");
+            return;
         }
 
+        // 회차 입력
+        int roundNumber;
         while (true) {
-            System.out.println("회차(1~10) 입력: ");
-            int roundNumber = Integer.parseInt(sc.next());
-            if (1 <= roundNumber && roundNumber <= 10) {
-                System.out.println("점수(0~100) 입력: ");
-                int studentScore = Integer.parseInt(sc.next());
-                if (0 <= studentScore && studentScore <= 100) {
-                    // 점수 ID 시퀀스 생성
-                    String scoreId = sequence();
-                    scoreIndex++;
-                    // 점수 객체 생성
-                    Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
-                    if (SUBJECT_TYPE_CHOICE.equals(subjectStore.get(subjectId).getSubjectType()))
-                        score.setGradeChoiceByScore();
-                    else if (SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType()))
-                        score.setGradeMandatoryByScore();
-
-                    // 점수 등록
-                    scoreStore.put(scoreId, score);
-                    System.out.println("\n점수 등록 성공!");
-                    break;
-                } else {
-                    // 잘못된 입력 (0~100 이외의 입력) 처리
+            try {
+                System.out.println("회차(1~10) 입력: ");
+                roundNumber = Integer.parseInt(sc.next());
+                if (1 > roundNumber || roundNumber > 10) {
                     System.out.println("알맞지 않은 숫자입니다.");
                     continue;
                 }
-            } else {
-                // 잘못된 입력 (1~10 이외의 입력) 처리
-                System.out.println("알맞지 않은 숫자입니다");
-                continue;
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
             }
         }
+
+        // 점수 입력
+        int studentScore;
+        while (true) {
+            try {
+                System.out.println("점수(0~100) 입력: ");
+                studentScore = Integer.parseInt(sc.next());
+                if (0 > studentScore || studentScore > 100) {
+                    System.out.println("알맞지 않은 숫자입니다.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
+            }
+        }
+
+
+        // 점수 ID 시퀀스 생성
+        String scoreId = sequence();
+
+        // 점수 객체 생성
+        Score score = new Score(scoreId, studentId, subjectId, roundNumber, studentScore);
+
+        // 과목 타입에 따른 등급 등록
+        if (SubjectManagement.isMandatory(subjectId)) {
+            score.setGradeMandatoryByScore();
+        } else {
+            score.setGradeChoiceByScore();
+        }
+
+        // 점수 등록
+        scoreStore.put(scoreId, score);
+        System.out.println("\n점수 등록 성공!");
     }
 
     // 수강생의 과목별 회차 점수 수정

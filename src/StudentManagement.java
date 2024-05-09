@@ -85,6 +85,7 @@ public class StudentManagement {
                 studentSubject.add(subjectId);
             }
         }
+
         // 선택 과목 리스트
         List<String> choiceSubjectNames = SubjectManagement.getChoiceSubject();
         if (choiceSubjectNames == null) {
@@ -341,5 +342,9 @@ public class StudentManagement {
             studentId = "";
         }
         return studentId;
+    }
+
+    public static Set<String> getStudentSubjectId(String studentId) {
+        return studentStore.get(studentId).getStudentSubject();
     }
 }

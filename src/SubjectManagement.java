@@ -124,4 +124,43 @@ public class SubjectManagement {
         }
         return choiceSubject;
     }
+
+    public static String getSubjectNameById(String studentSubjectId) {
+        return subjectStore.get(studentSubjectId).getSubjectName();
+    }
+
+    // 수강생이 수강하는 과목 중 한 가지를 선택하는 메서드, 취소 시 "" 리턴
+    public static String inquireSubject(List<String> studentSubjectId) {
+        String selectedSubject = "";
+        int it = 1;
+        while (true) {
+            // 사용자의 과목 리스트 보여주기
+            System.out.println("등록할 과목 선택:");
+            System.out.print("(");
+            for (String id : studentSubjectId) {
+                System.out.print(it + "." + subjectStore.get(id).getSubjectName() + ", ");
+                it++;
+            }
+            System.out.print(it + ".취소) ");
+
+            try {
+                int index = Integer.parseInt(sc.next());
+                if (index == it) {
+                    return selectedSubject;
+                } else if (index > it || index <= 0) {
+                    System.out.println("잘못된 입력입니다.\n");
+                    continue;
+                }
+                selectedSubject = studentSubjectId.get(index - 1);
+                return selectedSubject;
+
+            } catch (NumberFormatException e) {
+                System.out.println("번호를 입력해주세요.\n");
+            }
+        }
+    }
+
+    public static boolean isMandatory(String subjectId) {
+        return SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType());
+    }
 }
