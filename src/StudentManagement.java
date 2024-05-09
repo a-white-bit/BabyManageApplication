@@ -79,12 +79,7 @@ public class StudentManagement {
         Set<String> studentSubject = new HashSet<>();
 
         // 필수 과목 입력
-        for (String subject : subjectsMandatoryList) {
-            String subjectId = SubjectManagement.getSubjectIdByName(subject);
-            if (subjectId != null) {
-                studentSubject.add(subjectId);
-            }
-        }
+        studentSubject = SubjectManagement.getMandatorySubjectSet();
 
         // 선택 과목 리스트
         List<String> choiceSubjectNames = SubjectManagement.getChoiceSubject();
@@ -165,18 +160,12 @@ public class StudentManagement {
             Set<String> studentSubject = student.getStudentSubject();
 
             // 학생이 수강하는 과목리스트 출력
-            List<String> mandatoryList = new ArrayList<>();
-            List<String> optionalList = new ArrayList<>();
-            for (String subject : studentSubject) {
-                String type = subjectStore.get(subject).getSubjectType();
-                String name = subjectStore.get(subject).getSubjectName();
-                if (SUBJECT_TYPE_MANDATORY.equals(type)) {
-                    mandatoryList.add(name);
-                } else if (SUBJECT_TYPE_CHOICE.equals(type)) {
-                    optionalList.add(name);
-                }
-            }
+            List<String> mandatoryList = SubjectManagement.getStudentMandatorySubjectList(studentSubject);
+            List<String> optionalList = SubjectManagement.getStudentChoiceSubject(studentSubject);
+
+
             System.out.println("필수 과목: " + mandatoryList);
+
             if (!optionalList.isEmpty()) {
                 System.out.println("선택 과목: " + optionalList);
             } else {
