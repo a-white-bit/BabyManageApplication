@@ -174,11 +174,20 @@ public class CampManagementApplication {
          */
 
         // 이름 입력
-        System.out.print("수강생 이름 입력: ");
-        String studentName = sc.next();
+        System.out.print("수강생 이름 입력 : ");
+        sc.nextLine();
+        String studentName = sc.nextLine();
+        if (Objects.equals(studentName, "") || studentName == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
 
         // 상태 입력
         String studentState = getStudentState();
+        if (Objects.equals(studentState, "") || studentState == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
 
         // 학생 과목 리스트 생성
         // 필수 & 선택 과목 추가될 리스트
@@ -193,6 +202,10 @@ public class CampManagementApplication {
         }
         // 선택 과목 리스트
         List<String> choiceSubjectNames = getChoiceSubject();
+        if (choiceSubjectNames == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
         // 선택 과목 입력
         for (String subject : choiceSubjectNames) {
             String subjectId = getSubjectIdByName(subject);
@@ -210,24 +223,30 @@ public class CampManagementApplication {
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // 수강생 상태를 입력받는 메서드
+    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
     private static String getStudentState() {
         String studentState = "";
         int listSize = stateList.size();
         while (true) {
             System.out.println("수강생 상태 입력:");
             System.out.print("(");
-            for (int i = 0; i < listSize - 1; i++) {
+            for (int i = 0; i < listSize; i++) {
                 System.out.print(i + 1 + "." + stateList.get(i) + ", ");
             }
-            System.out.print(listSize + "." + stateList.get(listSize - 1));
-            System.out.print(") ");
+            System.out.print(listSize + 1 + ".취소) ");
 
             try {
-                int index = Integer.parseInt(sc.next()) - 1;
-                studentState = stateList.get(index);
+                int index = Integer.parseInt(sc.next());
+                if (index == listSize + 1) {
+                    return studentState;
+                } else if (index > listSize + 1 || index <= 0) {
+                    System.out.println("잘못된 입력입니다.\n");
+                    continue;
+                }
+                studentState = stateList.get(index - 1);
+
             } catch (NumberFormatException e) {
-                System.out.println("번호를 입력해주세요.");
+                System.out.println("번호를 입력해주세요.\n");
                 continue;
             }
             return studentState;
@@ -239,11 +258,11 @@ public class CampManagementApplication {
         /*
          * 생각보다 많은 코드가 기술되어서 따로 메서드를 작성했습니다.
          * 1) 사용자가 선택 중인 과목 리스트 표시함
-         * 2) 선택한 과목은 "x.OOOO" 으로 사용할 수 없는 번호임을 명시함
+         * 2) 선택한 과목은 "x.OOOO" 으로 사용할 수 없는 번호임을 명시함 -> StringBuilder 사용
          * 3) 예외처리 완료
          */
         List<String> choiceSubject = new ArrayList<>();
-        Boolean[] selected = new Boolean[subjectsChoiceList.size()]; // 고른 과목인지 체크
+        Boolean[] selected = new Boolean[subjectsChoiceList.size()]; // 고른 과목인지 체크하는 배열
         Arrays.fill(selected, false);
         StringBuilder subjectsChoice = new StringBuilder();
 
@@ -266,29 +285,31 @@ public class CampManagementApplication {
                 }
                 subjectsChoice.append(".").append(subjectsChoiceList.get(i)).append(", ");
             }
-            subjectsChoice.append(subjectsChoiceList.size() + 1).append(". 등록 완료) ");
+            subjectsChoice.append(subjectsChoiceList.size() + 1).append(". 등록 완료, ");
+            subjectsChoice.append(subjectsChoiceList.size() + 2).append(". 취소) ");
             System.out.print(subjectsChoice.toString());
             subjectsChoice.delete(0, subjectsChoice.length());
 
             // 선택과목 입력
             try {
                 int index = Integer.parseInt(sc.next()) - 1;
-                if (index < 0 || index > subjectsChoiceList.size()) {
+                if (index == subjectsChoiceList.size()) {
+                    break; // 등록 완료
+                } else if (index == subjectsChoiceList.size() + 1) {
+                    choiceSubject = null;
+                    break; // 등록 취소
+                } else if (index < 0 || index > subjectsChoiceList.size() + 1) {
                     System.out.println("\n잘못된 번호입니다.");
                     continue;
-                } else if (index == subjectsChoiceList.size()) {
-                    break;
                 }
 
-                String choice = subjectsChoiceList.get(index);
-                if (choiceSubject.contains(choice)) {
+                String choiceNumber = subjectsChoiceList.get(index);
+                if (choiceSubject.contains(choiceNumber)) {
                     System.out.println("\n이미 선택된 과목입니다.");
-                }
-                else {
-                    choiceSubject.add(choice);
+                } else {
+                    choiceSubject.add(choiceNumber);
                     selected[index] = true;
                 }
-
             } catch (NumberFormatException e) {
                 System.out.println("\n번호를 입력해주세요.");
             }
@@ -422,6 +443,10 @@ public class CampManagementApplication {
         System.out.println("\n수강생을 상태별로 조회합니다...");
         System.out.print("조회할 ");
         String studentState = getStudentState();
+        if (Objects.equals(studentState, "") || studentState == null) {
+            System.out.println("조회가 취소되었습니다.");
+            return;
+        }
 
         // studentStore 돌면서 상태가 studentState인 학생을 해시맵에 저장
         Map<String, String> studentSortByState = new HashMap<>();
@@ -431,7 +456,7 @@ public class CampManagementApplication {
             }
         }
 
-        System.out.println("<상태: " + studentState + ">");
+        System.out.println("\n<상태: " + studentState + ">");
         if (studentSortByState.isEmpty()) {
             System.out.println("해당하는 학생이 없습니다.");
         } else {
@@ -448,32 +473,31 @@ public class CampManagementApplication {
         String studentId = sc.next();
 
         Student student = studentStore.get(studentId);
-
         if (student != null) {
-            String studentState = "";
+            sc.nextLine();
 
-            System.out.println("변경하는 수강생 이름을 입력하세요: (미 입력시 기존 정보가 유지됩니다.)");
-            String studentName = sc.next();
+            // 이름 변경, 미 입력시 기존 정보 유지
+            System.out.print("변경될 이름을 입력하세요: (미 입력시 기존 정보가 유지됩니다.) ");
+            String studentName = sc.nextLine();
 
-            System.out.println("변경하는 수강생 상태를 입력하세요: \n 1.아주좋음, 2.좋음, 3.보통, 4.나쁨, 5.아주나쁨, 6.기존 정보 유지");
-            int stateNumber = Integer.parseInt(sc.next());
-
-            switch (stateNumber) {
-                case 1 -> studentState = STUDENT_STATE_VERYGOOD;
-                case 2 -> studentState = STUDENT_STATE_GOOD;
-                case 3 -> studentState = STUDENT_STATE_NORMAL;
-                case 4 -> studentState = STUDENT_STATE_BAD;
-                case 5 -> studentState = STUDENT_STATE_VERYBAD;
-                case 6 -> studentState = "";
-                default -> System.out.println("잘못된 입력입니다");
-            }
-
-            //미 입력시 기존 정보 유지
             if (!"".equals(studentName)) {
+                System.out.print("[" + studentStore.get(studentId).getStudentName() + "]에서 ");
                 student.setStudentName(studentName); //수강생 이름 set
+                System.out.println("[" + studentName + "]으로 변경되었습니다.");
+            } else {
+                System.out.println("학생 이름이 [" + studentStore.get(studentId).getStudentName() + "]으로 유지됩니다.");
             }
+
+            // 상태 변경, 상태 변경 메서드 사용
+            System.out.print("변경될 ");
+            String studentState = getStudentState();
+
             if (!"".equals(studentState)) {
+                System.out.print("[" + studentStore.get(studentId).getStudentState() + "]에서 ");
                 student.setStudentState(studentState); //수강생 상태 set
+                System.out.println("[" + studentState + "]으로 변경되었습니다.");
+            } else {
+                System.out.println("학생 상태는 [" + studentStore.get(studentId).getStudentState() + "]으로 유지됩니다.");
             }
 
         } else {
@@ -745,6 +769,7 @@ public class CampManagementApplication {
         System.out.println("\n평균 등급 조회 성공!");
     }
 
+    // 특정 학생의 특정 과목 평균 등급 조회
     private static String settingGrade(String studentId, String subjectId) {
         String subjectType = subjectStore.get(subjectId).getSubjectType();
         List<Integer> scoreList = new ArrayList<>();
