@@ -657,12 +657,6 @@ public class CampManagementApplication {
 
         // 5. 수정 과목이 mandatory인지 choice인지에 따라 .setGradeMandatoryScore(), .setGradeChoiceScore() 둘 중 하나 실행하여 등급(A,B,..) 설정
         // 5-1. 과목 타입(mandatory, choice)은 확인하려면 subjectStore에서 subjectId로 해당하는 subject 객체를 찾고 멤버변수 subjectType으로 알 수있음
-
-
-
-        System.out.println("\n점수 수정 성공!");
-    }
-
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
