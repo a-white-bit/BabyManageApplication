@@ -306,9 +306,10 @@ public class ScoreManagement {
         while (true) {
 
             // 상태 입력
-            System.out.print("점수를 조회하고 싶은 ");
+            System.out.print("\n점수를 조회하고 싶은 ");
             studentState = StudentManagement.getStudentState();
-            System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
+            if (Objects.equals("", studentState)) { return; }
+            System.out.println("\n상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
 
             // 입력받은 상태가 일치하는 학생 객체 리스트
             List<Student> studentByState = StudentManagement.getStudentByState(studentState);

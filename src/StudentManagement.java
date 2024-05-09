@@ -273,7 +273,7 @@ public class StudentManagement {
         System.out.print("정말로 " + deleteStudent.getStudentName() + "님의 정보를 삭제하시겠습니까?:\n ('네' 입력시 삭제) ");
 
         // 해당하는 수강생 ID 정보 삭제
-        if ("네".equals(sc.next())) {
+        if ("네".equals(sc.nextLine())) {
             studentStore.remove(studentId);
             System.out.println("삭제되었습니다.");
         } else {
@@ -331,7 +331,7 @@ public class StudentManagement {
          * 존재하지 않는 id값 입력시 null 반환
          */
         System.out.print("수강생 ID를 입력해주세요: ");
-        String studentId = sc.next().toUpperCase();
+        String studentId = sc.nextLine().toUpperCase();
         if (studentId.matches("^[0-9]+$")) {
             studentId = "ST" + Integer.parseInt(studentId);
         }
@@ -342,16 +342,6 @@ public class StudentManagement {
             return studentId;
         }
     }
-
-//    public static String getStudentId() {
-//        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-//        // 잘못된 Id 입력 처리 필요
-//        String studentId = sc.nextLine();
-//        if (studentStore.get(studentId) == null) {
-//            studentId = "";
-//        }
-//        return studentId;
-//    }
 
     public static Set<String> getStudentSubjectId(String studentId) {
         return studentStore.get(studentId).getStudentSubject();

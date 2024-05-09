@@ -175,11 +175,11 @@ public class SubjectManagement {
     // 수강생이 수강하는 과목 중 한 가지를 선택하는 메서드, 취소 시 "" 리턴
     public static String inquireSubject(List<String> studentSubjectId) {
         String selectedSubject = "";
-        int it = 1;
         while (true) {
             // 사용자의 과목 리스트 보여주기
             System.out.println("과목 선택:");
             System.out.print("(");
+            int it = 1;
             for (String id : studentSubjectId) {
                 System.out.print(it + "." + subjectStore.get(id).getSubjectName() + ", ");
                 it++;
