@@ -613,26 +613,25 @@ public class CampManagementApplication {
         String studentId = getStudentId();
         System.out.println(studentId);
         //getStudentId메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
-            if ("".equals(studentId)) {
-                System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
-                return;
-            }
-            System.out.println("시험 점수를 수정합니다...");
-            Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
-            // stream을 이용한 subjectID를 Name로변경
-            List<String> studentSubjectNames = studentSubjects.stream().map(x ->{
-                return x = subjectStore.get(x).getSubjectName();
-            }).toList();
+        if ("".equals(studentId)) {
+            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+            return;
+        }
+        System.out.println("시험 점수를 수정합니다...");
+        Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
+        // stream을 이용한 subjectID를 Name로변경
+        List<String> studentSubjectNames = studentSubjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
 
-            for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
-                System.out.print(studentSubjectNames+ "\n수정할 과목을 입력해주세요 : ");
+        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
+            System.out.print(studentSubjectNames + "\n수정할 과목을 입력해주세요 : ");
             // 수정할 과목 이름 입력받기
-                String subjectName = sc.next();
-                System.out.print("수정할 회차를 선택해주세요 : ");
+            String subjectName = sc.next();
+            System.out.print("수정할 회차를 선택해주세요 : ");
             // 수정할 과목 회차 입력받기,
-             int roundNumber = Integer.parseInt(sc.next());
-
-             for (Score score : scoreStore.values()) {
+            int roundNumber = Integer.parseInt(sc.next());
+            for (Score score : scoreStore.values()) {
                 if (score.getStudentId().equals(studentId)
                         && score.getSubjectId().equals(getSubjectIdByName(subjectName))
                         && score.getRoundNumber() == roundNumber) {
@@ -642,8 +641,8 @@ public class CampManagementApplication {
                     System.out.println("바뀐 점수 : " + changeScore);
                 }
             }
-            System.out.println("\n점수 수정 성공!");
-            }
+        }
+        System.out.println("\n점수 수정 성공!");
     }
 
         // 기능 구현 (수정할 과목 및 회차, 점수)
