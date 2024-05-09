@@ -333,4 +333,8 @@ public class StudentManagement {
     public static Set<String> getStudentSubjectId(String studentId) {
         return studentStore.get(studentId).getStudentSubject();
     }
+
+    public static String getStudentName(String studentId) {
+        return studentStore.get(studentId).getStudentName();
+    }
 }
