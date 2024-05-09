@@ -124,4 +124,48 @@ public class SubjectManagement {
         }
         return choiceSubject;
     }
+
+    //필수 과목 set으로 반환
+    public static Set<String> getMandatorySubjectSet() {
+        Set<String> mandatorySubjectSet = new HashSet<>();
+
+        for (String subject : subjectsMandatoryList) {
+            String subjectId = getSubjectIdByName(subject);
+            if (subjectId != null) {
+                mandatorySubjectSet.add(subjectId);
+            }
+        }
+
+        return mandatorySubjectSet;
+    }
+
+    public static List<String> getStudentMandatorySubjectList(Set<String> studentSubject) {
+        List<String> studentMandatorySubjectList = new ArrayList<String>();
+
+        for(String subjectId : studentSubject) {
+            String type = subjectStore.get(subjectId).getSubjectType();
+            String name = subjectStore.get(subjectId).getSubjectName();
+
+            if (SUBJECT_TYPE_MANDATORY.equals(type)) {
+                studentMandatorySubjectList.add(name);
+            }
+        }
+
+        return studentMandatorySubjectList;
+    }
+
+    public static List<String> getStudentChoiceSubject(Set<String> studentSubject) {
+        List<String> studentChoiceSubjectList = new ArrayList<String>();
+
+        for(String subjectId : studentSubject) {
+            String type = subjectStore.get(subjectId).getSubjectType();
+            String name = subjectStore.get(subjectId).getSubjectName();
+
+            if (SUBJECT_TYPE_CHOICE.equals(type)) {
+                studentChoiceSubjectList.add(name);
+            }
+        }
+
+        return studentChoiceSubjectList;
+    }
 }
