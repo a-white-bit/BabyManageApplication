@@ -10,74 +10,43 @@ public class StudentManagement {
 
     // 데이터 저장소
     private static Map<String, Student> studentStore;
-    private static Map<String, Subject> subjectStore;
-    private static Map<String, Score> scoreStore;
-
-    // 과목 타입(필수, 선택)
-    private static String SUBJECT_TYPE_MANDATORY;
-    private static String SUBJECT_TYPE_CHOICE;
-
-    // 타입별 과목 리스트
-    private static List<String> subjectsMandatoryList;
-    private static List<String> subjectsChoiceList;
 
     //index관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
 
+    // index 자동 증가
+    private static String sequence() {
+        studentIndex++;
+        return INDEX_TYPE_STUDENT + studentIndex;
+    }
+
+    // 학생 상태 분류
+    private static final String STUDENT_STATE_VERYGOOD = "아주좋음";
+    private static final String STUDENT_STATE_GOOD = "좋음";
+    private static final String STUDENT_STATE_NORMAL = "보통";
+    private static final String STUDENT_STATE_BAD = "나쁨";
+    private static final String STUDENT_STATE_VERYBAD = "아주나쁨";
+
     // 학생 상태 표현 리스트
-    private static List<String> stateList = new ArrayList<>();
+    private static final List<String> stateList = List.of(
+            STUDENT_STATE_VERYGOOD,
+            STUDENT_STATE_GOOD,
+            STUDENT_STATE_NORMAL,
+            STUDENT_STATE_BAD,
+            STUDENT_STATE_VERYBAD);
 
-    public StudentManagement(Map<String, Student>studentStore, Map<String, Subject> subjectStore, Map<String, Score> scoreStore, String Mandatory, String Choice,List<String> MandatoryList, List<String> ChoiceList, List<String> stateList){
-        StudentManagement.studentStore = studentStore;
-        StudentManagement.subjectStore = subjectStore;
-        StudentManagement.scoreStore = scoreStore;
-        StudentManagement.SUBJECT_TYPE_MANDATORY = Mandatory;
-        StudentManagement.SUBJECT_TYPE_CHOICE = Choice;
-        StudentManagement.subjectsMandatoryList = MandatoryList;
-        StudentManagement.subjectsChoiceList = ChoiceList;
-        StudentManagement.stateList = stateList;
-    }
-
-    static void displayStudentView() throws InterruptedException {
-        boolean flag = true;
-        while (flag) {
-            System.out.println("==================================");
-            System.out.println("수강생 관리 실행 중...");
-            System.out.println("1. 수강생 등록");
-            System.out.println("2. 수강생 조회");
-            System.out.println("3. 수강생 정보 수정");
-            System.out.println("4. 수강생 삭제");
-            System.out.println("5. 메인 화면 이동");
-            System.out.print("관리 항목을 선택하세요...");
-            int input = sc.nextInt();
-
-            switch (input) {
-                case 1 -> createStudent(); // 수강생 등록
-                case 2 -> displayStudentListView(); // 수강생 목록 조회
-                case 3 -> updateStudent(); // 수강생 정보 수정
-                case 4 -> deleteStudent(); //수강생 삭제
-                case 5 -> flag = false; // 메인 화면 이동
-                default -> {
-                    System.out.println("잘못된 입력입니다.\n다시 입력해주세요...");
-                    Thread.sleep(800);
-                }
-            }
+    // 싱글톤은 아니고 유사한 무언가의 동작...
+    private StudentManagement() {}
+    public static Map<String, Student> getStore() {
+        if (studentStore == null) {
+            studentStore = new HashMap<>();
         }
-    }
-
-    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
-    static String getSubjectIdByName(String subjectName) {
-        for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
-            if (entry.getValue().getSubjectName().equals(subjectName)) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        return studentStore;
     }
 
     // 수강생 등록
-    private static void createStudent() {
+    public static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
 
         /* 이 메서드에서 구현해야할 것:
@@ -111,27 +80,27 @@ public class StudentManagement {
 
         // 필수 과목 입력
         for (String subject : subjectsMandatoryList) {
-            String subjectId = getSubjectIdByName(subject);
+            String subjectId = SubjectManagement.getSubjectIdByName(subject);
             if (subjectId != null) {
                 studentSubject.add(subjectId);
             }
         }
         // 선택 과목 리스트
-        List<String> choiceSubjectNames = getChoiceSubject();
+        List<String> choiceSubjectNames = SubjectManagement.getChoiceSubject();
         if (choiceSubjectNames == null) {
             System.out.println("등록이 취소되었습니다.");
             return;
         }
         // 선택 과목 입력
         for (String subject : choiceSubjectNames) {
-            String subjectId = getSubjectIdByName(subject);
+            String subjectId = SubjectManagement.getSubjectIdByName(subject);
             if (subjectId != null) {
                 studentSubject.add(subjectId);
             }
         }
 
         // 수강생 ID 시퀀스 생성
-        String studentId = CampManagementApplication.sequence(INDEX_TYPE_STUDENT, studentIndex);
+        String studentId = sequence();
         studentIndex++;
         // 수강생 인스턴스 생성 예시 코드
         Student student = new Student(studentId, studentName, studentState, studentSubject);
@@ -140,127 +109,10 @@ public class StudentManagement {
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
-    private static String getStudentState() {
-        String studentState = "";
-        int listSize = stateList.size();
-        while (true) {
-            System.out.println("수강생 상태 입력:");
-            System.out.print("(");
-            for (int i = 0; i < listSize; i++) {
-                System.out.print(i + 1 + "." + stateList.get(i) + ", ");
-            }
-            System.out.print(listSize + 1 + ".취소) ");
 
-            try {
-                int index = Integer.parseInt(sc.next());
-                if (index == listSize + 1) {
-                    return studentState;
-                } else if (index > listSize + 1 || index <= 0) {
-                    System.out.println("잘못된 입력입니다.\n");
-                    continue;
-                }
-                studentState = stateList.get(index - 1);
-
-            } catch (NumberFormatException e) {
-                System.out.println("번호를 입력해주세요.\n");
-                continue;
-            }
-            return studentState;
-        }
-    }
-
-    // 수강생 등록 -> 선택과목을 입력받는 메서드, 선택한 과목 리스트 반환
-    private static List<String> getChoiceSubject() {
-        /*
-         * 생각보다 많은 코드가 기술되어서 따로 메서드를 작성했습니다.
-         * 1) 사용자가 선택 중인 과목 리스트 표시함
-         * 2) 선택한 과목은 "x.OOOO" 으로 사용할 수 없는 번호임을 명시함 -> StringBuilder 사용
-         * 3) 예외처리 완료
-         */
-        List<String> choiceSubject = new ArrayList<>();
-        Boolean[] selected = new Boolean[subjectsChoiceList.size()]; // 고른 과목인지 체크하는 배열
-        Arrays.fill(selected, false);
-        StringBuilder subjectsChoice = new StringBuilder();
-
-        while (true) {
-            if (choiceSubject.size() == subjectsChoiceList.size()) {
-                System.out.println("\n모든 수강을 선택하셨습니다.");
-                break;
-            }
-            // 사용자가 선택한 과목 출력
-            System.out.print("수강할 선택 과목: ");
-            if (!choiceSubject.isEmpty()) {
-                System.out.print(choiceSubject);
-            }
-            subjectsChoice.append("\n(");
-            for (int i = 0; i < subjectsChoiceList.size(); i++) {
-                if (!selected[i]) {
-                    subjectsChoice.append(i + 1);
-                } else {
-                    subjectsChoice.append("x");
-                }
-                subjectsChoice.append(".").append(subjectsChoiceList.get(i)).append(", ");
-            }
-            subjectsChoice.append(subjectsChoiceList.size() + 1).append(". 등록 완료, ");
-            subjectsChoice.append(subjectsChoiceList.size() + 2).append(". 취소) ");
-            System.out.print(subjectsChoice.toString());
-            subjectsChoice.delete(0, subjectsChoice.length());
-
-            // 선택과목 입력
-            try {
-                int index = Integer.parseInt(sc.next()) - 1;
-                if (index == subjectsChoiceList.size()) {
-                    break; // 등록 완료
-                } else if (index == subjectsChoiceList.size() + 1) {
-                    choiceSubject = null;
-                    break; // 등록 취소
-                } else if (index < 0 || index > subjectsChoiceList.size() + 1) {
-                    System.out.println("\n잘못된 번호입니다.");
-                    continue;
-                }
-
-                String choiceNumber = subjectsChoiceList.get(index);
-                if (choiceSubject.contains(choiceNumber)) {
-                    System.out.println("\n이미 선택된 과목입니다.");
-                } else {
-                    choiceSubject.add(choiceNumber);
-                    selected[index] = true;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("\n번호를 입력해주세요.");
-            }
-        }
-        return choiceSubject;
-    }
-
-    private static void displayStudentListView() throws InterruptedException {
-        boolean flag = true;
-        while (flag) {
-            System.out.println("\n==================================");
-            System.out.println("수강생 조회 실행 중...");
-            System.out.println("1. 수강생 전체 목록");
-            System.out.println("2. 상세 정보 조회");
-            System.out.println("3. 상태별 목록 조회");
-            System.out.println("4. 수강생 관리로 이동");
-            System.out.print("조회 항목을 선택하세요...");
-            int input = sc.nextInt();
-
-            switch (input) {
-                case 1 -> inquireStudent(); // 전체 목록 조회
-                case 2 -> inquireStudentInfo(); // 상세 정보 조회
-                case 3 -> inquireStudentByState(); // 상태별 목록 조회
-                case 4 -> flag = false; // 수강 관리 기능으로
-                default -> {
-                    System.out.println("잘못된 입력입니다.\n다시 입력해주세요..");
-                    Thread.sleep(800);
-                }
-            }
-        }
-    }
 
     // 수강생 전체 목록 조회
-    private static void inquireStudent() {
+    public static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         /*
          * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다.
@@ -285,7 +137,7 @@ public class StudentManagement {
     }
 
     // 수강생 상세 정보 조회
-    private static void inquireStudentInfo() {
+    public static void inquireStudentInfo() {
         System.out.println("\n수강생 상세 정보를 조회합니다...");
         /*
          * 조회하고 싶은 수강생 ID를 입력받습니다. (예시: "ST1")
@@ -339,7 +191,7 @@ public class StudentManagement {
     }
 
     // 수강생 상태별 목록 조회
-    private static void inquireStudentByState() {
+    public static void inquireStudentByState() {
         /*
          * 조회하고 싶은 상태를 사용자에게 입력받습니다. (예시: "아주좋음")
          * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다. Entry set문법으로 Map의 키, Value 를 받아옴
@@ -384,7 +236,7 @@ public class StudentManagement {
     }
 
     // 수강생 정보 수정
-    private static void updateStudent() {
+    public static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
         String studentId = sc.next();
@@ -423,7 +275,7 @@ public class StudentManagement {
     }
 
     // 수강생 정보 삭제
-    private static void deleteStudent() {
+    public static void deleteStudent(Map<String, Score> scoreStore) {
         System.out.println("\n수강생 정보를 삭제합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
         String studentId = sc.next();
@@ -448,5 +300,46 @@ public class StudentManagement {
                 scoreStore.remove(entry.getKey());
             }
         }
+    }
+
+
+    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
+    public static String getStudentState() {
+        String studentState = "";
+        int listSize = stateList.size();
+        while (true) {
+            System.out.println("수강생 상태 입력:");
+            System.out.print("(");
+            for (int i = 0; i < listSize; i++) {
+                System.out.print(i + 1 + "." + stateList.get(i) + ", ");
+            }
+            System.out.print(listSize + 1 + ".취소) ");
+
+            try {
+                int index = Integer.parseInt(sc.next());
+                if (index == listSize + 1) {
+                    return studentState;
+                } else if (index > listSize + 1 || index <= 0) {
+                    System.out.println("잘못된 입력입니다.\n");
+                    continue;
+                }
+                studentState = stateList.get(index - 1);
+
+            } catch (NumberFormatException e) {
+                System.out.println("번호를 입력해주세요.\n");
+                continue;
+            }
+            return studentState;
+        }
+    }
+
+    public static String getStudentId() {
+        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
+        // 잘못된 Id 입력 처리 필요
+        String studentId = sc.next();
+        if (studentStore.get(studentId) == null) {
+            studentId = "";
+        }
+        return studentId;
     }
 }
