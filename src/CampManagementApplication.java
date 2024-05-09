@@ -659,56 +659,126 @@ public class CampManagementApplication {
         // 5-1. 과목 타입(mandatory, choice)은 확인하려면 subjectStore에서 subjectId로 해당하는 subject 객체를 찾고 멤버변수 subjectType으로 알 수있음
 
 
-//         수강생의 특정 과목 회차별 등급 조회
-        private static void inquireRoundGradeBySubject () {
-            String studentId = getStudentId(); // 관리할 수강생 고유 번호
-            System.out.println("회차별 등급을 조회합니다...");
 
-//             기능 구현 (조회할 특정 과목)
-//             1. 과목 이름 입력받기
-//
-//             2. 시험본 회차 입력받기
-//
-//             3. scoreStore를 돌면서 [studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
-//
-//             4. score 객체의 studentGrade 멤버변수 출력
+        System.out.println("\n점수 수정 성공!");
+    }
 
-            System.out.println("\n등급 조회 성공!");
+    // 수강생의 특정 과목 회차별 등급 조회
+    private static void inquireRoundGradeBySubject() {
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println("회차별 등급을 조회합니다...");
+
+        // 기능 구현 (조회할 특정 과목)
+        // 1. 과목 이름 입력받기
+        Set<String> subjects = studentStore.get(studentId).getStudentSubject();
+        List<String> studentSubjectNames = subjects.stream().map(x -> {
+            return x = subjectStore.get(x).getSubjectName();
+        }).toList();
+        System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
+        String studentSubject = sc.next();
+
+        // 이상한 값 안 받기 위한 코드 짜기
+        // 유효한 과목 ID를 저장할 변수 초기화
+        String subjectId = null;
+        // 사용자가 유효한 과목 이름을 입력할 때까지 반복
+        while (subjectId == null) {
+            // 사용자가 입력한 과목 이름을 사용하여 해당 과목의 ID를 가져옴
+            subjectId = getSubjectIdByName(studentSubject);
+            // 만약 입력된 과목 이름이 유효하지 않으면 다시 입력 요청
+            if (subjectId == null) {
+                // 잘못된 입력임을 알리는 메시지 출력
+                System.out.println("잘못된 과목입니다. 다시 입력하세요.");
+                // 사용자가 선택할 수 있는 유효한 과목 목록을 출력하고 다시 입력 요청
+                System.out.print("과목을 입력해주세요 " + studentSubjectNames + "\n과목 입력 : ");
+                studentSubject = sc.next();
+            }
         }
 
-//        // 수강생의 과목별 평균 등급 조회
-        private static void inquireAvgGrades () {
-            String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
-            System.out.println("과목별 평균 등급을 조회합니다...");
-//
-//            // 기능 구현 (조회할 특정 과목)
-            // 1. 과목 이름 입력받기
-            // 1-1. subjectStore를 돌면서 입력받은 과목 이름과 일치하는 subject 객체 찾기
-            // 1-2. 해당 객체의 subjectId, subjectType 가져오기 (이후 연산에 필요함)
+        // 2. 시험본 회차 입력받기
+        System.out.println("시험본 회차를 입력해주세요 : ");
+        int examRound;
+        while (true) {
+            try {
+                examRound = Integer.parseInt(sc.next());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.print("올바른 숫자를 입력해주세요: ");
+            }
+        }
 
-            // 2. scoreStore를 돌면서 [studentId, subjectId(1-2에서 가져왔던 것)] 이 두 가지가 일치하는 score 객체를 찾고
-            // 찾은 score 객체마다의 studentScore 멤버변수들을 가지고 평균점수 구하기
+        // 3. scoreStore를 돌면서 [studentId, subjectId, examRound] 이 세가지가 일치하는 score 객체 찾기
+        // scoreStore에 있는 각 Score 객체에 대해 다음 작업을 수행합니다.
+        for (Score score : scoreStore.values()) {
+            //[studentId, 과목이름, 회차] 이 세가지가 일치하는 score 객체 찾기
+            if (score.getStudentId().equals(studentId)
+                    && score.getSubjectId().equals(getSubjectIdByName(studentSubject))
+                    && score.getRoundNumber() == examRound) {
+                // 4. score 객체의 studentGrade 멤버변수 출력
+                System.out.println("수강생 " + studentStore.get(studentId).getStudentName() + "의 " + studentSubject + " 과목의 " + examRound + "회차 등급은 " + score.getStudentGrade() + "입니다.");
+                return;
+            }
+        }
+        // 3번에서 일치하는 score 객체를 찾지 못한 경우
+        System.out.println("해당하는 정보를 찾을 수 없습니다.");
+    }
+    // 수강생의 과목별 평균 등급 조회
+    private static void inquireAvgGrades() {
+        String studentId = getStudentId(); // 과목별 평균 등급을 보고싶은 수강생ID 입력
+        System.out.println("과목별 평균 등급을 조회합니다...");
 
-            // 3. 평균 점수를  등급으로 환산하기
-            //   (1-2.)에서 구했던 subjectType 이 MANDATORY인지 CHOICE인지에 따라 averageScoreToGrade() 메서드 활용
-            // --> String grade = averageScoreToGrade(평균점수, subjectType); 또는
-            // --> String grade = averageScoreToGrade(점수리스트, subjectType); 선택해서 사용..
+        Set<String> subjects = new HashSet<>();
 
-            // 4. 평균 등급 출력
+        for(Map.Entry<String, Student> entry : studentStore.entrySet()) {
+            if(entry.getKey().equals(studentId)){
+                subjects = entry.getValue().getStudentSubject();
+            }
+        }
+
+        for(String str : subjects){
+            String subjectName = subjectStore.get(str).getSubjectName();
+            String grade = settingGrade(studentId, str);
+
+            if(!"none".equals(grade)){
+                System.out.println( subjectName+" 과목 평균 등급 : "+grade);
+            }
+        }
 
             System.out.println("\n평균 등급 조회 성공!");
         }
 
-        // 특정 상태 수강생들의 필수 과목 평균 등급 조회
-        private static void inquireMandatoryAvgGradeByStudentState () {
-            String studentState;
-            while (true) {
-                System.out.println("조회하고싶은 수강생들의 상태를 입력: ");
-                studentState = sc.next();
-                if (stateList.contains(studentState)) {
-                    break;
-                }
-                System.out.println("잘못된 입력입니다. 다시 입력해주세요..");
+    private static String settingGrade(String studentId, String subjectId) {
+        String subjectType = subjectStore.get(subjectId).getSubjectType();
+        List<Integer> scoreList = new ArrayList<>();
+        String grade = "";
+
+        for(Map.Entry<String, Score> entry : scoreStore.entrySet()) {
+            if(studentId.equals(entry.getValue().getStudentId())
+                    && subjectId.equals(entry.getValue().getSubjectId())){
+                scoreList.add(entry.getValue().getStudentScore());
+            }
+        }
+
+        if(scoreList.isEmpty()){
+            grade = "none";
+        }else{
+            if(subjectType.equals(SUBJECT_TYPE_CHOICE)){
+                grade = Score.getGradeChoiceByScore(scoreList);
+            }else{
+                grade = Score.getGradeMandatoryByScore(scoreList);
+            }
+        }
+
+        return grade;
+    }
+
+    // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+    private static void inquireMandatoryAvgGradeByStudentState() {
+        String studentState;
+        while (true) {
+            System.out.println("조회하고싶은 수강생들의 상태를 입력: ");
+            studentState = sc.next();
+            if (stateList.contains(studentState)) {
+                break;
             }
             System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
 
