@@ -76,11 +76,22 @@ public class StudentManagement {
         // 필수 & 선택 과목 추가될 리스트
         Set<String> studentSubject = new HashSet<>();
 
+        // 필수 과목 리스트
+        List<String> mandatorySubjectNames = SubjectManagement.inquireMandatorySubject();
+        if (mandatorySubjectNames == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
         // 필수 과목 입력
-        studentSubject = SubjectManagement.getMandatorySubjectSet();
+        for (String subject : mandatorySubjectNames) {
+            String subjectId = SubjectManagement.getSubjectIdByName(subject);
+            if (subjectId != null) {
+                studentSubject.add(subjectId);
+            }
+        }
 
         // 선택 과목 리스트
-        List<String> choiceSubjectNames = SubjectManagement.getChoiceSubject();
+        List<String> choiceSubjectNames = SubjectManagement.inquireChoiceSubject();
         if (choiceSubjectNames == null) {
             System.out.println("등록이 취소되었습니다.");
             return;
@@ -169,13 +180,7 @@ public class StudentManagement {
 
 
         System.out.println("필수 과목: " + mandatoryList);
-        System.out.print("선택 과목: ");
-        if (!optionalList.isEmpty()) {
-            System.out.println(optionalList);
-        }
-        else {
-            System.out.println("없음");
-        }
+        System.out.println("선택 과목: " + optionalList);
         System.out.println("\n수강생 상세 정보 조회 성공!");
     }
 
@@ -247,12 +252,13 @@ public class StudentManagement {
 
         // 상태 변경, 상태 변경 메서드 사용
         System.out.print("변경될 ");
-        String studentState = getStudentState();
+        String beforeState = studentStore.get(studentId).getStudentState();
+        String afterState = getStudentState();
 
-        if (!"".equals(studentState)) {
-            System.out.print("[" + studentStore.get(studentId).getStudentState() + "]에서 ");
-            updateStudent.setStudentState(studentState); //수강생 상태 set
-            System.out.println("[" + studentState + "]으로 변경되었습니다.");
+        if (!"".equals(afterState) && !beforeState.equals(afterState)) {
+            updateStudent.setStudentState(afterState); //수강생 상태 set
+            System.out.print("[" + beforeState + "]에서 ");
+            System.out.println("[" + afterState + "]으로 변경되었습니다.");
         } else {
             System.out.println("학생 상태는 [" + studentStore.get(studentId).getStudentState() + "]으로 유지됩니다.");
         }
@@ -321,7 +327,7 @@ public class StudentManagement {
          * ST1, st1, sT1, St1, 1, 01, 001, .. 가능
          * 존재하지 않는 id값 입력시 null 반환
          */
-        System.out.print("수강생 ID를 입력해주세요: ");
+        System.out.print("\n수강생 ID를 입력해주세요: ");
         String studentId = sc.nextLine().toUpperCase();
         if (studentId.matches("^[0-9]+$")) {
             studentId = "ST" + Integer.parseInt(studentId);
@@ -350,5 +356,9 @@ public class StudentManagement {
             }
         }
         return studentByState;
+    }
+
+    public static boolean isEmptyStudent() {
+        return studentStore.isEmpty();
     }
 }
