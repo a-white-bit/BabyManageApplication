@@ -1,6 +1,5 @@
 import model.Score;
 import model.Student;
-
 import java.util.*;
 
 public class ScoreManagement {
@@ -10,7 +9,7 @@ public class ScoreManagement {
     // 데이터 저장소
     private static Map<String, Score> scoreStore;
 
-    //index관리 필드
+    // index 관리 필드
     private static int scoreIndex;
     private static final String INDEX_TYPE_SCORE = "SC";
 
@@ -90,12 +89,21 @@ public class ScoreManagement {
         System.out.println("\n점수 등록 성공!");
     }
 
+    // 점수 삭제
+    public static void deleteStudentScore(String studentId) {
+        for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
+            if (entry.getValue().getStudentId().equals(studentId)) {
+                scoreStore.remove(entry.getKey());
+            }
+        }
+    }
+
     // 회차 입력
     private static Integer inquireRound() {
         int roundNumber;
         while (true) {
             try {
-                System.out.println("회차(1~10) 입력: ");
+                System.out.print("회차(1~10) 입력: ");
                 String round = sc.nextLine();
                 if (Objects.equals("", round)) {
                     return null;
@@ -119,7 +127,7 @@ public class ScoreManagement {
         int studentScore;
         while (true) {
             try {
-                System.out.println("점수(0~100) 입력: ");
+                System.out.print("점수(0~100) 입력: ");
                 String score = sc.nextLine();
                 if (Objects.equals("", score)) {
                     return null;
@@ -167,7 +175,7 @@ public class ScoreManagement {
         }
 
         // 수정할 점수 입력
-        System.out.println("수정할 ");
+        System.out.print("수정할 ");
         Integer updateScore = inquireScore();
         if (updateScore == null) {
             System.out.println("점수 수정을 취소합니다.");
@@ -269,8 +277,7 @@ public class ScoreManagement {
         }
         if (roundCount != 0) {
             System.out.println("\n평균 등급 조회 성공!");
-        }
-        else {
+        } else {
             System.out.println("시험 정보가 없습니다.");
         }
     }
@@ -303,46 +310,47 @@ public class ScoreManagement {
     // 특정 상태 수강생들의 필수 과목 평균 등급 조회
     public static void inquireMandatoryAvgGradeByStudentState() {
         String studentState;
-        while (true) {
 
-            // 상태 입력
-            System.out.print("\n점수를 조회하고 싶은 ");
-            studentState = StudentManagement.getStudentState();
-            if (Objects.equals("", studentState)) { return; }
-            System.out.println("\n상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
+        // 상태 입력
+        System.out.print("\n점수를 조회하고 싶은 ");
+        studentState = StudentManagement.getStudentState();
+        if (Objects.equals("", studentState)) {
+            return;
+        }
+        System.out.println("\n상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급을 조회합니다...");
 
-            // 입력받은 상태가 일치하는 학생 객체 리스트
-            List<Student> studentByState = StudentManagement.getStudentByState(studentState);
+        // 입력받은 상태가 일치하는 학생 객체 리스트
+        List<Student> studentByState = StudentManagement.getStudentByState(studentState);
 
-            // 위 학생들의 모든 점수 ID를 리스트에 저장
-            List<String> scoreId = new ArrayList<String>();
-            for (Student student : studentByState) {
-                for (Score score : scoreStore.values()) {
-                    if (Objects.equals(score.getStudentId(), student.getStudentId())) {
-                        scoreId.add(score.getScoreId());
-                    }
+        // 위 학생들의 모든 점수 ID를 리스트에 저장
+        List<String> scoreId = new ArrayList<>();
+        for (Student student : studentByState) {
+            for (Score score : scoreStore.values()) {
+                if (Objects.equals(score.getStudentId(), student.getStudentId())) {
+                    scoreId.add(score.getScoreId());
                 }
-            }
-
-            // 과목 타입이 필수 과목인 것만 점수 저장
-            String subjectId;
-            List<Integer> scores = new ArrayList<>();
-            for (int i = 0; i < scoreId.size(); i++) {
-                // 과목 타입이 필수인지 확인
-                subjectId = scoreStore.get(scoreId.get(i)).getSubjectId();
-                if (SubjectManagement.isMandatory(subjectId)) {
-                    scores.add(scoreStore.get(scoreId.get(i)).getStudentScore());
-                }
-            }
-
-            // 총 평균등급 계산
-            String avgGrade = Score.getGradeMandatoryByScore(scores);
-            if (!"none".equals(avgGrade)) {
-                System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급: " + avgGrade);
-                System.out.println("\n필수 과목 평균 등급 조회 성공!");
-            } else {
-                System.out.println("조회할 점수가 없습니다.");
             }
         }
+
+        // 과목 타입이 필수 과목인 것만 점수 저장
+        String subjectId;
+        List<Integer> scores = new ArrayList<>();
+        for (int i = 0; i < scoreId.size(); i++) {
+            // 과목 타입이 필수인지 확인
+            subjectId = scoreStore.get(scoreId.get(i)).getSubjectId();
+            if (SubjectManagement.isMandatory(subjectId)) {
+                scores.add(scoreStore.get(scoreId.get(i)).getStudentScore());
+            }
+        }
+
+        // 총 평균등급 계산
+        String avgGrade = Score.getGradeMandatoryByScore(scores);
+        if (!"none".equals(avgGrade)) {
+            System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급: " + avgGrade);
+            System.out.println("\n필수 과목 평균 등급 조회 성공!");
+        } else {
+            System.out.println("조회할 점수가 없습니다.");
+        }
+
     }
 }

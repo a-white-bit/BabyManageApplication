@@ -1,7 +1,4 @@
-import model.Score;
 import model.Student;
-import model.Subject;
-
 import java.util.*;
 
 public class StudentManagement {
@@ -11,7 +8,7 @@ public class StudentManagement {
     // 데이터 저장소
     private static Map<String, Student> studentStore;
 
-    //index관리 필드
+    // index 관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
 
@@ -262,7 +259,7 @@ public class StudentManagement {
     }
 
     // 수강생 정보 삭제
-    public static void deleteStudent(Map<String, Score> scoreStore) {
+    public static void deleteStudent() {
         System.out.println("\n수강생 정보를 삭제합니다...");
 
         // id 조회
@@ -282,13 +279,7 @@ public class StudentManagement {
         }
 
         // 해당하는 수강생 점수 정보 삭제
-        Iterator<Map.Entry<String, Score>> entries = scoreStore.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String, Score> entry = entries.next();
-            if (entry.getValue().getStudentId().equals(studentId)) {
-                scoreStore.remove(entry.getKey());
-            }
-        }
+        ScoreManagement.deleteStudentScore(studentId);
     }
 
 

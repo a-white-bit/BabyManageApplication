@@ -4,14 +4,14 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/09 22:00
+// updated 2024/05/10 01:00
 
 /**
  * 구현 메모
- * -
- * 1. 숫자가 아닌 값 입력되면 오류로 프로그램 종료됨
- * 프로그램은 종료되지 않게 하고, 다시 값을 받게 하거나 수정단계만 빠져나가도록 하기
- * switch 변수를 String 형으로 작성  or 예외 try-catch
+ *
+ *
+ *
+ *
  */
 
 public class CampManagementApplication {
@@ -57,7 +57,7 @@ public class CampManagementApplication {
                 case "3" -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
-                    Thread.sleep(2000);
+                    Thread.sleep(800);
                 }
             }
         }
@@ -81,7 +81,7 @@ public class CampManagementApplication {
                 case "1" -> StudentManagement.createStudent(); // 수강생 등록
                 case "2" -> displayStudentListView(); // 수강생 목록 조회
                 case "3" -> StudentManagement.updateStudent(); // 수강생 정보 수정
-                case "4" -> StudentManagement.deleteStudent(scoreStore); //수강생 삭제
+                case "4" -> StudentManagement.deleteStudent(); //수강생 삭제
                 case "5" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n다시 입력해주세요...");
@@ -116,7 +116,7 @@ public class CampManagementApplication {
         }
     }
 
-    private static void displayScoreView() {
+    private static void displayScoreView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -139,7 +139,7 @@ public class CampManagementApplication {
                 case "6" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
-                    flag = false;
+                    Thread.sleep(800);
                 }
             }
         }
