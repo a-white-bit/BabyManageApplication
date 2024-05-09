@@ -332,4 +332,8 @@ public class StudentManagement {
         }
         return studentId;
     }
+
+    public static Set<String> getStudentSubjectId(String studentId) {
+        return studentStore.get(studentId).getStudentSubject();
+    }
 }
