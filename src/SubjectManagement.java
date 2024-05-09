@@ -99,7 +99,7 @@ public class SubjectManagement {
 
             // 선택과목 입력
             try {
-                int index = Integer.parseInt(sc.next()) - 1;
+                int index = Integer.parseInt(sc.nextLine()) - 1;
                 if (index == subjectsChoiceList.size()) {
                     break; // 등록 완료
                 } else if (index == subjectsChoiceList.size() + 1) {
@@ -187,7 +187,7 @@ public class SubjectManagement {
             System.out.print(it + ".취소) ");
 
             try {
-                int index = Integer.parseInt(sc.next());
+                int index = Integer.parseInt(sc.nextLine());
                 if (index == it) {
                     return selectedSubject;
                 } else if (index > it || index <= 0) {

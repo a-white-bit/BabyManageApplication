@@ -60,7 +60,6 @@ public class StudentManagement {
 
         // 이름 입력
         System.out.print("수강생 이름 입력 : ");
-        sc.nextLine();
         String studentName = sc.nextLine();
         if (Objects.equals(studentName, "") || studentName == null) {
             System.out.println("등록이 취소되었습니다.");
@@ -142,7 +141,7 @@ public class StudentManagement {
         System.out.print("\n수강생 고유번호를 입력해주세요: ");
         // 정규화 사용, id 숫자만 입력해도 검색됨
         // ST1, st1, sT1, St1, 1, 01, 001, .. 가능
-        String studentId = sc.next().toUpperCase();
+        String studentId = sc.nextLine().toUpperCase();
         if (studentId.matches("^[0-9]+$")) {
             studentId = "ST" + Integer.parseInt(studentId);
         }
@@ -226,7 +225,7 @@ public class StudentManagement {
     public static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
-        String studentId = sc.next();
+        String studentId = sc.nextLine();
 
         Student student = studentStore.get(studentId);
         if (student != null) {
@@ -265,11 +264,11 @@ public class StudentManagement {
     public static void deleteStudent(Map<String, Score> scoreStore) {
         System.out.println("\n수강생 정보를 삭제합니다...");
         System.out.println("\n수강생 고유번호를 입력해주세요: ");
-        String studentId = sc.next();
+        String studentId = sc.nextLine();
         Student deleteStudent = studentStore.get(studentId);
         if (deleteStudent != null) {
             System.out.print("정말로 " + deleteStudent.getStudentName() + "님의 정보를 삭제하시겠습니까?:\n ('네' 입력시 삭제) ");
-            if ("네".equals(sc.next())) {
+            if ("네".equals(sc.nextLine())) {
                 studentStore.remove(studentId);
                 System.out.println("삭제되었습니다.");
             } else {
@@ -303,7 +302,7 @@ public class StudentManagement {
             System.out.print(listSize + 1 + ".취소) ");
 
             try {
-                int index = Integer.parseInt(sc.next());
+                int index = Integer.parseInt(sc.nextLine());
                 if (index == listSize + 1) {
                     return studentState;
                 } else if (index > listSize + 1 || index <= 0) {
@@ -323,7 +322,7 @@ public class StudentManagement {
     public static String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         // 잘못된 Id 입력 처리 필요
-        String studentId = sc.next();
+        String studentId = sc.nextLine();
         if (studentStore.get(studentId) == null) {
             studentId = "";
         }

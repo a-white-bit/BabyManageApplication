@@ -92,9 +92,6 @@ public class ScoreManagement {
 
     // 회차 입력
     private static Integer inquireRound() {
-        if (sc.hasNextLine()) {
-            sc.nextLine();
-        }
         int roundNumber;
         while (true) {
             try {
@@ -119,9 +116,6 @@ public class ScoreManagement {
 
     // 점수 입력
     private static Integer inquireScore() {
-        if (sc.hasNextLine()) {
-            sc.nextLine();
-        }
         int studentScore;
         while (true) {
             try {
