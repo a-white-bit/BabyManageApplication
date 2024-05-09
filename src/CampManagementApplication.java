@@ -150,77 +150,25 @@ public class CampManagementApplication {
         }
     }
 
-    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
-    private static String getSubjectIdByName(String subjectName) {
-        for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
-            if (entry.getValue().getSubjectName().equals(subjectName)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    // 수강생 등록
-    private static void createStudent() {
-        System.out.println("\n수강생을 등록합니다...");
-
-        /* 이 메서드에서 구현해야할 것:
-         * 다음 정보를 학생 목록(studentStore)에 저장하기
-         * 수강생 ID, 이름, 상태, 과목 목록
-         * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
-         * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
-         * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
-         * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+    // 수강생 ID를 입력받는 메서드, 실패시 null
+    private static String getStudentId() {
+        /*
+         * 수강생 Id를 입력받는 메서드
+         * 정규화 사용, id 숫자만 입력해도 검색됨
+         * ST1, st1, sT1, St1, 1, 01, 001, .. 가능
+         * 존재하지 않는 id값 입력시 null 반환
          */
-
-        // 이름 입력
-        System.out.print("수강생 이름 입력 : ");
-        sc.nextLine();
-        String studentName = sc.nextLine();
-        if (Objects.equals(studentName, "") || studentName == null) {
-            System.out.println("등록이 취소되었습니다.");
-            return;
+        System.out.print("수강생 ID를 입력해주세요: ");
+        String studentId = sc.next().toUpperCase();
+        if (studentId.matches("^[0-9]+$")) {
+            studentId = "ST" + Integer.parseInt(studentId);
         }
-
-        // 상태 입력
-        String studentState = getStudentState();
-        if (Objects.equals(studentState, "") || studentState == null) {
-            System.out.println("등록이 취소되었습니다.");
-            return;
+        if (!studentStore.containsKey(studentId)) {
+            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
+            return null;
+        } else {
+            return studentId;
         }
-
-        // 학생 과목 리스트 생성
-        // 필수 & 선택 과목 추가될 리스트
-        Set<String> studentSubject = new HashSet<>();
-
-        // 필수 과목 입력
-        for (String subject : subjectsMandatoryList) {
-            String subjectId = getSubjectIdByName(subject);
-            if (subjectId != null) {
-                studentSubject.add(subjectId);
-            }
-        }
-        // 선택 과목 리스트
-        List<String> choiceSubjectNames = getChoiceSubject();
-        if (choiceSubjectNames == null) {
-            System.out.println("등록이 취소되었습니다.");
-            return;
-        }
-        // 선택 과목 입력
-        for (String subject : choiceSubjectNames) {
-            String subjectId = getSubjectIdByName(subject);
-            if (subjectId != null) {
-                studentSubject.add(subjectId);
-            }
-        }
-
-        // 수강생 ID 시퀀스 생성
-        String studentId = sequence(INDEX_TYPE_STUDENT);
-        // 수강생 인스턴스 생성 예시 코드
-        Student student = new Student(studentId, studentName, studentState, studentSubject);
-        // 학생 목록(Map)에 저장
-        studentStore.put(studentId, student);
-        System.out.println("수강생 등록 성공!\n");
     }
 
     // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
@@ -317,6 +265,79 @@ public class CampManagementApplication {
         return choiceSubject;
     }
 
+    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
+    private static String getSubjectIdByName(String subjectName) {
+        for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
+            if (entry.getValue().getSubjectName().equals(subjectName)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    // 수강생 등록
+    private static void createStudent() {
+        System.out.println("\n수강생을 등록합니다...");
+
+        /* 이 메서드에서 구현해야할 것:
+         * 다음 정보를 학생 목록(studentStore)에 저장하기
+         * 수강생 ID, 이름, 상태, 과목 목록
+         * 수강생 ID는 사용자에게서 임의로 입력받지 않습니다. 저희 프로그램이 내부적으로 등록합니다. ("ST1", "ST2", "ST3", ... 으로 등록됨)
+         * 과목 목록은, 사용자에게서 여러개의 과목을 입력받아 컬렉션에 저장되어야 합니다.
+         * 필수 과목과 선택 과목이 존재하는데, 필수 과목은 무조건 컬렉션에 저장하고
+         * 선택 과목을 사용자에게 물어보고 입력받은 것들을 컬렉션에 넣어주면 될 것 같습니다!
+         */
+
+        // 이름 입력
+        System.out.print("수강생 이름 입력 : ");
+        sc.nextLine();
+        String studentName = sc.nextLine();
+        if (Objects.equals(studentName, "") || studentName == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
+
+        // 상태 입력
+        String studentState = getStudentState();
+        if (Objects.equals(studentState, "") || studentState == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
+
+        // 학생 과목 리스트 생성
+        // 필수 & 선택 과목 추가될 리스트
+        Set<String> studentSubject = new HashSet<>();
+
+        // 필수 과목 입력
+        for (String subject : subjectsMandatoryList) {
+            String subjectId = getSubjectIdByName(subject);
+            if (subjectId != null) {
+                studentSubject.add(subjectId);
+            }
+        }
+        // 선택 과목 리스트
+        List<String> choiceSubjectNames = getChoiceSubject();
+        if (choiceSubjectNames == null) {
+            System.out.println("등록이 취소되었습니다.");
+            return;
+        }
+        // 선택 과목 입력
+        for (String subject : choiceSubjectNames) {
+            String subjectId = getSubjectIdByName(subject);
+            if (subjectId != null) {
+                studentSubject.add(subjectId);
+            }
+        }
+
+        // 수강생 ID 시퀀스 생성
+        String studentId = sequence(INDEX_TYPE_STUDENT);
+        // 수강생 인스턴스 생성 예시 코드
+        Student student = new Student(studentId, studentName, studentState, studentSubject);
+        // 학생 목록(Map)에 저장
+        studentStore.put(studentId, student);
+        System.out.println("수강생 등록 성공!\n");
+    }
+
     private static void displayStudentListView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
@@ -377,21 +398,18 @@ public class CampManagementApplication {
          * 학생 ID, 학생이름, 상태(state), 과목리스트
          * 과목리스트는 컬렉션이므로 for문으로 돌면서 이름들을 출력해주세요.
          */
+        // id 조회
         String studentId = getStudentId();
-        if (studentId == null) { // 조회한 수강생이 없을 경우
-            System.out.println("등록되지 않은 수강생입니다. 되돌아갑니다..");
-            return;
-        }
+        if (studentId == null) { return; }
         Student student = studentStore.get(studentId);
 
         // 수강생 조회
         System.out.println("ID: " + student.getStudentId());
         System.out.println("이름: " + student.getStudentName());
         System.out.println("상태: " + student.getStudentState());
-
         Set<String> studentSubject = student.getStudentSubject();
 
-        // 학생이 수강하는 과목리스트 출력
+        // 학생이 수강하는 과목리스트 (필수, 선택)
         List<String> mandatoryList = new ArrayList<>();
         List<String> optionalList = new ArrayList<>();
         for (String subject : studentSubject) {
@@ -404,32 +422,14 @@ public class CampManagementApplication {
             }
         }
         System.out.println("필수 과목: " + mandatoryList);
+        System.out.print("선택 과목: ");
         if (!optionalList.isEmpty()) {
-            System.out.println("선택 과목: " + optionalList);
-        } else {
-            System.out.println("선택 과목: 없음");
+            System.out.println(optionalList);
+        }
+        else {
+            System.out.println("없음");
         }
         System.out.println("\n수강생 상세 정보 조회 성공!");
-    }
-
-    // 수강생 ID를 입력받는 메서드, 실패시 null
-    private static String getStudentId() {
-        /*
-         * 수강생 Id를 입력받는 메서드
-         * 정규화 사용, id 숫자만 입력해도 검색됨
-         * ST1, st1, sT1, St1, 1, 01, 001, .. 가능
-         * 존재하지 않는 id값 입력시 null 반환
-         */
-        System.out.print("수강생 ID를 입력해주세요: ");
-        String studentId = sc.next().toUpperCase();
-        if (studentId.matches("^[0-9]+$")) {
-            studentId = "ST" + Integer.parseInt(studentId);
-        }
-        if (!studentStore.containsKey(studentId)) {
-            return null;
-        } else {
-            return studentId;
-        }
     }
 
     // 수강생 상태별 목록 조회
@@ -480,58 +480,56 @@ public class CampManagementApplication {
     // 수강생 정보 수정
     private static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
-        System.out.println("\n수강생 고유번호를 입력해주세요: ");
-        String studentId = sc.next();
 
-        Student student = studentStore.get(studentId);
-        if (student != null) {
-            sc.nextLine();
+        // id 조회
+        String studentId = getStudentId();
+        if (studentId == null) return;
+        Student updateStudent = studentStore.get(studentId);
+        sc.nextLine();
 
-            // 이름 변경, 미 입력시 기존 정보 유지
-            System.out.print("변경될 이름을 입력하세요: (미 입력시 기존 정보가 유지됩니다.) ");
-            String studentName = sc.nextLine();
+        // 이름 변경, 미 입력시 기존 정보 유지
+        System.out.print("변경될 이름을 입력하세요: (미 입력시 기존 정보가 유지됩니다.) ");
+        String studentName = sc.nextLine();
 
-            if (!"".equals(studentName)) {
-                System.out.print("[" + studentStore.get(studentId).getStudentName() + "]에서 ");
-                student.setStudentName(studentName); //수강생 이름 set
-                System.out.println("[" + studentName + "]으로 변경되었습니다.");
-            } else {
-                System.out.println("학생 이름이 [" + studentStore.get(studentId).getStudentName() + "]으로 유지됩니다.");
-            }
-
-            // 상태 변경, 상태 변경 메서드 사용
-            System.out.print("변경될 ");
-            String studentState = getStudentState();
-
-            if (!"".equals(studentState)) {
-                System.out.print("[" + studentStore.get(studentId).getStudentState() + "]에서 ");
-                student.setStudentState(studentState); //수강생 상태 set
-                System.out.println("[" + studentState + "]으로 변경되었습니다.");
-            } else {
-                System.out.println("학생 상태는 [" + studentStore.get(studentId).getStudentState() + "]으로 유지됩니다.");
-            }
-
+        if (!"".equals(studentName)) {
+            System.out.print("[" + studentStore.get(studentId).getStudentName() + "]에서 ");
+            updateStudent.setStudentName(studentName); //수강생 이름 set
+            System.out.println("[" + studentName + "]으로 변경되었습니다.");
         } else {
-            System.out.println("해당 수강생이 없습니다.");
+            System.out.println("학생 이름이 [" + studentStore.get(studentId).getStudentName() + "]으로 유지됩니다.");
+        }
+
+        // 상태 변경, 상태 변경 메서드 사용
+        System.out.print("변경될 ");
+        String studentState = getStudentState();
+
+        if (!"".equals(studentState)) {
+            System.out.print("[" + studentStore.get(studentId).getStudentState() + "]에서 ");
+            updateStudent.setStudentState(studentState); //수강생 상태 set
+            System.out.println("[" + studentState + "]으로 변경되었습니다.");
+        } else {
+            System.out.println("학생 상태는 [" + studentStore.get(studentId).getStudentState() + "]으로 유지됩니다.");
         }
     }
 
     // 수강생 정보 삭제
     private static void deleteStudent() {
         System.out.println("\n수강생 정보를 삭제합니다...");
-        System.out.println("\n수강생 고유번호를 입력해주세요: ");
-        String studentId = sc.next();
+
+        // id 조회
+        String studentId = getStudentId();
+        if (studentId == null) return;
         Student deleteStudent = studentStore.get(studentId);
-        if (deleteStudent != null) {
-            System.out.print("정말로 " + deleteStudent.getStudentName() + "님의 정보를 삭제하시겠습니까?:\n ('네' 입력시 삭제) ");
-            if ("네".equals(sc.next())) {
-                studentStore.remove(studentId);
-                System.out.println("삭제되었습니다.");
-            } else {
-                System.out.println("\n삭제가 취소되었습니다.");
-            }
+
+        System.out.print("정말로 " + deleteStudent.getStudentName() + "님의 정보를 삭제하시겠습니까?:\n ('네' 입력시 삭제) ");
+
+        // 해당하는 수강생 ID 정보 삭제
+        if ("네".equals(sc.next())) {
+            studentStore.remove(studentId);
+            System.out.println("삭제되었습니다.");
         } else {
-            System.out.println("해당 수강생이 없습니다.");
+            System.out.println("\n삭제가 취소되었습니다.");
+            return;
         }
 
         // 해당하는 수강생 점수 정보 삭제
