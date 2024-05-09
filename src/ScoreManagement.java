@@ -1,6 +1,5 @@
 import model.Score;
 import model.Student;
-import model.Subject;
 
 import java.util.*;
 
@@ -55,6 +54,7 @@ public class ScoreManagement {
         List<String> studentSubjectId = StudentManagement.getStudentSubjectId(studentId).stream().toList();
 
         // 등록할 과목 입력
+        System.out.print("등록할 ");
         String subjectId = SubjectManagement.inquireSubject(studentSubjectId);
         if ("".equals(subjectId)) {
             System.out.println("점수 등록을 취소합니다.");
@@ -62,37 +62,18 @@ public class ScoreManagement {
         }
 
         // 회차 입력
-        int roundNumber;
-        while (true) {
-            try {
-                System.out.println("회차(1~10) 입력: ");
-                roundNumber = Integer.parseInt(sc.next());
-                if (1 > roundNumber || roundNumber > 10) {
-                    System.out.println("알맞지 않은 숫자입니다.");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("숫자를 입력해주세요.");
-            }
+        Integer roundNumber = inquireRound();
+        if (roundNumber == null) {
+            System.out.println("점수 등록을 취소합니다.");
+            return;
         }
 
         // 점수 입력
-        int studentScore;
-        while (true) {
-            try {
-                System.out.println("점수(0~100) 입력: ");
-                studentScore = Integer.parseInt(sc.next());
-                if (0 > studentScore || studentScore > 100) {
-                    System.out.println("알맞지 않은 숫자입니다.");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("숫자를 입력해주세요.");
-            }
+        Integer studentScore = inquireScore();
+        if (studentScore == null) {
+            System.out.println("점수 등록을 취소합니다.");
+            return;
         }
-
 
         // 점수 ID 시퀀스 생성
         String scoreId = sequence();
@@ -112,48 +93,117 @@ public class ScoreManagement {
         System.out.println("\n점수 등록 성공!");
     }
 
+    // 회차 입력
+    private static Integer inquireRound() {
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+        int roundNumber;
+        while (true) {
+            try {
+                System.out.println("회차(1~10) 입력: ");
+                String round = sc.nextLine();
+                if (Objects.equals("", round)) {
+                    return null;
+                }
+
+                roundNumber = Integer.parseInt(round);
+                if (1 > roundNumber || roundNumber > 10) {
+                    System.out.println("알맞지 않은 숫자입니다.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
+            }
+        }
+        return roundNumber;
+    }
+
+    // 점수 입력
+    private static Integer inquireScore() {
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+        int studentScore;
+        while (true) {
+            try {
+                System.out.println("점수(0~100) 입력: ");
+                String score = sc.nextLine();
+                if (Objects.equals("", score)) {
+                    return null;
+                }
+
+                studentScore = Integer.parseInt(score);
+                if (0 > studentScore || studentScore > 100) {
+                    System.out.println("알맞지 않은 숫자입니다.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
+            }
+        }
+        return studentScore;
+    }
+
     // 수강생의 과목별 회차 점수 수정
     public static void updateRoundScoreBySubject() {
         // 관리할 수강생 고유 번호
         String studentId = StudentManagement.getStudentId();
-        System.out.println(studentId);
-        //getStudentId 메소드에서의 studentId값이 null일때 리턴시켜주는 조건문
-        if ("".equals(studentId)) {
-            System.out.println("등록되지 않은 학생 ID입니다. 되돌아갑니다..");
+        if (studentId == null) {
             return;
         }
         System.out.println("시험 점수를 수정합니다...");
-        Set<String> studentSubjects = studentStore.get(studentId).getStudentSubject();
-        // stream을 이용한 subjectID를 Name로변경
-        List<String> studentSubjectNames = studentSubjects.stream().map(x -> {
-            return x = subjectStore.get(x).getSubjectName();
-        }).toList();
 
-        for (Map.Entry<String, Student> entryset : studentStore.entrySet()) {
-            System.out.print(studentSubjectNames + "\n수정할 과목을 입력해주세요 : ");
-            // 수정할 과목 이름 입력받기
-            String subjectName = sc.next();
-            System.out.print("수정할 회차를 선택해주세요 : ");
-            // 수정할 과목 회차 입력받기,
-            int roundNumber = Integer.parseInt(sc.next());
+        // 수강생의 수강 과목 id 리스트
+        List<String> studentSubjectId = StudentManagement.getStudentSubjectId(studentId).stream().toList();
 
-            for (Score score : scoreStore.values()) {
-                if (score.getStudentId().equals(studentId)
-                        && score.getSubjectId().equals(SubjectManagement.getSubjectIdByName(subjectName))
-                        && score.getRoundNumber() == roundNumber) {
-                    System.out.print("바꿀 점수를 입력해주세요 : ");
-                    int changeScore = Integer.parseInt(sc.next());
-                    score.setStudentScore(changeScore);
-                    System.out.println("바뀐 점수 : " + changeScore);
-                }
+        // 수정할 과목 id 선택
+        System.out.print("수정할 ");
+        String subjectId = SubjectManagement.inquireSubject(studentSubjectId);
+        if (Objects.equals("", subjectId) || subjectId == null) {
+            System.out.println("점수 수정을 취소합니다.");
+            return;
+        }
+
+        // 수정할 과목 회차 입력
+        System.out.print("수정할 ");
+        Integer round = inquireRound();
+        if (round == null) {
+            System.out.println("점수 수정을 취소합니다.");
+            return;
+        }
+
+        // 수정할 점수 입력
+        System.out.println("수정할 ");
+        Integer updateScore = inquireScore();
+        if (updateScore == null) {
+            System.out.println("점수 수정을 취소합니다.");
+            return;
+        }
+
+        // 점수 수정
+        for (Score score : scoreStore.values()) {
+            if (score.getStudentId().equals(studentId)
+                    && score.getSubjectId().equals(subjectId)
+                    && score.getRoundNumber() == round) {
+                int origianlScore = score.getStudentScore();
+                score.setStudentScore(updateScore);
+                System.out.println("바뀐 점수 : [" + origianlScore + "]점 -> [" + updateScore + "]점");
+                System.out.println("\n점수 수정 성공!");
+                return;
             }
-            System.out.println("\n점수 수정 성공!");
         }
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
     public static void inquireRoundGradeBySubject() {
-        String studentId = StudentManagement.getStudentId(); // 관리할 수강생 고유 번호
+        // 관리할 수강생 고유 번호
+        String studentId = StudentManagement.getStudentId();
+        if (studentId == null) {
+            return;
+        }
         System.out.println("회차별 등급을 조회합니다...");
 
         // 기능 구현 (조회할 특정 과목)
@@ -238,7 +288,6 @@ public class ScoreManagement {
 
     // 특정 학생의 특정 과목 평균 등급 조회
     private static String settingGrade(String studentId, String subjectId) {
-        String subjectType = subjectStore.get(subjectId).getSubjectType();
         List<Integer> scoreList = new ArrayList<>();
         String grade = "";
 
@@ -252,10 +301,10 @@ public class ScoreManagement {
         if (scoreList.isEmpty()) {
             grade = "none";
         } else {
-            if (subjectType.equals(SUBJECT_TYPE_CHOICE)) {
-                grade = Score.getGradeChoiceByScore(scoreList);
-            } else {
+            if (SubjectManagement.isMandatory(subjectId)) {
                 grade = Score.getGradeMandatoryByScore(scoreList);
+            } else {
+                grade = Score.getGradeChoiceByScore(scoreList);
             }
         }
 

@@ -46,7 +46,6 @@ public class SubjectManagement {
 
         for (String subject : subjects) {
             subjectSeq = sequence();
-            subjectIndex++;
             subjectStore.put(subjectSeq, new Subject(subjectSeq, subject, type));
         }
     }
@@ -179,7 +178,7 @@ public class SubjectManagement {
         int it = 1;
         while (true) {
             // 사용자의 과목 리스트 보여주기
-            System.out.println("등록할 과목 선택:");
+            System.out.println("과목 선택:");
             System.out.print("(");
             for (String id : studentSubjectId) {
                 System.out.print(it + "." + subjectStore.get(id).getSubjectName() + ", ");

@@ -97,15 +97,12 @@ public class StudentManagement {
 
         // 수강생 ID 시퀀스 생성
         String studentId = sequence();
-        studentIndex++;
         // 수강생 인스턴스 생성 예시 코드
         Student student = new Student(studentId, studentName, studentState, studentSubject);
         // 학생 목록(Map)에 저장
         studentStore.put(studentId, student);
         System.out.println("수강생 등록 성공!\n");
     }
-
-
 
     // 수강생 전체 목록 조회
     public static void inquireStudent() {
