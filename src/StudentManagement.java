@@ -1,5 +1,8 @@
 import model.Score;
+import model.Subject;
 import model.Student;
+import model.SubjectType;
+
 import java.util.*;
 
 public class StudentManagement {
@@ -46,7 +49,7 @@ public class StudentManagement {
     }
 
     // 1.1.수강생 등록
-    public static void createStudent() {
+    public static void createStudent(Map<String, Subject> subjectStore) {
         System.out.println("\n수강생을 등록합니다...");
 
         /* 이 메서드에서 구현해야할 것:
@@ -85,7 +88,7 @@ public class StudentManagement {
         }
         // 필수 과목 입력
         for (String subject : mandatorySubjectNames) {
-            String subjectId = SubjectManagement.getSubjectIdByName(subject);
+            String subjectId = getSubjectIdByName(subjectStore, subject);
             if (subjectId != null) {
                 studentSubject.add(subjectId);
             }
@@ -99,7 +102,7 @@ public class StudentManagement {
         }
         // 선택 과목 입력
         for (String subject : choiceSubjectNames) {
-            String subjectId = SubjectManagement.getSubjectIdByName(subject);
+            String subjectId = getSubjectIdByName(subjectStore, subject);
             if (subjectId != null) {
                 studentSubject.add(subjectId);
             }
@@ -140,7 +143,7 @@ public class StudentManagement {
     }
 
     // 1.2.2.수강생 상세 정보 조회
-    public static void inquireStudentInfo() {
+    public static void inquireStudentInfo(Map<String, Subject> subjectStore) {
         System.out.println("\n수강생 상세 정보를 조회합니다...");
         /*
          * 조회하고 싶은 수강생 ID를 입력받습니다. (예시: "ST1")
@@ -163,9 +166,9 @@ public class StudentManagement {
 
         // 학생이 수강하는 과목리스트 출력
         // *********
-        List<String> mandatoryList = SubjectManagement.getStudentMandatorySubjectList(studentSubject);
-        List<String> optionalList = SubjectManagement.getStudentChoiceSubject(studentSubject);
-        // *********
+        List<String> mandatoryList = getStudentMandatorySubject(subjectStore, studentSubject);
+        List<String> optionalList = getStudentChoiceSubject(subjectStore, studentSubject);
+        // ********* or
         // 학생이 수강하는 과목리스트 (필수, 선택)
 //        List<String> mandatoryList = new ArrayList<>();
 //        List<String> optionalList = new ArrayList<>();
@@ -178,7 +181,6 @@ public class StudentManagement {
 //                optionalList.add(name);
 //            }
 //        }
-
 
         System.out.println("필수 과목: " + mandatoryList);
         System.out.println("선택 과목: " + optionalList);
@@ -298,10 +300,11 @@ public class StudentManagement {
         }
     }
 
-
-    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴 * 메모있음 *
+    // ** 메모있음 **
+    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
     public static String getStudentState() {
         /*
+         * 일단은 public으로 다른 클래스들이 사용할 수 있도록 허용함
          * stateList를 Enum으로 빠지고 Enum 메서드로 변경하는 것이 좋을 것 같다 판단됨
          */
         String studentState = "";
@@ -353,26 +356,47 @@ public class StudentManagement {
         }
     }
 
-    //----------------삭제 고려
-    private static Set<String> getStudentSubjectId(String studentId) {
-        return studentStore.get(studentId).getStudentSubject();
-    }
 
-    private static String getStudentName(String studentId) {
-        return studentStore.get(studentId).getStudentName();
-    }
 
-    private static List<Student> getStudentByState(String state) {
-        List<Student> studentByState = new ArrayList<>();
-        for (Student student : studentStore.values()) {
-            if (student.getStudentState().equals(state)) {
-                studentByState.add(student);
+    // -------refac--------
+    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
+    private static String getSubjectIdByName(Map<String, Subject> subjectStore, String subjectName) {
+        for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
+            if (entry.getValue().getSubjectName().equals(subjectName)) {
+                return entry.getKey();
             }
         }
-        return studentByState;
+        return null;
     }
 
-    private static boolean isEmptyStudent() {
-        return studentStore.isEmpty();
+    private static List<String> getStudentMandatorySubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
+        List<String> studentMandatorySubjectList = new ArrayList<String>();
+
+        for(String subjectId : studentSubject) {
+            SubjectType type = subjectStore.get(subjectId).getSubjectType();
+            String name = subjectStore.get(subjectId).getSubjectName();
+
+            if (SubjectType.SUBJECT_TYPE_MANDATORY.equals(type)) {
+                studentMandatorySubjectList.add(name);
+            }
+        }
+
+        return studentMandatorySubjectList;
     }
+
+    private static List<String> getStudentChoiceSubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
+        List<String> studentChoiceSubjectList = new ArrayList<String>();
+
+        for(String subjectId : studentSubject) {
+            SubjectType type = subjectStore.get(subjectId).getSubjectType();
+            String name = subjectStore.get(subjectId).getSubjectName();
+
+            if (SubjectType.SUBJECT_TYPE_CHOICE.equals(type)) {
+                studentChoiceSubjectList.add(name);
+            }
+        }
+
+        return studentChoiceSubjectList;
+    }
+
 }

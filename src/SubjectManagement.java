@@ -1,4 +1,6 @@
 import model.Subject;
+import model.SubjectType;
+
 import java.util.*;
 
 public class SubjectManagement {
@@ -35,14 +37,14 @@ public class SubjectManagement {
     public static Map<String, Subject> getStore() {
         if (subjectStore == null) {
             subjectStore = new HashMap<>();
-            setSubjectList(subjectsMandatoryList, SUBJECT_TYPE_MANDATORY);
-            setSubjectList(subjectsChoiceList, SUBJECT_TYPE_CHOICE);
+            setSubjectList(subjectsMandatoryList, SubjectType.SUBJECT_TYPE_MANDATORY);
+            setSubjectList(subjectsChoiceList, SubjectType.SUBJECT_TYPE_CHOICE);
         }
         return subjectStore;
     }
 
     // 과목 리스트 설정
-    private static void setSubjectList(List<String> subjects, String type) {
+    private static void setSubjectList(List<String> subjects, SubjectType type) {
         String subjectSeq = "";
 
         for (String subject : subjects) {
@@ -51,12 +53,13 @@ public class SubjectManagement {
         }
     }
 
-    public static String getSubjectNameById(String studentSubjectId) {
+
+    private static String getSubjectNameById(String studentSubjectId) {
         return subjectStore.get(studentSubjectId).getSubjectName();
     }
 
     // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
-    public static String getSubjectIdByName(String subjectName) {
+    private static String getSubjectIdByName(String subjectName) {
         for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
             if (entry.getValue().getSubjectName().equals(subjectName)) {
                 return entry.getKey();
@@ -65,8 +68,14 @@ public class SubjectManagement {
         return null;
     }
 
+    // ** 메모 있음 **
     // 선택과목을 입력받는 메서드, 선택한 과목 리스트 반환, 취소시 null 반환
     public static List<String> inquireChoiceSubject() {
+        /*
+         * subjectsChoiceList, SUBJECT_CHOICE_MIN, .. 등을
+         * enum 클래스로 관리하는 것이 좋아 보임
+         * 우선은 이 메서드를 public으로 다른 클래스들이 사용할 수 있도록 함
+         */
         /*
          * 생각보다 많은 코드가 기술되어서 따로 메서드를 작성했습니다.
          * 1) 사용자가 선택 중인 과목 리스트 표시함
@@ -135,8 +144,14 @@ public class SubjectManagement {
         return choiceSubject;
     }
 
+    // ** 메모 있음 **
     // 필수과목을 입력받는 메서드, 선택한 과목 리스트 반환, 취소시 null 반환
     public static List<String> inquireMandatorySubject() {
+        /*
+         * subjectsMandatoryList, SUBJECT_MANDATORY_MIN, .. 등을
+         * enum 클래스로 관리하는 것이 좋아 보임
+         * 우선은 이 메서드를 public으로 다른 클래스들이 사용할 수 있도록 함
+         */
         List<String> mandatorySubject = new ArrayList<>();
         Boolean[] selected = new Boolean[subjectsMandatoryList.size()]; // 고른 과목인지 체크하는 배열
         Arrays.fill(selected, false);
@@ -200,7 +215,7 @@ public class SubjectManagement {
     }
 
     //필수 과목 set으로 반환
-    public static Set<String> getMandatorySubject() {
+    private static Set<String> getMandatorySubject() {
         Set<String> mandatorySubjectSet = new HashSet<>();
 
         for (String subject : subjectsMandatoryList) {
@@ -213,14 +228,14 @@ public class SubjectManagement {
         return mandatorySubjectSet;
     }
 
-    public static List<String> getStudentMandatorySubjectList(Set<String> studentSubject) {
+    private static List<String> getStudentMandatorySubjectList(Set<String> studentSubject) {
         List<String> studentMandatorySubjectList = new ArrayList<String>();
 
         for(String subjectId : studentSubject) {
-            String type = subjectStore.get(subjectId).getSubjectType();
+            SubjectType type = subjectStore.get(subjectId).getSubjectType();
             String name = subjectStore.get(subjectId).getSubjectName();
 
-            if (SUBJECT_TYPE_MANDATORY.equals(type)) {
+            if (SubjectType.SUBJECT_TYPE_MANDATORY.equals(type)) {
                 studentMandatorySubjectList.add(name);
             }
         }
@@ -228,14 +243,14 @@ public class SubjectManagement {
         return studentMandatorySubjectList;
     }
 
-    public static List<String> getStudentChoiceSubject(Set<String> studentSubject) {
+    private static List<String> getStudentChoiceSubject(Set<String> studentSubject) {
         List<String> studentChoiceSubjectList = new ArrayList<String>();
 
         for(String subjectId : studentSubject) {
-            String type = subjectStore.get(subjectId).getSubjectType();
+            SubjectType type = subjectStore.get(subjectId).getSubjectType();
             String name = subjectStore.get(subjectId).getSubjectName();
 
-            if (SUBJECT_TYPE_CHOICE.equals(type)) {
+            if (SubjectType.SUBJECT_TYPE_CHOICE.equals(type)) {
                 studentChoiceSubjectList.add(name);
             }
         }
@@ -244,7 +259,7 @@ public class SubjectManagement {
     }
 
     // 수강생이 수강하는 과목 중 한 가지를 선택하는 메서드, 취소 시 "" 리턴
-    public static String inquireSubject(List<String> studentSubjectId) {
+    private static String inquireSubject(List<String> studentSubjectId) {
         String selectedSubject = "";
         while (true) {
             // 사용자의 과목 리스트 보여주기
@@ -274,7 +289,7 @@ public class SubjectManagement {
         }
     }
 
-    public static boolean isMandatory(String subjectId) {
-        return SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType());
+    private static boolean isMandatory(String subjectId) {
+        return SubjectType.SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType());
     }
 }

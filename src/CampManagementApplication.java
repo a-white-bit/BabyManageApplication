@@ -4,7 +4,7 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/10 09:00
+// updated 2024/05/10 12:00
 
 /**
  * 구현 메모
@@ -78,7 +78,7 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> StudentManagement.createStudent(); // 수강생 등록
+                case "1" -> StudentManagement.createStudent(subjectStore); // 수강생 등록
                 case "2" -> displayStudentListView(); // 수강생 목록 조회
                 case "3" -> StudentManagement.updateStudent(); // 수강생 정보 수정
                 case "4" -> StudentManagement.deleteStudent(scoreStore); //수강생 삭제
@@ -105,7 +105,7 @@ public class CampManagementApplication {
 
             switch (input) {
                 case "1" -> StudentManagement.inquireStudent(); // 전체 목록 조회
-                case "2" -> StudentManagement.inquireStudentInfo(); // 상세 정보 조회
+                case "2" -> StudentManagement.inquireStudentInfo(subjectStore); // 상세 정보 조회
                 case "3" -> StudentManagement.inquireStudentByState(); // 상태별 목록 조회
                 case "4" -> flag = false; // 수강 관리 기능으로
                 default -> {
@@ -131,11 +131,11 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> ScoreManagement.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
-                case "2" -> ScoreManagement.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
-                case "3" -> ScoreManagement.inquireRoundGradeBySubject(studentStore); // 수강생의 특정 과목 회차별 등급 조회
-                case "4" -> ScoreManagement.inquireAvgGrades(studentStore); // 수강생의 과목별 평균 등급 조회
-                case "5" -> ScoreManagement.inquireMandatoryAvgGradeByStudentState(studentStore); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+                case "1" -> ScoreManagement.createScore(studentStore, subjectStore); // 수강생의 과목별 시험 회차 및 점수 등록
+                case "2" -> ScoreManagement.updateRoundScoreBySubject(studentStore, subjectStore); // 수강생의 과목별 회차 점수 수정
+                case "3" -> ScoreManagement.inquireRoundGradeBySubject(studentStore, subjectStore); // 수강생의 특정 과목 회차별 등급 조회
+                case "4" -> ScoreManagement.inquireAvgGrades(studentStore, subjectStore); // 수강생의 과목별 평균 등급 조회
+                case "5" -> ScoreManagement.inquireMandatoryAvgGradeByStudentState(studentStore, subjectStore); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
                 case "6" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
