@@ -4,13 +4,13 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/10 04:00
+// updated 2024/05/10 09:00
 
 /**
  * 구현 메모
  *
- *
- *
+ *  모듈 간 결합도가 높은 것으로 판단되어서
+ * 되는데까지 풀어보겠습니다 !
  *
  */
 
@@ -131,11 +131,11 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> ScoreManagement.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case "2" -> ScoreManagement.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case "3" -> ScoreManagement.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case "4" -> ScoreManagement.inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
-                case "5" -> ScoreManagement.inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+                case "1" -> ScoreManagement.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
+                case "2" -> ScoreManagement.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
+                case "3" -> ScoreManagement.inquireRoundGradeBySubject(studentStore); // 수강생의 특정 과목 회차별 등급 조회
+                case "4" -> ScoreManagement.inquireAvgGrades(studentStore); // 수강생의 과목별 평균 등급 조회
+                case "5" -> ScoreManagement.inquireMandatoryAvgGradeByStudentState(studentStore); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
                 case "6" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");

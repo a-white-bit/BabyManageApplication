@@ -44,7 +44,7 @@ public class StudentManagement {
         return studentStore;
     }
 
-    // 수강생 등록
+    // 1.1.수강생 등록
     public static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
 
@@ -113,7 +113,7 @@ public class StudentManagement {
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // 수강생 전체 목록 조회
+    // 1.2.1.수강생 전체 목록 조회
     public static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         /*
@@ -138,7 +138,7 @@ public class StudentManagement {
         }
     }
 
-    // 수강생 상세 정보 조회
+    // 1.2.2.수강생 상세 정보 조회
     public static void inquireStudentInfo() {
         System.out.println("\n수강생 상세 정보를 조회합니다...");
         /*
@@ -184,7 +184,7 @@ public class StudentManagement {
         System.out.println("\n수강생 상세 정보 조회 성공!");
     }
 
-    // 수강생 상태별 목록 조회
+    // 1.2.3.수강생 상태별 목록 조회
     public static void inquireStudentByState() {
         /*
          * 조회하고 싶은 상태를 사용자에게 입력받습니다. (예시: "아주좋음")
@@ -229,7 +229,7 @@ public class StudentManagement {
         }
     }
 
-    // 수강생 정보 수정
+    // 1.3.수강생 정보 수정
     public static void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
 
@@ -264,7 +264,7 @@ public class StudentManagement {
         }
     }
 
-    // 수강생 정보 삭제
+    // 1.4.수강생 정보 삭제
     public static void deleteStudent() {
         System.out.println("\n수강생 정보를 삭제합니다...");
 
@@ -289,8 +289,11 @@ public class StudentManagement {
     }
 
 
-    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴
+    // 수강생 상태를 입력받는 메서드, 취소 시 "" 리턴 * 메모있음 *
     public static String getStudentState() {
+        /*
+         * stateList를 Enum으로 빠지고 Enum 메서드로 변경하는 것이 좋을 것 같다 판단됨
+         */
         String studentState = "";
         int listSize = stateList.size();
         while (true) {
@@ -320,7 +323,7 @@ public class StudentManagement {
     }
 
     // 수강생 ID를 입력받는 메서드, 실패시 null
-    public static String getStudentId() {
+    private static String getStudentId() {
         /*
          * 수강생 Id를 입력받는 메서드
          * 정규화 사용, id 숫자만 입력해도 검색됨
@@ -340,15 +343,16 @@ public class StudentManagement {
         }
     }
 
-    public static Set<String> getStudentSubjectId(String studentId) {
+    //----------------삭제 고려
+    private static Set<String> getStudentSubjectId(String studentId) {
         return studentStore.get(studentId).getStudentSubject();
     }
 
-    public static String getStudentName(String studentId) {
+    private static String getStudentName(String studentId) {
         return studentStore.get(studentId).getStudentName();
     }
 
-    public static List<Student> getStudentByState(String state) {
+    private static List<Student> getStudentByState(String state) {
         List<Student> studentByState = new ArrayList<>();
         for (Student student : studentStore.values()) {
             if (student.getStudentState().equals(state)) {
@@ -358,7 +362,7 @@ public class StudentManagement {
         return studentByState;
     }
 
-    public static boolean isEmptyStudent() {
+    private static boolean isEmptyStudent() {
         return studentStore.isEmpty();
     }
 }
