@@ -1,384 +1,382 @@
-<mxfile host="65bd71144e">
-    <diagram id="2Q_Wa5cL7qmAalsq_AKc" name="위쪽">
-        <mxGraphModel dx="6012" dy="2532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
-            <root>
-                <mxCell id="0"/>
-                <mxCell id="1" parent="0"/>
-                <mxCell id="15" value="CampManagementApplication" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=31;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;labelPosition=center;verticalLabelPosition=middle;textDirection=ltr;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="-1340" width="530" height="320" as="geometry">
-                        <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="17" value="Student{&#10;   + 학생ID : private String studentId&#10;   + 학생이름 : private String studentName&#10;   + 학생상태 : private String studentState&#10;   + 학생의수강과목 : private Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="15" vertex="1">
-                    <mxGeometry y="31" width="530" height="84" as="geometry"/>
-                </mxCell>
-                <mxCell id="18" value="Subject{&#10;    +과목ID : private String subjectId;&#10;    +과목명 : private String subjectName;&#10;    +필수과목, 선택과목 : private String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="15" vertex="1">
-                    <mxGeometry y="115" width="530" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="19" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="15" vertex="1">
-                    <mxGeometry y="185" width="530" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="94" value="" style="endArrow=none;html=1;fontColor=#F0F0F0;exitX=0;exitY=-0.023;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.993;entryY=-0.009;entryDx=0;entryDy=0;entryPerimeter=0;" parent="15" source="18" target="18" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="422" y="167" as="sourcePoint"/>
-                        <mxPoint x="472" y="117" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="20" value="Score {&#10;   +점수등록 : private static void createScore&#10;   +점수수정 : private static void updateRoundScoreBySubject&#10;   +회차조회 : private static void inquireRoundGradeBySubject&#10;   +평균조회 : private static void inquireAvgGrades&#10;   +필수과목조회 : private static void inquireMandatoryAvgGradeByStudentState" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="15" vertex="1">
-                    <mxGeometry y="193" width="530" height="102" as="geometry"/>
-                </mxCell>
-                <mxCell id="28" value="Score" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="-910" width="520" height="520" as="geometry">
-                        <mxRectangle x="755" y="756" width="170" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="30" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="28" vertex="1">
-                    <mxGeometry y="26" width="520" height="4" as="geometry"/>
-                </mxCell>
-                <mxCell id="47" value="" style="endArrow=none;html=1;exitX=0.001;exitY=1.001;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.995;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;" parent="28" source="29" target="29" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="-250" y="-120" as="sourcePoint"/>
-                        <mxPoint x="320" y="170" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="300" y="164"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="81" value="" style="edgeStyle=none;html=1;" parent="28" target="29" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="160" y="164" as="sourcePoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="29" value="점수ID : private String scoreId;&#10;학생 ID : private String studentId;&#10;과목 ID : private String subjectId;&#10;회차 : private int roundNumber;&#10;학생점수 : private int studentScore;&#10;학생등급 : private String studentGrade;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="28" vertex="1">
-                    <mxGeometry y="30" width="520" height="131" as="geometry"/>
-                </mxCell>
-                <mxCell id="83" value="&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;//setter&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;void&amp;nbsp;setStudentScore&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;void&amp;nbsp;setGradeChoiceByScore&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;//getter&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getScoreId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getStudentId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getSubjectId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;int&amp;nbsp;getRoundNumber&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;int&amp;nbsp;getStudentScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getStudentGrade&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;static&amp;nbsp;String&amp;nbsp;getGradeMandatoryByScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;static&amp;nbsp;String&amp;nbsp;getGradeChoiceByScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F0F0F0;" parent="28" vertex="1">
-                    <mxGeometry y="161" width="520" height="359" as="geometry"/>
-                </mxCell>
-                <mxCell id="32" value="Subject" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;" parent="1" vertex="1">
-                    <mxGeometry x="890" y="-910" width="493" height="320" as="geometry">
-                        <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="33" value="+과목ID : private String subjectId;&#10;+과목명 : private String subjectName;&#10;+필수과목, 선택과목 : private String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="32" vertex="1">
-                    <mxGeometry y="26" width="493" height="84" as="geometry"/>
-                </mxCell>
-                <mxCell id="38" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="32" vertex="1">
-                    <mxGeometry y="110" width="493" height="2" as="geometry"/>
-                </mxCell>
-                <mxCell id="39" value="    public String getSubjectId() { return subjectId; }&#10;    public String getSubjectName() {   return subjectName;}&#10;&#10;// 과목의Type이 mandatory , choice의 반환값에 따라서 정해짐&#10;    public String getSubjectType() {   return subjectType; }&#10;    public boolean isMandatory() { return subjectType.equalsIgnoreCase(&quot;mandatory&quot;); }&#10;    public boolean isChoice() { return subjectType.equalsIgnoreCase(&quot;choice&quot;); }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="32" vertex="1">
-                    <mxGeometry y="112" width="493" height="118" as="geometry"/>
-                </mxCell>
-                <mxCell id="48" value="Student&lt;br style=&quot;font-size: 30px;&quot;&gt;" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;swimlaneLine=1;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="-790" y="-910" width="550" height="415" as="geometry">
-                        <mxRectangle x="-433" y="629" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="50" value="&#10;   + 학생ID : private String studentId&#10;    +학생이름 : private String studentName&#10;    +학생상태 : private String studentState&#10;    +학생의수강과목 : private Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="48" vertex="1">
-                    <mxGeometry y="26" width="550" height="94" as="geometry"/>
-                </mxCell>
-                <mxCell id="52" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="48" vertex="1">
-                    <mxGeometry y="120" width="550" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="60" value="// Getter&#10;    public String getStudentId() { return studentId;}&#10;    public String getStudentName() {  return studentName;}&#10;    public String getStudentState() { return studentState; }&#10;    public Set&lt;String&gt; getStudentSubject() { return studentSubject; }&#10;  &#10;  // Setter&#10;    public void setStudentId(String studentId) { this.studentId = studentId; }&#10;    public void setStudentName(String studentName) { this.studentName = studentName; }&#10;    public void setStudentState(String studentState) { this.studentState = studentState; }&#10;    public void setStudentSubject(Set&lt;String&gt; studentSubject) { this.studentSubject = studentSubject; }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;horizontal=1;" parent="48" vertex="1">
-                    <mxGeometry y="220" width="550" height="195" as="geometry"/>
-                </mxCell>
-                <mxCell id="87" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-weight: normal; line-height: 19px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;과목&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Set&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;studentStore&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;get&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(studentId).&lt;/span&gt;&lt;span style=&quot;&quot;&gt;getStudentSubject&lt;/span&gt;&lt;span style=&quot;&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;List&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;studentSubjectNames&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;stream&lt;/span&gt;&lt;span style=&quot;&quot;&gt;().&lt;/span&gt;&lt;span style=&quot;&quot;&gt;map&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(x &lt;/span&gt;&lt;span style=&quot;&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt; {&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;return&lt;/span&gt;&lt;span style=&quot;&quot;&gt; x &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjectStore&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;get&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(x).&lt;/span&gt;&lt;span style=&quot;&quot;&gt;getSubjectName&lt;/span&gt;&lt;span style=&quot;&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;}).toList();&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;fontColor=#F0F0F0;" parent="1" vertex="1">
-                    <mxGeometry x="740" y="-206.5" width="390" height="170" as="geometry"/>
-                </mxCell>
-                <mxCell id="100" value="&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;점수&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;scoreStore&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;put&lt;/span&gt;(scoreId, score);&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;&quot;&gt;changeScore&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;Integer&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;parseInt&lt;/span&gt;(&lt;span style=&quot;&quot;&gt;sc&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;next&lt;/span&gt;());&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;examRound &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;Integer&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;parseInt&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;&quot;&gt;sc&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;next&lt;/span&gt;&lt;span style=&quot;&quot;&gt;());&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Set&lt;/span&gt;&amp;lt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&amp;gt; &lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;&quot;&gt;HashSet&lt;/span&gt;&amp;lt;&amp;gt;();&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;&quot;&gt;avgGrade&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;Score&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;getGradeMandatoryByScore&lt;/span&gt;(scores);&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;fontColor=#F0F0F0;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="740" y="-33.5" width="390" height="190" as="geometry"/>
-                </mxCell>
-                <mxCell id="101" value="&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Student{&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+학생의수강과목 : private Set&amp;lt;String&amp;gt; studentSubject&amp;nbsp;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;br&gt;Subject{&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;+과목ID :&amp;nbsp;private String subjectId;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+과목명 :&amp;nbsp;private String subjectName;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+필수과목, 선택과목 :&amp;nbsp;private String subjectType;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;위 두 코드가 상호간에 학생과 과목의 별도의 객체가 학생이 수강하는 과목이라는 새로운 결과값을 반환시켜준다.&lt;/font&gt;&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="160" y="250" width="560" height="320" as="geometry"/>
-                </mxCell>
-                <mxCell id="102" value="" style="endArrow=none;html=1;fontSize=30;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="87" target="87" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="410" y="2213.5" as="sourcePoint"/>
-                        <mxPoint x="460" y="2163.5" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1000" y="-163.5"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="103" value="" style="endArrow=none;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="100" target="100" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="330" y="2313.5" as="sourcePoint"/>
-                        <mxPoint x="380" y="2263.5" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="109" value="출력" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" parent="1" vertex="1">
-                    <mxGeometry x="415" y="-1520" width="80" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-111" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="28" target="15" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="420" y="-200" as="sourcePoint"/>
-                        <mxPoint x="455" y="-889" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-112" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="48" target="17" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="190" y="-190" as="sourcePoint"/>
-                        <mxPoint x="322.50000000000045" y="-889" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="-240" y="-1270"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-113" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;entryX=1.002;entryY=0.68;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="32" target="18" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1310" y="-300" as="sourcePoint"/>
-                        <mxPoint x="1360" y="-350" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1140" y="-1180"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-114" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="100" target="83" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="740" y="320" as="sourcePoint"/>
-                        <mxPoint x="790" y="270" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="450" y="62"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-115" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="87" target="32" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="740" y="320" as="sourcePoint"/>
-                        <mxPoint x="1640" y="230" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1270" y="-121"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-118" value="" style="endArrow=none;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="101" target="101" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="360" y="230" as="sourcePoint"/>
-                        <mxPoint x="410" y="180" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-120" value="" style="endArrow=none;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="101" target="101" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="360" y="230" as="sourcePoint"/>
-                        <mxPoint x="410" y="180" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-121" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0.004;exitY=0.158;exitDx=0;exitDy=0;entryX=-0.024;entryY=0.019;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" source="va6zyPkbkS1uNYBuAUcX-122" target="60" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="-180" y="390" as="sourcePoint"/>
-                        <mxPoint x="-130" y="340" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="-1030" y="310"/>
-                            <mxPoint x="-1030" y="-686"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-122" value="" style="swimlane;startSize=0;fontSize=17;fontColor=#F0F0F0;" parent="1" vertex="1">
-                    <mxGeometry x="160" y="270" width="560" height="310" as="geometry"/>
-                </mxCell>
-                <mxCell id="va6zyPkbkS1uNYBuAUcX-123" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="va6zyPkbkS1uNYBuAUcX-122" edge="1" target="39">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="130" y="460" as="sourcePoint"/>
-                        <mxPoint x="1720" y="240" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1670" y="410"/>
-                            <mxPoint x="1650" y="-739"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="yghi8we6Bp6i2me9-wkZ-110" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="15" target="109" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="440" y="-920" as="sourcePoint"/>
-                        <mxPoint x="490" y="-970" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="dWHOqPz5T6RkKj1orb0X-118" value="&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font color=&quot;#cccccc&quot; style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Student Id {&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;String studentId = sc.next();&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Student student = studentStore.get(studentId);&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot; style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Score {&lt;br&gt;&lt;/font&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;switch (input) {&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 1 -&amp;gt; createScore(); // 수강생의 과목별 시험 회차 및 점수 등록&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 2 -&amp;gt; updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 3 -&amp;gt; inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 4 -&amp;gt; inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 5 -&amp;gt; inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 6 -&amp;gt; flag = false; // 메인 화면 이동&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;default -&amp;gt; {&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; System.out.println(&quot;잘못된 입력입니다.\n메인 화면 이동...&quot;);&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; flag = false;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="-510" y="-230" width="757" height="410" as="geometry"/>
-                </mxCell>
-                <mxCell id="dWHOqPz5T6RkKj1orb0X-119" value="" style="endArrow=none;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="dWHOqPz5T6RkKj1orb0X-118" target="dWHOqPz5T6RkKj1orb0X-121" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="-310" y="-280" as="sourcePoint"/>
-                        <mxPoint x="-260" y="-330" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="dWHOqPz5T6RkKj1orb0X-121" value="" style="swimlane;startSize=0;fontSize=17;fontColor=#F0F0F0;" parent="1" vertex="1">
-                    <mxGeometry x="-510" y="-230" width="747" height="400" as="geometry"/>
-                </mxCell>
-                <mxCell id="dWHOqPz5T6RkKj1orb0X-122" value="" style="endArrow=classic;html=1;fontSize=13;fontColor=#CCCCCC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.273;entryY=1.05;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="dWHOqPz5T6RkKj1orb0X-121" target="60" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="240" y="840" as="sourcePoint"/>
-                        <mxPoint x="290" y="790" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="-640" y="-30"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="dWHOqPz5T6RkKj1orb0X-123" value="" style="endArrow=classic;html=1;fontSize=13;fontColor=#CCCCCC;" parent="1" target="83" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="230" y="-60" as="sourcePoint"/>
-                        <mxPoint x="1650" y="220" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="320" y="-60"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
-    <diagram name="아래쪽" id="CqFqfnrp8SiUvhfj7fE7">
-        <mxGraphModel dx="4810" dy="2377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
-            <root>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-0"/>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-1" parent="D5YTPB07ds9DTILFUJjs-0"/>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-2" value="CampManagementApplication" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=31;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;labelPosition=center;verticalLabelPosition=middle;textDirection=ltr;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="150" y="-350" width="560" height="590" as="geometry">
-                        <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-3" value="Student{&#10;   + 학생ID :  String studentId&#10;   + 학생이름 : String studentName&#10;   + 학생상태 : String studentState&#10;   + 학생의수강과목 : Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=23;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
-                    <mxGeometry y="31" width="560" height="209" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-4" value="Subject{&#10;    +과목ID : String subjectId;&#10;    +과목명 : String subjectName;&#10;    +필수과목, 선택과목 : String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=26;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
-                    <mxGeometry y="240" width="560" height="170" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-5" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
-                    <mxGeometry y="410" width="560" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-6" value="" style="endArrow=none;html=1;fontColor=#F0F0F0;exitX=0;exitY=-0.023;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.993;entryY=-0.009;entryDx=0;entryDy=0;entryPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-2" source="D5YTPB07ds9DTILFUJjs-4" target="D5YTPB07ds9DTILFUJjs-4" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="422" y="167" as="sourcePoint"/>
-                        <mxPoint x="472" y="117" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-7" value="Score {&#10;   +점수등록 : createScore&#10;   +점수수정 : updateRoundScoreBySubject&#10;   +회차조회 : inquireRoundGradeBySubject&#10;   +평균조회 : inquireAvgGrades&#10;   +필수과목조회 : inquireMandatoryAvgGradeByStudentState" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
-                    <mxGeometry y="418" width="560" height="172" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-9" value="Score" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="1080" y="-1220" width="660" height="550" as="geometry">
-                        <mxRectangle x="755" y="756" width="170" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-10" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
-                    <mxGeometry y="26" width="660" height="4" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-13" value="점수ID : String scoreId;&#10;학생 ID : String studentId;&#10;과목 ID : String subjectId;&#10;회차 : int roundNumber;&#10;학생점수 : int studentScore;&#10;학생등급 : String studentGrade;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=27;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
-                    <mxGeometry y="30" width="660" height="230" as="geometry"/>
-                </mxCell>
-                <mxCell id="u4hNNTJII-TejNb8Yk7C-9" value="   // Getter&#10;String getScoreId() { return scoreId; }&#10;String getStudentId() { return studentId;}&#10;String getSubjectId() {return subjectId;}&#10;int getRoundNumber() { return roundNumber;}&#10;int getStudentScore() {return studentScore;}&#10;String getStudentGrade() {return studentGrade;}" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=31;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
-                    <mxGeometry y="260" width="660" height="290" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-15" value="" style="endArrow=block;endSize=10;endFill=0;shadow=0;strokeWidth=1;rounded=0;curved=0;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-9" target="D5YTPB07ds9DTILFUJjs-2" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="210" y="373" as="sourcePoint"/>
-                        <mxPoint x="310" y="271" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1560" y="-80"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-16" value="Subject" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="70" y="-1000" width="850" height="320" as="geometry">
-                        <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-17" value="+과목ID : String subjectId;&#10;+과목명 : String subjectName;&#10;+필수과목, 선택과목 : String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=23;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
-                    <mxGeometry y="26" width="850" height="104" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-18" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
-                    <mxGeometry y="130" width="850" height="2" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-19" value="    public String getSubjectId() { return subjectId; }&#10;    public String getSubjectName() {   return subjectName;}&#10;&#10;// 과목의Type이 mandatory , choice의 반환값에 따라서 정해짐&#10;    String getSubjectType() {   return subjectType; }&#10;    boolean isMandatory() { return subjectType.equalsIgnoreCase(&quot;mandatory&quot;); }&#10;    boolean isChoice() { return subjectType.equalsIgnoreCase(&quot;choice&quot;); }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=22;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
-                    <mxGeometry y="132" width="850" height="188" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-20" value="Student&lt;br style=&quot;font-size: 30px;&quot;&gt;" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;swimlaneLine=1;html=1;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="-780" y="-1110" width="730" height="500" as="geometry">
-                        <mxRectangle x="-433" y="629" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-21" value="&#10;   + 학생ID : String studentId&#10;    +학생이름 : String studentName&#10;    +학생상태 : String studentState&#10;    +학생의수강과목 : Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=24;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
-                    <mxGeometry y="26" width="730" height="174" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-22" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
-                    <mxGeometry y="200" width="730" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-23" value="// Getter&#10;    getStudentId() { return studentId;}&#10;    getStudentName() {  return studentName;}&#10;    getStudentState() { return studentState; }&#10;    Set&lt;String&gt; getStudentSubject() { return studentSubject; }&#10;  &#10;  // Setter&#10;     setStudentId(String studentId) { this.studentId = studentId; }&#10;     setStudentName(String studentName) { this.studentName = studentName; }&#10;     setStudentState(String studentState) { this.studentState = studentState; }&#10;    setStudentSubject(Set&lt;String&gt; studentSubject) { this.studentSubject = studentSubject; }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;horizontal=1;fontSize=18;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
-                    <mxGeometry y="240" width="730" height="260" as="geometry"/>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-6" value="" style="endArrow=classic;html=1;fontSize=20;exitX=0.363;exitY=1.031;exitDx=0;exitDy=0;exitPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-20" source="D5YTPB07ds9DTILFUJjs-23" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="260" y="420" as="sourcePoint"/>
-                        <mxPoint x="930" y="900" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="260" y="900"/>
-                            <mxPoint x="570" y="900"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-24" value="" style="whiteSpace=wrap;html=1;fillColor=none;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="-390" y="-550" width="510" height="290" as="geometry"/>
-                </mxCell>
-                <mxCell id="D5YTPB07ds9DTILFUJjs-27" value="&lt;div style=&quot;font-size: 20px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 20px;&quot;&gt;Student{&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;학생의수강과목 : Set&amp;lt;String&amp;gt; studentSubject&amp;nbsp; 코드와&lt;br style=&quot;font-size: 20px;&quot;&gt;Subject{&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+과목ID : String subjectId;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 20px;&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+과목명 : String subjectName;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 20px;&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+필수과목, 선택과목 : String subjectType;&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;br style=&quot;font-size: 20px;&quot;&gt;&amp;nbsp;코드가 상호간에 학생과 과목의 별도의 객체들이 &lt;br style=&quot;font-size: 20px;&quot;&gt;학생이 수강하는 과목(studentSubject[i])이라는&amp;nbsp;객체를 반환시켜준다.&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="-380" y="-550" width="480" height="270" as="geometry"/>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-2" value="" style="endArrow=classic;html=1;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="440" y="-680.0000000000001" as="sourcePoint"/>
-                        <mxPoint x="440" y="-360" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-3" value="" style="endArrow=none;dashed=1;html=1;fontSize=20;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-17" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="710" y="-865" as="sourcePoint"/>
-                        <mxPoint x="1090" y="-922" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-4" value="" style="endArrow=none;dashed=1;html=1;fontSize=20;exitX=1.005;exitY=0.051;exitDx=0;exitDy=0;exitPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-23" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="-230" y="-860" as="sourcePoint"/>
-                        <mxPoint x="180" y="-860" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-7" value="" style="endArrow=none;dashed=1;html=1;fontSize=13;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint y="-560" as="sourcePoint"/>
-                        <mxPoint y="-860" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint y="-720"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-8" value="" style="endArrow=none;dashed=1;html=1;fontSize=13;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1010" y="-650" as="sourcePoint"/>
-                        <mxPoint x="1010" y="-920" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-15" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=13;fillColor=none;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="760" y="-650" width="490" height="490" as="geometry"/>
-                </mxCell>
-                <mxCell id="sveYoT4_GafbHkfeT07I-16" value="&lt;span style=&quot;font-size: 21px;&quot;&gt;학생ID : private String studentId +&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;과목ID :&amp;nbsp;private String subjectId;&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 21px;&quot;&gt;=studentSubject[i])&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 21px;&quot;&gt;&lt;/font&gt;&amp;nbsp;&lt;br style=&quot;font-size: 21px;&quot;&gt;StudentId와 SubjectiD의 상호작용인&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;studentSubject[i])에&amp;nbsp;&lt;/span&gt;studentScore를&amp;nbsp;&lt;br style=&quot;font-size: 21px;&quot;&gt;입력한 뒤 해당학생의 수강과목에 값을&lt;br style=&quot;font-size: 21px;&quot;&gt;대입시켜준다.&lt;br style=&quot;font-size: 21px;&quot;&gt;그 값을 가지고 studentGrade값에 입력해&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;studentSubject[i])에 점수와 학점 둘다 입력시켜&lt;/span&gt;&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;br style=&quot;font-size: 21px;&quot;&gt;하나의 학생에 과목,점수,학점을 입력, 관리할수있는&lt;br style=&quot;font-size: 21px;&quot;&gt;프로세스가 만들어진다." style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
-                    <mxGeometry x="760" y="-650" width="500" height="390" as="geometry"/>
-                </mxCell>
-                <mxCell id="kSyN6EfRKaFN2ydEJG4l-1" value="" style="endArrow=classic;html=1;fontSize=20;exitX=1.008;exitY=0.38;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.268;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-24" target="D5YTPB07ds9DTILFUJjs-2" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="124" y="-416" as="sourcePoint"/>
-                        <mxPoint x="300" y="-360" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="299" y="-440"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="kSyN6EfRKaFN2ydEJG4l-3" value="" style="endArrow=classic;html=1;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="760" y="-440" as="sourcePoint"/>
-                        <mxPoint x="600" y="-360" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="600" y="-440"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
+<mxfile host="app.diagrams.net" modified="2024-05-10T03:38:09.763Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Whale/3.25.232.19 Safari/537.36" version="24.3.1" etag="mKN293UT3VGRjMF9O4YK" type="device" pages="2">
+  <diagram id="2Q_Wa5cL7qmAalsq_AKc" name="위쪽">
+    <mxGraphModel dx="2554" dy="2308" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="15" value="CampManagementApplication" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=31;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;labelPosition=center;verticalLabelPosition=middle;textDirection=ltr;" parent="1" vertex="1">
+          <mxGeometry x="190" y="-1340" width="530" height="320" as="geometry">
+            <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="17" value="Student{&#xa;   + 학생ID : private String studentId&#xa;   + 학생이름 : private String studentName&#xa;   + 학생상태 : private String studentState&#xa;   + 학생의수강과목 : private Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="15" vertex="1">
+          <mxGeometry y="31" width="530" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="Subject{&#xa;    +과목ID : private String subjectId;&#xa;    +과목명 : private String subjectName;&#xa;    +필수과목, 선택과목 : private String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="15" vertex="1">
+          <mxGeometry y="115" width="530" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="19" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="15" vertex="1">
+          <mxGeometry y="185" width="530" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="94" value="" style="endArrow=none;html=1;fontColor=#F0F0F0;exitX=0;exitY=-0.023;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.993;entryY=-0.009;entryDx=0;entryDy=0;entryPerimeter=0;" parent="15" source="18" target="18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="422" y="167" as="sourcePoint" />
+            <mxPoint x="472" y="117" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="20" value="Score {&#xa;   +점수등록 : private static void createScore&#xa;   +점수수정 : private static void updateRoundScoreBySubject&#xa;   +회차조회 : private static void inquireRoundGradeBySubject&#xa;   +평균조회 : private static void inquireAvgGrades&#xa;   +필수과목조회 : private static void inquireMandatoryAvgGradeByStudentState" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="15" vertex="1">
+          <mxGeometry y="193" width="530" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="28" value="Score" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;" parent="1" vertex="1">
+          <mxGeometry x="60" y="-910" width="520" height="520" as="geometry">
+            <mxRectangle x="755" y="756" width="170" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="28" vertex="1">
+          <mxGeometry y="26" width="520" height="4" as="geometry" />
+        </mxCell>
+        <mxCell id="47" value="" style="endArrow=none;html=1;exitX=0.001;exitY=1.001;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.995;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;" parent="28" source="29" target="29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-250" y="-120" as="sourcePoint" />
+            <mxPoint x="320" y="170" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="300" y="164" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="81" value="" style="edgeStyle=none;html=1;" parent="28" target="29" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="164" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29" value="점수ID : private String scoreId;&#xa;학생 ID : private String studentId;&#xa;과목 ID : private String subjectId;&#xa;회차 : private int roundNumber;&#xa;학생점수 : private int studentScore;&#xa;학생등급 : private String studentGrade;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="28" vertex="1">
+          <mxGeometry y="30" width="520" height="131" as="geometry" />
+        </mxCell>
+        <mxCell id="83" value="&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;//setter&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;void&amp;nbsp;setStudentScore&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;void&amp;nbsp;setGradeChoiceByScore&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;//getter&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getScoreId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getStudentId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getSubjectId&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;int&amp;nbsp;getRoundNumber&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;int&amp;nbsp;getStudentScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;String&amp;nbsp;getStudentGrade&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;static&amp;nbsp;String&amp;nbsp;getGradeMandatoryByScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;public&amp;nbsp;static&amp;nbsp;String&amp;nbsp;getGradeChoiceByScore&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F0F0F0;" parent="28" vertex="1">
+          <mxGeometry y="161" width="520" height="359" as="geometry" />
+        </mxCell>
+        <mxCell id="32" value="Subject" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;" parent="1" vertex="1">
+          <mxGeometry x="890" y="-910" width="493" height="320" as="geometry">
+            <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="33" value="+과목ID : private String subjectId;&#xa;+과목명 : private String subjectName;&#xa;+필수과목, 선택과목 : private String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="32" vertex="1">
+          <mxGeometry y="26" width="493" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="38" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="32" vertex="1">
+          <mxGeometry y="110" width="493" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="39" value="    public String getSubjectId() { return subjectId; }&#xa;    public String getSubjectName() {   return subjectName;}&#xa;&#xa;// 과목의Type이 mandatory , choice의 반환값에 따라서 정해짐&#xa;    public String getSubjectType() {   return subjectType; }&#xa;    public boolean isMandatory() { return subjectType.equalsIgnoreCase(&quot;mandatory&quot;); }&#xa;    public boolean isChoice() { return subjectType.equalsIgnoreCase(&quot;choice&quot;); }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="32" vertex="1">
+          <mxGeometry y="112" width="493" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="48" value="Student&lt;br style=&quot;font-size: 30px;&quot;&gt;" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;swimlaneLine=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-790" y="-910" width="550" height="415" as="geometry">
+            <mxRectangle x="-433" y="629" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="50" value="&#xa;   + 학생ID : private String studentId&#xa;    +학생이름 : private String studentName&#xa;    +학생상태 : private String studentState&#xa;    +학생의수강과목 : private Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" parent="48" vertex="1">
+          <mxGeometry y="26" width="550" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="52" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="48" vertex="1">
+          <mxGeometry y="120" width="550" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="60" value="// Getter&#xa;    public String getStudentId() { return studentId;}&#xa;    public String getStudentName() {  return studentName;}&#xa;    public String getStudentState() { return studentState; }&#xa;    public Set&lt;String&gt; getStudentSubject() { return studentSubject; }&#xa;  &#xa;  // Setter&#xa;    public void setStudentId(String studentId) { this.studentId = studentId; }&#xa;    public void setStudentName(String studentName) { this.studentName = studentName; }&#xa;    public void setStudentState(String studentState) { this.studentState = studentState; }&#xa;    public void setStudentSubject(Set&lt;String&gt; studentSubject) { this.studentSubject = studentSubject; }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;horizontal=1;" parent="48" vertex="1">
+          <mxGeometry y="220" width="550" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="87" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-weight: normal; line-height: 19px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;과목&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Set&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;studentStore&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;get&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(studentId).&lt;/span&gt;&lt;span style=&quot;&quot;&gt;getStudentSubject&lt;/span&gt;&lt;span style=&quot;&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;List&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;studentSubjectNames&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;stream&lt;/span&gt;&lt;span style=&quot;&quot;&gt;().&lt;/span&gt;&lt;span style=&quot;&quot;&gt;map&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(x &lt;/span&gt;&lt;span style=&quot;&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt; {&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;return&lt;/span&gt;&lt;span style=&quot;&quot;&gt; x &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;subjectStore&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;get&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(x).&lt;/span&gt;&lt;span style=&quot;&quot;&gt;getSubjectName&lt;/span&gt;&lt;span style=&quot;&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;}).toList();&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;fontColor=#F0F0F0;" parent="1" vertex="1">
+          <mxGeometry x="740" y="-206.5" width="390" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="100" value="&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;점수&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;&quot;&gt;scoreStore&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;put&lt;/span&gt;(scoreId, score);&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;&quot;&gt;changeScore&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;Integer&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;parseInt&lt;/span&gt;(&lt;span style=&quot;&quot;&gt;sc&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;next&lt;/span&gt;());&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;examRound &lt;/span&gt;&lt;span style=&quot;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;&quot;&gt;Integer&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;parseInt&lt;/span&gt;&lt;span style=&quot;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;&quot;&gt;sc&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;&quot;&gt;next&lt;/span&gt;&lt;span style=&quot;&quot;&gt;());&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Set&lt;/span&gt;&amp;lt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt;&amp;gt; &lt;span style=&quot;&quot;&gt;subjects&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;&quot;&gt;HashSet&lt;/span&gt;&amp;lt;&amp;gt;();&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;&quot;&gt;avgGrade&lt;/span&gt; &lt;span style=&quot;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;&quot;&gt;Score&lt;/span&gt;.&lt;span style=&quot;&quot;&gt;getGradeMandatoryByScore&lt;/span&gt;(scores);&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;fontColor=#F0F0F0;align=left;" parent="1" vertex="1">
+          <mxGeometry x="740" y="-33.5" width="390" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="101" value="&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Student{&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+학생의수강과목 : private Set&amp;lt;String&amp;gt; studentSubject&amp;nbsp;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;br&gt;Subject{&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;+과목ID :&amp;nbsp;private String subjectId;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+과목명 :&amp;nbsp;private String subjectName;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;&lt;span style=&quot;&quot;&gt;+필수과목, 선택과목 :&amp;nbsp;private String subjectType;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;위 두 코드가 상호간에 학생과 과목의 별도의 객체가 학생이 수강하는 과목이라는 새로운 결과값을 반환시켜준다.&lt;/font&gt;&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="160" y="250" width="560" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="102" value="" style="endArrow=none;html=1;fontSize=30;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="87" target="87" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="2213.5" as="sourcePoint" />
+            <mxPoint x="460" y="2163.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1000" y="-163.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="103" value="" style="endArrow=none;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="100" target="100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="2313.5" as="sourcePoint" />
+            <mxPoint x="380" y="2263.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="109" value="출력" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" parent="1" vertex="1">
+          <mxGeometry x="415" y="-1520" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-111" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="28" target="15" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="-200" as="sourcePoint" />
+            <mxPoint x="455" y="-889" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-112" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="48" target="17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="190" y="-190" as="sourcePoint" />
+            <mxPoint x="322.50000000000045" y="-889" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-240" y="-1270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-113" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;entryX=1.002;entryY=0.68;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="32" target="18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1310" y="-300" as="sourcePoint" />
+            <mxPoint x="1360" y="-350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1140" y="-1180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-114" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="100" target="83" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="740" y="320" as="sourcePoint" />
+            <mxPoint x="790" y="270" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="450" y="62" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-115" value="" style="endArrow=classic;html=1;fontSize=20;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="87" target="32" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="740" y="320" as="sourcePoint" />
+            <mxPoint x="1640" y="230" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1270" y="-121" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-118" value="" style="endArrow=none;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="101" target="101" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="230" as="sourcePoint" />
+            <mxPoint x="410" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-120" value="" style="endArrow=none;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="101" target="101" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="230" as="sourcePoint" />
+            <mxPoint x="410" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-121" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0.004;exitY=0.158;exitDx=0;exitDy=0;entryX=-0.024;entryY=0.019;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" source="va6zyPkbkS1uNYBuAUcX-122" target="60" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-180" y="390" as="sourcePoint" />
+            <mxPoint x="-130" y="340" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-1030" y="310" />
+              <mxPoint x="-1030" y="-686" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-122" value="" style="swimlane;startSize=0;fontSize=17;fontColor=#F0F0F0;" parent="1" vertex="1">
+          <mxGeometry x="160" y="270" width="560" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="va6zyPkbkS1uNYBuAUcX-123" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="va6zyPkbkS1uNYBuAUcX-122" target="39" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="460" as="sourcePoint" />
+            <mxPoint x="1720" y="240" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1670" y="410" />
+              <mxPoint x="1650" y="-739" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yghi8we6Bp6i2me9-wkZ-110" value="" style="endArrow=classic;html=1;fontSize=17;fontColor=#F0F0F0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="15" target="109" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="-920" as="sourcePoint" />
+            <mxPoint x="490" y="-970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dWHOqPz5T6RkKj1orb0X-118" value="&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font color=&quot;#cccccc&quot; style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Student Id {&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 17px;&quot;&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;String studentId = sc.next();&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Student student = studentStore.get(studentId);&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot; style=&quot;font-size: 17px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;Score {&lt;br&gt;&lt;/font&gt;&lt;div style=&quot;background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px;&quot;&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;switch (input) {&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 1 -&amp;gt; createScore(); // 수강생의 과목별 시험 회차 및 점수 등록&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 2 -&amp;gt; updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 3 -&amp;gt; inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 4 -&amp;gt; inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 5 -&amp;gt; inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;case 6 -&amp;gt; flag = false; // 메인 화면 이동&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;default -&amp;gt; {&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; System.out.println(&quot;잘못된 입력입니다.\n메인 화면 이동...&quot;);&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; flag = false;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cccccc&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="-510" y="-230" width="757" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="dWHOqPz5T6RkKj1orb0X-119" value="" style="endArrow=none;html=1;fontSize=20;fontColor=#F0F0F0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="dWHOqPz5T6RkKj1orb0X-118" target="dWHOqPz5T6RkKj1orb0X-121" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-310" y="-280" as="sourcePoint" />
+            <mxPoint x="-260" y="-330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dWHOqPz5T6RkKj1orb0X-121" value="" style="swimlane;startSize=0;fontSize=17;fontColor=#F0F0F0;" parent="1" vertex="1">
+          <mxGeometry x="-510" y="-230" width="747" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="dWHOqPz5T6RkKj1orb0X-122" value="" style="endArrow=classic;html=1;fontSize=13;fontColor=#CCCCCC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.273;entryY=1.05;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="dWHOqPz5T6RkKj1orb0X-121" target="60" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="840" as="sourcePoint" />
+            <mxPoint x="290" y="790" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-640" y="-30" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dWHOqPz5T6RkKj1orb0X-123" value="" style="endArrow=classic;html=1;fontSize=13;fontColor=#CCCCCC;" parent="1" target="83" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="230" y="-60" as="sourcePoint" />
+            <mxPoint x="1650" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="320" y="-60" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="아래쪽" id="CqFqfnrp8SiUvhfj7fE7">
+    <mxGraphModel dx="3855" dy="2513" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-0" />
+        <mxCell id="D5YTPB07ds9DTILFUJjs-1" parent="D5YTPB07ds9DTILFUJjs-0" />
+        <mxCell id="D5YTPB07ds9DTILFUJjs-2" value="CampManagementApplication" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=31;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;labelPosition=center;verticalLabelPosition=middle;textDirection=ltr;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="160" y="-520" width="560" height="590" as="geometry">
+            <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-3" value="Student{&#xa;   + 학생ID :  String studentId&#xa;   + 학생이름 : String studentName&#xa;   + 학생상태 : String studentState&#xa;   + 학생의수강과목 : Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=23;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
+          <mxGeometry y="31" width="560" height="209" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-4" value="Subject{&#xa;    +과목ID : String subjectId;&#xa;    +과목명 : String subjectName;&#xa;    +필수과목, 선택과목 : String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=26;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
+          <mxGeometry y="240" width="560" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-5" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
+          <mxGeometry y="410" width="560" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-6" value="" style="endArrow=none;html=1;fontColor=#F0F0F0;exitX=0;exitY=-0.023;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.993;entryY=-0.009;entryDx=0;entryDy=0;entryPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-2" source="D5YTPB07ds9DTILFUJjs-4" target="D5YTPB07ds9DTILFUJjs-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="422" y="167" as="sourcePoint" />
+            <mxPoint x="472" y="117" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-7" value="Score {&#xa;   +점수등록 : createScore&#xa;   +점수수정 : updateRoundScoreBySubject&#xa;   +회차조회 : inquireRoundGradeBySubject&#xa;   +평균조회 : inquireAvgGrades&#xa;   +필수과목조회 : inquireMandatoryAvgGradeByStudentState" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-2" vertex="1">
+          <mxGeometry y="418" width="560" height="172" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-9" value="Score" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="1080" y="-1150" width="660" height="550" as="geometry">
+            <mxRectangle x="755" y="756" width="170" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-10" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
+          <mxGeometry y="26" width="660" height="4" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-13" value="점수ID : String scoreId;&#xa;학생 ID : String studentId;&#xa;과목 ID : String subjectId;&#xa;회차 : int roundNumber;&#xa;학생점수 : int studentScore;&#xa;학생등급 : String studentGrade;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=27;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
+          <mxGeometry y="30" width="660" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="u4hNNTJII-TejNb8Yk7C-9" value="   // Getter&#xa;String getScoreId() { return scoreId; }&#xa;String getStudentId() { return studentId;}&#xa;String getSubjectId() {return subjectId;}&#xa;int getRoundNumber() { return roundNumber;}&#xa;int getStudentScore() {return studentScore;}&#xa;String getStudentGrade() {return studentGrade;}" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=31;" parent="D5YTPB07ds9DTILFUJjs-9" vertex="1">
+          <mxGeometry y="260" width="660" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-15" value="" style="endArrow=block;endSize=10;endFill=0;shadow=0;strokeWidth=1;rounded=0;curved=0;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-9" target="D5YTPB07ds9DTILFUJjs-2" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="210" y="373" as="sourcePoint" />
+            <mxPoint x="310" y="271" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1560" y="-40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-16" value="Subject" style="swimlane;fontStyle=0;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=26;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="70" y="-1000" width="850" height="320" as="geometry">
+            <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-17" value="+과목ID : String subjectId;&#xa;+과목명 : String subjectName;&#xa;+필수과목, 선택과목 : String subjectType;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=23;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
+          <mxGeometry y="26" width="850" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-18" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
+          <mxGeometry y="130" width="850" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-19" value="    public String getSubjectId() { return subjectId; }&#xa;    public String getSubjectName() {   return subjectName;}&#xa;&#xa;// 과목의Type이 mandatory , choice의 반환값에 따라서 정해짐&#xa;    String getSubjectType() {   return subjectType; }&#xa;    boolean isMandatory() { return subjectType.equalsIgnoreCase(&quot;mandatory&quot;); }&#xa;    boolean isChoice() { return subjectType.equalsIgnoreCase(&quot;choice&quot;); }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=22;" parent="D5YTPB07ds9DTILFUJjs-16" vertex="1">
+          <mxGeometry y="132" width="850" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-20" value="Student&lt;br style=&quot;font-size: 30px;&quot;&gt;" style="swimlane;fontStyle=2;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fontSize=30;swimlaneLine=1;html=1;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="-780" y="-1110" width="730" height="500" as="geometry">
+            <mxRectangle x="-433" y="629" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-21" value="&#xa;   + 학생ID : String studentId&#xa;    +학생이름 : String studentName&#xa;    +학생상태 : String studentState&#xa;    +학생의수강과목 : Set&lt;String&gt; studentSubject" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fontSize=24;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
+          <mxGeometry y="26" width="730" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-22" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
+          <mxGeometry y="200" width="730" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-23" value="// Getter&#xa;    getStudentId() { return studentId;}&#xa;    getStudentName() {  return studentName;}&#xa;    getStudentState() { return studentState; }&#xa;    Set&lt;String&gt; getStudentSubject() { return studentSubject; }&#xa;  &#xa;  // Setter&#xa;     setStudentId(String studentId) { this.studentId = studentId; }&#xa;     setStudentName(String studentName) { this.studentName = studentName; }&#xa;     setStudentState(String studentState) { this.studentState = studentState; }&#xa;    setStudentSubject(Set&lt;String&gt; studentSubject) { this.studentSubject = studentSubject; }" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;horizontal=1;fontSize=18;" parent="D5YTPB07ds9DTILFUJjs-20" vertex="1">
+          <mxGeometry y="240" width="730" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-6" value="" style="endArrow=classic;html=1;fontSize=20;exitX=0.363;exitY=1.031;exitDx=0;exitDy=0;exitPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-20" source="D5YTPB07ds9DTILFUJjs-23" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="260" y="420" as="sourcePoint" />
+            <mxPoint x="930" y="900" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="260" y="900" />
+              <mxPoint x="570" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-24" value="" style="whiteSpace=wrap;html=1;fillColor=none;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="-390" y="-550" width="510" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="D5YTPB07ds9DTILFUJjs-27" value="&lt;div style=&quot;font-size: 20px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 20px;&quot;&gt;Student{&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;학생의수강과목 : Set&amp;lt;String&amp;gt; studentSubject&amp;nbsp; 코드와&lt;br style=&quot;font-size: 20px;&quot;&gt;Subject{&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+과목ID : String subjectId;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 20px;&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+과목명 : String subjectName;&lt;/span&gt;&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 20px;&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;+필수과목, 선택과목 : String subjectType;&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;br style=&quot;font-size: 20px;&quot;&gt;&amp;nbsp;코드가 상호간에 학생과 과목의 별도의 객체들이 &lt;br style=&quot;font-size: 20px;&quot;&gt;학생이 수강하는 과목(studentSubject[i])이라는&amp;nbsp;객체를 반환시켜준다.&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;/span&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="-380" y="-550" width="480" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-2" value="" style="endArrow=classic;html=1;fontSize=20;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1" target="D5YTPB07ds9DTILFUJjs-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="-680.0000000000001" as="sourcePoint" />
+            <mxPoint x="440" y="-360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-3" value="" style="endArrow=none;dashed=1;html=1;fontSize=20;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="710" y="-865" as="sourcePoint" />
+            <mxPoint x="1090" y="-922" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-4" value="" style="endArrow=none;dashed=1;html=1;fontSize=20;exitX=1.005;exitY=0.051;exitDx=0;exitDy=0;exitPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-23" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-230" y="-860" as="sourcePoint" />
+            <mxPoint x="180" y="-860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-7" value="" style="endArrow=none;dashed=1;html=1;fontSize=13;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="-560" as="sourcePoint" />
+            <mxPoint y="-860" as="targetPoint" />
+            <Array as="points">
+              <mxPoint y="-720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-8" value="" style="endArrow=none;dashed=1;html=1;fontSize=13;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1" source="sveYoT4_GafbHkfeT07I-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1010" y="-650" as="sourcePoint" />
+            <mxPoint x="1010" y="-920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-15" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=13;fillColor=none;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="760" y="-580" width="490" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="sveYoT4_GafbHkfeT07I-16" value="&lt;span style=&quot;font-size: 21px;&quot;&gt;학생ID : private String studentId +&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;과목ID :&amp;nbsp;private String subjectId;&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 21px;&quot;&gt;=studentSubject[i])&lt;br style=&quot;padding: 0px; margin: 0px; font-size: 21px;&quot;&gt;&lt;/font&gt;&amp;nbsp;&lt;br style=&quot;font-size: 21px;&quot;&gt;StudentId와 SubjectiD의 상호작용인&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;studentSubject[i])에&amp;nbsp;&lt;/span&gt;studentScore를&amp;nbsp;&lt;br style=&quot;font-size: 21px;&quot;&gt;입력한 뒤 해당학생의 수강과목에 값을&lt;br style=&quot;font-size: 21px;&quot;&gt;대입시켜준다.&lt;br style=&quot;font-size: 21px;&quot;&gt;그 값을 가지고 studentGrade값에 입력해&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;span style=&quot;font-size: 21px;&quot;&gt;studentSubject[i])에 점수와 학점 둘다 입력시켜&lt;/span&gt;&lt;br style=&quot;font-size: 21px;&quot;&gt;&lt;br style=&quot;font-size: 21px;&quot;&gt;하나의 학생에 과목,점수,학점을 입력, 관리할수있는&lt;br style=&quot;font-size: 21px;&quot;&gt;프로세스가 만들어진다." style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="D5YTPB07ds9DTILFUJjs-1" vertex="1">
+          <mxGeometry x="770" y="-550" width="500" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="kSyN6EfRKaFN2ydEJG4l-1" value="" style="endArrow=classic;html=1;fontSize=20;exitX=1.008;exitY=0.38;exitDx=0;exitDy=0;exitPerimeter=0;" parent="D5YTPB07ds9DTILFUJjs-1" source="D5YTPB07ds9DTILFUJjs-24" target="D5YTPB07ds9DTILFUJjs-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="124" y="-416" as="sourcePoint" />
+            <mxPoint x="310" y="-510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="160" y="-440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kSyN6EfRKaFN2ydEJG4l-3" value="" style="endArrow=classic;html=1;fontSize=20;" parent="D5YTPB07ds9DTILFUJjs-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="-440" as="sourcePoint" />
+            <mxPoint x="730" y="-440" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>
