@@ -37,11 +37,19 @@ public class StudentManagement {
             STUDENT_STATE_BAD,
             STUDENT_STATE_VERYBAD);
 
-    // 싱글톤은 아니고 유사한 무언가의 동작...
-    private StudentManagement() {
+    // 싱글톤 클래스 객체를 담을 인스턴스 변수
+    private static StudentManagement studentManagement;
+
+    private StudentManagement() {}
+
+    public static StudentManagement getInstance() {
+        if (studentManagement == null) {
+            studentManagement = new StudentManagement();
+        }
+        return studentManagement;
     }
 
-    public static Map<String, Student> getStore() {
+    public Map<String, Student> getStore() {
         if (studentStore == null) {
             studentStore = new HashMap<>();
         }
@@ -49,7 +57,7 @@ public class StudentManagement {
     }
 
     // 1.1.수강생 등록
-    public static void createStudent(Map<String, Subject> subjectStore) {
+    public void createStudent(Map<String, Subject> subjectStore) {
         System.out.println("\n수강생을 등록합니다...");
 
         /* 이 메서드에서 구현해야할 것:
@@ -63,7 +71,7 @@ public class StudentManagement {
 
         // 이름 입력
         System.out.print("수강생 이름 입력 : ");
-        String studentName = sc.nextLine();
+        String studentName = sc.nextLine().trim();
         if (Objects.equals(studentName, "") || studentName == null) {
             System.out.println("등록이 취소되었습니다.");
             return;
@@ -118,7 +126,7 @@ public class StudentManagement {
     }
 
     // 1.2.1.수강생 전체 목록 조회
-    public static void inquireStudent() {
+    public void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         /*
          * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다.
@@ -143,7 +151,7 @@ public class StudentManagement {
     }
 
     // 1.2.2.수강생 상세 정보 조회
-    public static void inquireStudentInfo(Map<String, Subject> subjectStore) {
+    public void inquireStudentInfo(Map<String, Subject> subjectStore) {
         System.out.println("\n수강생 상세 정보를 조회합니다...");
         /*
          * 조회하고 싶은 수강생 ID를 입력받습니다. (예시: "ST1")
@@ -188,7 +196,7 @@ public class StudentManagement {
     }
 
     // 1.2.3.수강생 상태별 목록 조회
-    public static void inquireStudentByState() {
+    public void inquireStudentByState() {
         /*
          * 조회하고 싶은 상태를 사용자에게 입력받습니다. (예시: "아주좋음")
          * 수강생 목록은 studentStore에 있고, Map 컬렉션을 사용합니다. Entry set문법으로 Map의 키, Value 를 받아옴
@@ -233,7 +241,7 @@ public class StudentManagement {
     }
 
     // 1.3.수강생 정보 수정
-    public static void updateStudent() {
+    public void updateStudent() {
         System.out.println("\n수강생 정보를 수정합니다...");
 
         // id 조회
@@ -268,7 +276,7 @@ public class StudentManagement {
     }
 
     // 1.4.수강생 정보 삭제
-    public static void deleteStudent(Map<String, Score> scoreStore) {
+    public void deleteStudent(Map<String, Score> scoreStore) {
         System.out.println("\n수강생 정보를 삭제합니다...");
 
         // id 조회
@@ -292,7 +300,7 @@ public class StudentManagement {
     }
 
     // 1.4.점수 삭제(수강생 삭제 내부)
-    private static void deleteStudentScore(Map<String, Score> scoreStore, String studentId) {
+    private void deleteStudentScore(Map<String, Score> scoreStore, String studentId) {
         for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
             if (entry.getValue().getStudentId().equals(studentId)) {
                 scoreStore.remove(entry.getKey());
@@ -336,7 +344,7 @@ public class StudentManagement {
     }
 
     // 수강생 ID를 입력받는 메서드, 실패시 null
-    private static String getStudentId() {
+    private String getStudentId() {
         /*
          * 수강생 Id를 입력받는 메서드
          * 정규화 사용, id 숫자만 입력해도 검색됨
@@ -356,9 +364,8 @@ public class StudentManagement {
         }
     }
 
-
     // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
-    private static String getSubjectIdByName(Map<String, Subject> subjectStore, String subjectName) {
+    private String getSubjectIdByName(Map<String, Subject> subjectStore, String subjectName) {
         for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
             if (entry.getValue().getSubjectName().equals(subjectName)) {
                 return entry.getKey();
@@ -367,7 +374,8 @@ public class StudentManagement {
         return null;
     }
 
-    private static List<String> getStudentMandatorySubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
+    // 학생의 과목 리스트를 받아 필수 과목만 반환
+    private List<String> getStudentMandatorySubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
         List<String> studentMandatorySubjectList = new ArrayList<String>();
 
         for(String subjectId : studentSubject) {
@@ -382,7 +390,8 @@ public class StudentManagement {
         return studentMandatorySubjectList;
     }
 
-    private static List<String> getStudentChoiceSubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
+    // 학생의 과목 리스트를 받아 선택 과목만 반환
+    private List<String> getStudentChoiceSubject(Map<String, Subject> subjectStore, Set<String> studentSubject) {
         List<String> studentChoiceSubjectList = new ArrayList<String>();
 
         for(String subjectId : studentSubject) {

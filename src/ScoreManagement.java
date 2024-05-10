@@ -22,11 +22,19 @@ public class ScoreManagement {
         return INDEX_TYPE_SCORE + scoreIndex;
     }
 
-    // 싱글톤은 아니고 유사한 무언가의 동작...
-    private ScoreManagement() {
+    // 싱글톤 클래스 객체를 담을 인스턴스 변수
+    private static ScoreManagement scoreManagement;
+
+    private ScoreManagement() {}
+
+    public static ScoreManagement getInstance() {
+        if (scoreManagement == null) {
+            scoreManagement = new ScoreManagement();
+        }
+        return scoreManagement;
     }
 
-    public static Map<String, Score> getStore() {
+    public Map<String, Score> getStore() {
         if (scoreStore == null) {
             scoreStore = new HashMap<>();
         }
@@ -35,7 +43,7 @@ public class ScoreManagement {
 
 
     // 2.1.수강생의 과목별 시험 회차 및 점수 등록
-    public static void createScore(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
+    public void createScore(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
         /*
          * 회차 번호(Score 클래스의 roundNumber 멤버변수)가 1 ~ 10 값만 저장되어야 합니다.  * 1회차 ~ 10회차
          * 등록하려는 점수(Score 클래스의 studentScore 멤버변수)가 0 ~ 100 값만 저장되어야 합니다.
@@ -107,7 +115,7 @@ public class ScoreManagement {
     }
 
     // 2.2.수강생의 과목별 회차 점수 수정
-    public static void updateRoundScoreBySubject(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
+    public void updateRoundScoreBySubject(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
         // 등록된 수강생이 아무도 없으면 종료합니다.
         if (isEmptyStudent(studentStore)) {
             System.out.println("\n등록된 수강생이 없습니다.");
@@ -170,7 +178,7 @@ public class ScoreManagement {
     }
 
     // 2.3.수강생의 특정 과목 회차별 등급 조회
-    public static void inquireRoundGradeBySubject(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
+    public void inquireRoundGradeBySubject(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
         // 등록된 수강생이 아무도 없으면 종료합니다.
         if (isEmptyStudent(studentStore)) {
             System.out.println("\n등록된 수강생이 없습니다.");
@@ -227,7 +235,7 @@ public class ScoreManagement {
     }
 
     // 2.4.수강생의 과목별 평균 등급 조회
-    public static void inquireAvgGrades(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
+    public void inquireAvgGrades(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
         // 등록된 수강생이 아무도 없으면 종료합니다.
         if (isEmptyStudent(studentStore)) {
             System.out.println("\n등록된 수강생이 없습니다.");
@@ -262,7 +270,7 @@ public class ScoreManagement {
     }
 
     // 2.4.특정 학생의 특정 과목 평균 등급 조회, 없을 시 "" 반환
-    private static String settingGrade(Map<String, Subject> subjectStore, String studentId, String subjectId) {
+    private String settingGrade(Map<String, Subject> subjectStore, String studentId, String subjectId) {
         List<Integer> scoreList = new ArrayList<>();
 
         for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
@@ -285,7 +293,7 @@ public class ScoreManagement {
     }
 
     // 2.5.특정 상태 수강생들의 필수 과목 평균 등급 조회, 포괄적인 총 평균
-    public static void inquireMandatoryAvgGradeByStudentState(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
+    public void inquireMandatoryAvgGradeByStudentState(Map<String, Student> studentStore, Map<String, Subject> subjectStore) {
         // 등록된 수강생이 없으면 종료
         if (isEmptyStudent(studentStore)) {
             System.out.println("\n등록된 수강생이 없습니다.");
@@ -336,7 +344,7 @@ public class ScoreManagement {
     }
 
     // 회차 입력
-    private static Integer inquireRound() {
+    private Integer inquireRound() {
         int roundNumber;
         while (true) {
             try {
@@ -360,7 +368,7 @@ public class ScoreManagement {
     }
 
     // 점수 입력
-    private static Integer inquireScore() {
+    private Integer inquireScore() {
         int studentScore;
         while (true) {
             try {
@@ -384,13 +392,13 @@ public class ScoreManagement {
     }
 
     // studentStore가 비어있는지 확인
-    private static boolean isEmptyStudent(Map<String, Student> studentStore) {
+    private boolean isEmptyStudent(Map<String, Student> studentStore) {
         return studentStore.isEmpty();
     }
 
     // ** 메모있음 **
     // 수강생 ID를 입력받는 메서드, 실패시 null
-    private static String getStudentId(Map<String, Student> studentStore) {
+    private String getStudentId(Map<String, Student> studentStore) {
         /*
          * StudentManagement 클래스의 getStudentId와 완전히 동일한 기능을 함
          * 리팩토링 과정에서 각 클래스의 private으로 숨겨두었지만 다른 방법을 고려해야 할 듯 함.
@@ -415,15 +423,18 @@ public class ScoreManagement {
         }
     }
 
-    private static List<String> getStudentSubjectId(Map<String, Student> studentStore, String studentId) {
+    // 해당하는 수강생의 수강 과목 리스트 반환
+    private List<String> getStudentSubjectId(Map<String, Student> studentStore, String studentId) {
         return studentStore.get(studentId).getStudentSubject().stream().toList();
     }
 
-    private static String getStudentName(Map<String, Student> studentStore, String studentId) {
+    // 수강생 ID로 이름을 반환
+    private String getStudentName(Map<String, Student> studentStore, String studentId) {
         return studentStore.get(studentId).getStudentName();
     }
 
-    private static List<Student> getStudentByState(Map<String, Student> studentStore, String state) {
+    // 해당하는 상태의 학생 리스트 반환
+    private List<Student> getStudentByState(Map<String, Student> studentStore, String state) {
         List<Student> studentByState = new ArrayList<>();
         for (Student student : studentStore.values()) {
             if (student.getStudentState().equals(state)) {
@@ -434,7 +445,7 @@ public class ScoreManagement {
     }
 
     // 수강생이 수강하는 과목 중 한 가지를 선택하는 메서드, 취소 시 "" 리턴
-    private static String inquireSubject(Map<String, Subject> subjectStore, List<String> studentSubjectId) {
+    private String inquireSubject(Map<String, Subject> subjectStore, List<String> studentSubjectId) {
         String selectedSubject = "";
         while (true) {
             // 사용자의 과목 리스트 보여주기
@@ -464,11 +475,12 @@ public class ScoreManagement {
         }
     }
 
-    private static boolean isMandatory(Map<String, Subject> subjectStore, String subjectId) {
+    private boolean isMandatory(Map<String, Subject> subjectStore, String subjectId) {
         return SubjectType.SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType());
     }
 
-    private static String getSubjectNameById(Map<String, Subject> subjectStore, String studentSubjectId) {
+    // 과목 ID로 과목 이름 반환
+    private String getSubjectNameById(Map<String, Subject> subjectStore, String studentSubjectId) {
         return subjectStore.get(studentSubjectId).getSubjectName();
     }
 }

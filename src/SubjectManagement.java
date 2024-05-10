@@ -20,11 +20,6 @@ public class SubjectManagement {
         return INDEX_TYPE_SUBJECT + subjectIndex;
     }
 
-//    // **SubjectType Enum Class로 이동**
-//    // 과목 타입(필수, 선택)
-//    private static final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-//    private static final String SUBJECT_TYPE_CHOICE = "CHOICE";
-
     // 과목 타입 최소 선택 개수
     private static final int SUBJECT_MANDATORY_MIN = 3;
     private static final int SUBJECT_CHOICE_MIN = 2;
@@ -33,9 +28,19 @@ public class SubjectManagement {
     private static final List<String> subjectsMandatoryList = List.of("Java", "객체지향", "Spring", "JPA", "MySQL");
     private static final List<String> subjectsChoiceList = List.of("디자인 패턴", "Spring Security", "Redis", "MongoDB");
 
-    // 싱글톤은 아니고 유사한 무언가의 동작...
+    // 싱글톤 클래스 객체를 담을 인스턴스 변수
+    private static SubjectManagement subjectManagement;
+
     private SubjectManagement() {}
-    public static Map<String, Subject> getStore() {
+
+    public static SubjectManagement getInstance() {
+        if (subjectManagement == null) {
+            subjectManagement = new SubjectManagement();
+        }
+        return subjectManagement;
+    }
+
+    public Map<String, Subject> getStore() {
         if (subjectStore == null) {
             subjectStore = new HashMap<>();
             setSubjectList(subjectsMandatoryList, SubjectType.SUBJECT_TYPE_MANDATORY);
@@ -45,7 +50,7 @@ public class SubjectManagement {
     }
 
     // 과목 리스트 설정
-    private static void setSubjectList(List<String> subjects, SubjectType type) {
+    private void setSubjectList(List<String> subjects, SubjectType type) {
         String subjectSeq = "";
 
         for (String subject : subjects) {
