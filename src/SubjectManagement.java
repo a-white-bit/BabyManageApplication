@@ -20,9 +20,10 @@ public class SubjectManagement {
         return INDEX_TYPE_SUBJECT + subjectIndex;
     }
 
-    // 과목 타입(필수, 선택)
-    private static final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    private static final String SUBJECT_TYPE_CHOICE = "CHOICE";
+//    // **SubjectType Enum Class로 이동**
+//    // 과목 타입(필수, 선택)
+//    private static final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
+//    private static final String SUBJECT_TYPE_CHOICE = "CHOICE";
 
     // 과목 타입 최소 선택 개수
     private static final int SUBJECT_MANDATORY_MIN = 3;
