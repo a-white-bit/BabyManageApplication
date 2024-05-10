@@ -81,7 +81,7 @@ public class CampManagementApplication {
                 case "1" -> StudentManagement.createStudent(); // 수강생 등록
                 case "2" -> displayStudentListView(); // 수강생 목록 조회
                 case "3" -> StudentManagement.updateStudent(); // 수강생 정보 수정
-                case "4" -> StudentManagement.deleteStudent(); //수강생 삭제
+                case "4" -> StudentManagement.deleteStudent(scoreStore); //수강생 삭제
                 case "5" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n다시 입력해주세요...");

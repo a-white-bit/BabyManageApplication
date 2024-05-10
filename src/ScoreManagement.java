@@ -104,15 +104,6 @@ public class ScoreManagement {
         System.out.println("\n점수 등록 성공!");
     }
 
-    // 1.4.점수 삭제(수강생 삭제 내부)
-    public static void deleteStudentScore(String studentId) {
-        for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
-            if (entry.getValue().getStudentId().equals(studentId)) {
-                scoreStore.remove(entry.getKey());
-            }
-        }
-    }
-
     // 2.2.수강생의 과목별 회차 점수 수정
     public static void updateRoundScoreBySubject(Map<String, Student> studentStore) {
         // 등록된 수강생이 아무도 없으면 종료합니다.

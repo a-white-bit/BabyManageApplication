@@ -1,3 +1,4 @@
+import model.Score;
 import model.Student;
 import java.util.*;
 
@@ -265,7 +266,7 @@ public class StudentManagement {
     }
 
     // 1.4.수강생 정보 삭제
-    public static void deleteStudent() {
+    public static void deleteStudent(Map<String, Score> scoreStore) {
         System.out.println("\n수강생 정보를 삭제합니다...");
 
         // id 조회
@@ -285,7 +286,16 @@ public class StudentManagement {
         }
 
         // 해당하는 수강생 점수 정보 삭제
-        ScoreManagement.deleteStudentScore(studentId);
+        deleteStudentScore(scoreStore, studentId);
+    }
+
+    // 1.4.점수 삭제(수강생 삭제 내부)
+    private static void deleteStudentScore(Map<String, Score> scoreStore, String studentId) {
+        for (Map.Entry<String, Score> entry : scoreStore.entrySet()) {
+            if (entry.getValue().getStudentId().equals(studentId)) {
+                scoreStore.remove(entry.getKey());
+            }
+        }
     }
 
 
