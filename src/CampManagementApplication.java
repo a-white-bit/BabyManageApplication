@@ -4,19 +4,28 @@ import model.Subject;
 
 import java.util.*;
 
-// updated 2024/05/09 22:00
+// updated 2024/05/10 18:00
 
 /**
  * 구현 메모
- * -
- * 1. 숫자가 아닌 값 입력되면 오류로 프로그램 종료됨
- * 프로그램은 종료되지 않게 하고, 다시 값을 받게 하거나 수정단계만 빠져나가도록 하기
- * switch 변수를 String 형으로 작성  or 예외 try-catch
+ *
+ *  모듈 간 결합도가 높은 것으로 판단되어서
+ * 되는데까지 풀어보겠습니다 !
+ *
+ * 남은 것:
+ *  1. main에서 각 관리 클래스들을 인스턴스화 하고 (싱글턴)
+ *  전역 메서드(static)를 일반 메서드(default)로 변경 작업 하기
+ *  2. enum class 활용
  */
 
 public class CampManagementApplication {
     // 스캐너
     private static final Scanner sc = new Scanner(System.in);
+
+    // 관리 클래스 인스턴스
+    private static StudentManagement studentManagement;
+    private static SubjectManagement subjectManagement;
+    private static ScoreManagement scoreManagement;
 
     // 데이터 저장소
     private static Map<String, Student> studentStore;
@@ -35,9 +44,14 @@ public class CampManagementApplication {
 
     // 초기 데이터 생성
     private static void setInitData() {
-        studentStore = StudentManagement.getStore();
-        subjectStore = SubjectManagement.getStore();
-        scoreStore = ScoreManagement.getStore();
+
+        studentManagement = StudentManagement.getInstance();
+        subjectManagement = SubjectManagement.getInstance();
+        scoreManagement = ScoreManagement.getInstance();
+
+        studentStore = studentManagement.getStore();
+        subjectStore = subjectManagement.getStore();
+        scoreStore = scoreManagement.getStore();
     }
 
     private static void displayMainView() throws InterruptedException {
@@ -57,7 +71,7 @@ public class CampManagementApplication {
                 case "3" -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
-                    Thread.sleep(2000);
+                    Thread.sleep(800);
                 }
             }
         }
@@ -78,10 +92,10 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> StudentManagement.createStudent(); // 수강생 등록
+                case "1" -> studentManagement.createStudent(subjectStore); // 수강생 등록
                 case "2" -> displayStudentListView(); // 수강생 목록 조회
-                case "3" -> StudentManagement.updateStudent(); // 수강생 정보 수정
-                case "4" -> StudentManagement.deleteStudent(scoreStore); //수강생 삭제
+                case "3" -> studentManagement.updateStudent(); // 수강생 정보 수정
+                case "4" -> studentManagement.deleteStudent(scoreStore); //수강생 삭제
                 case "5" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n다시 입력해주세요...");
@@ -104,9 +118,9 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> StudentManagement.inquireStudent(); // 전체 목록 조회
-                case "2" -> StudentManagement.inquireStudentInfo(); // 상세 정보 조회
-                case "3" -> StudentManagement.inquireStudentByState(); // 상태별 목록 조회
+                case "1" -> studentManagement.inquireStudent(); // 전체 목록 조회
+                case "2" -> studentManagement.inquireStudentInfo(subjectStore); // 상세 정보 조회
+                case "3" -> studentManagement.inquireStudentByState(); // 상태별 목록 조회
                 case "4" -> flag = false; // 수강 관리 기능으로
                 default -> {
                     System.out.println("잘못된 입력입니다.\n다시 입력해주세요..");
@@ -116,7 +130,7 @@ public class CampManagementApplication {
         }
     }
 
-    private static void displayScoreView() {
+    private static void displayScoreView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -131,15 +145,15 @@ public class CampManagementApplication {
             String input = sc.nextLine();
 
             switch (input) {
-                case "1" -> ScoreManagement.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case "2" -> ScoreManagement.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case "3" -> ScoreManagement.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case "4" -> ScoreManagement.inquireAvgGrades(); // 수강생의 과목별 평균 등급 조회
-                case "5" -> ScoreManagement.inquireMandatoryAvgGradeByStudentState(); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+                case "1" -> scoreManagement.createScore(studentStore, subjectStore); // 수강생의 과목별 시험 회차 및 점수 등록
+                case "2" -> scoreManagement.updateRoundScoreBySubject(studentStore, subjectStore); // 수강생의 과목별 회차 점수 수정
+                case "3" -> scoreManagement.inquireRoundGradeBySubject(studentStore, subjectStore); // 수강생의 특정 과목 회차별 등급 조회
+                case "4" -> scoreManagement.inquireAvgGrades(studentStore, subjectStore); // 수강생의 과목별 평균 등급 조회
+                case "5" -> scoreManagement.inquireMandatoryAvgGradeByStudentState(studentStore, subjectStore); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
                 case "6" -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
-                    flag = false;
+                    Thread.sleep(800);
                 }
             }
         }
