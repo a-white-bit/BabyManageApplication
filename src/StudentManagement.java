@@ -357,8 +357,6 @@ public class StudentManagement {
     }
 
 
-
-    // -------refac--------
     // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
     private static String getSubjectIdByName(Map<String, Subject> subjectStore, String subjectName) {
         for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {

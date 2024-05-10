@@ -328,7 +328,7 @@ public class ScoreManagement {
         // 총 평균등급 계산
         String avgGrade = Score.getGradeMandatoryByScore(scores);
         if (!"none".equals(avgGrade)) {
-            System.out.println("상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급: " + avgGrade);
+            System.out.println("\n상태가 [" + studentState + "]인 수강생들의 필수 과목 평균 등급: " + avgGrade);
             System.out.println("\n필수 과목 평균 등급 조회 성공!");
         } else {
             System.out.println("조회할 점수가 없습니다.");
@@ -382,8 +382,6 @@ public class ScoreManagement {
         }
         return studentScore;
     }
-
-    //----------------------
 
     // studentStore가 비어있는지 확인
     private static boolean isEmptyStudent(Map<String, Student> studentStore) {
