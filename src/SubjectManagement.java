@@ -54,21 +54,6 @@ public class SubjectManagement {
         }
     }
 
-
-    private static String getSubjectNameById(String studentSubjectId) {
-        return subjectStore.get(studentSubjectId).getSubjectName();
-    }
-
-    // 과목이름을 가지고 ID를 구하는 메서드, 실패 null 반환
-    private static String getSubjectIdByName(String subjectName) {
-        for (Map.Entry<String, Subject> entry : subjectStore.entrySet()) {
-            if (entry.getValue().getSubjectName().equals(subjectName)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
     // ** 메모 있음 **
     // 선택과목을 입력받는 메서드, 선택한 과목 리스트 반환, 취소시 null 반환
     public static List<String> inquireChoiceSubject() {
@@ -215,82 +200,4 @@ public class SubjectManagement {
         return mandatorySubject;
     }
 
-    //필수 과목 set으로 반환
-    private static Set<String> getMandatorySubject() {
-        Set<String> mandatorySubjectSet = new HashSet<>();
-
-        for (String subject : subjectsMandatoryList) {
-            String subjectId = getSubjectIdByName(subject);
-            if (subjectId != null) {
-                mandatorySubjectSet.add(subjectId);
-            }
-        }
-
-        return mandatorySubjectSet;
-    }
-
-    private static List<String> getStudentMandatorySubjectList(Set<String> studentSubject) {
-        List<String> studentMandatorySubjectList = new ArrayList<String>();
-
-        for(String subjectId : studentSubject) {
-            SubjectType type = subjectStore.get(subjectId).getSubjectType();
-            String name = subjectStore.get(subjectId).getSubjectName();
-
-            if (SubjectType.SUBJECT_TYPE_MANDATORY.equals(type)) {
-                studentMandatorySubjectList.add(name);
-            }
-        }
-
-        return studentMandatorySubjectList;
-    }
-
-    private static List<String> getStudentChoiceSubject(Set<String> studentSubject) {
-        List<String> studentChoiceSubjectList = new ArrayList<String>();
-
-        for(String subjectId : studentSubject) {
-            SubjectType type = subjectStore.get(subjectId).getSubjectType();
-            String name = subjectStore.get(subjectId).getSubjectName();
-
-            if (SubjectType.SUBJECT_TYPE_CHOICE.equals(type)) {
-                studentChoiceSubjectList.add(name);
-            }
-        }
-
-        return studentChoiceSubjectList;
-    }
-
-    // 수강생이 수강하는 과목 중 한 가지를 선택하는 메서드, 취소 시 "" 리턴
-    private static String inquireSubject(List<String> studentSubjectId) {
-        String selectedSubject = "";
-        while (true) {
-            // 사용자의 과목 리스트 보여주기
-            System.out.println("과목 선택:");
-            System.out.print("(");
-            int it = 1;
-            for (String id : studentSubjectId) {
-                System.out.print(it + "." + subjectStore.get(id).getSubjectName() + ", ");
-                it++;
-            }
-            System.out.print(it + ".취소) ");
-
-            try {
-                int index = Integer.parseInt(sc.nextLine());
-                if (index == it) {
-                    return selectedSubject;
-                } else if (index > it || index <= 0) {
-                    System.out.println("잘못된 입력입니다.\n");
-                    continue;
-                }
-                selectedSubject = studentSubjectId.get(index - 1);
-                return selectedSubject;
-
-            } catch (NumberFormatException e) {
-                System.out.println("번호를 입력해주세요.\n");
-            }
-        }
-    }
-
-    private static boolean isMandatory(String subjectId) {
-        return SubjectType.SUBJECT_TYPE_MANDATORY.equals(subjectStore.get(subjectId).getSubjectType());
-    }
 }
